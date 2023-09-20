@@ -149,3 +149,6 @@ void menu_estoque(int tipo)
     if(tipo == 2) printf("2) Modificar o estoque\n");
     printf("3) Sair\n");
 }
+
+
+//boa noite
