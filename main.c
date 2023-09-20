@@ -150,3 +150,4 @@ void menu_estoque(int tipo)
     printf("3) Sair\n");
 }
 
+//ta dando certo 
