@@ -8,10 +8,11 @@ typedef struct dados
 } Dados;
 
 void menu(int tipo);
+void menu_estoque(int tipo);
 
 int main()
 {
-    int esc1, err = 0, mn, ext = 0, endcod = 0;
+    int esc1, err = 0, err_in = 0, mn, ext = 0, endcod = 0, opc;
     Dados* info = (Dados *) malloc(sizeof(Dados));
 
     //insercao de dados para entrar no sistema
@@ -106,6 +107,25 @@ int main()
         {
             switch(mn)
             {
+            case 1:
+                do
+                {
+                    err_in = 0;
+                    menu_estoque(esc1);
+                    scanf("%i", &opc);
+                    if((opc < 0) || (opc > 3)) err_in = 1;
+                    if((esc1 == 1) && (opc == 2)) err_in = 1;
+                    if(err_in) printf("Escolha invalida refaca-a");
+                    else
+                    {
+                        if(opc == 1) continue;
+                            //aqui sera chamado uma funcao de mostrar lista
+                        else if(opc == 2) continue;
+                            //mostra a lista e depois permite modificar, **MELHOR SER INSERCAO POR CHAVE, COMO CODIGO DO PRODUTO**
+                        else break;
+                    }
+                }while(1);
+                break;
             case 9:
                 endcod = 1;
             }
@@ -120,4 +140,12 @@ void menu(int tipo)
     printf("1) Acessar o estoque\n2) Acessar o gasto\n3) Acessar a area de compra\n");
     if(tipo == 2) printf("4) Cadastrar Clientes ou Funcionarios\n");
     printf("9) Sair\n");
+}
+
+void menu_estoque(int tipo)
+{
+    printf("Escolha uma opcao:\n");
+    printf("1) Mostrar o estoque\n");
+    if(tipo == 2) printf("2) Modificar o estoque\n");
+    printf("3) Sair\n");
 }
