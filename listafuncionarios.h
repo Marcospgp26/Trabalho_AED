@@ -6,7 +6,7 @@ typedef struct funcionario
     int senha;
     char CPF[11];
     char nome[50];
-    long float pagamento;
+    float pagamento;
 }Funcionario;
 
 typedef struct lista_f Lista_f;

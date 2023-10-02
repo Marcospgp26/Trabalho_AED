@@ -6,7 +6,7 @@ typedef struct cliente
     int senha;
     char CPF[11];
     char nome[50];
-    long float gasto;
+    float gasto;
 }Cliente;
 
 typedef struct lista_c Lista_c;

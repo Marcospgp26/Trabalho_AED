@@ -12,7 +12,7 @@ typedef struct produto
 typedef struct lista_p Lista_p;
 
 Lista_p* Criar_p();
-void Mostrar_p(Lista_c* l);
+void Mostrar_p(Lista_p* l);
 int ListaVazia_p(Lista_p *l);
 int Tamanho_p(Lista_p *l);
 

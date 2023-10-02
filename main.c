@@ -1,15 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "listaclientes.h"
+#include "listafuncionarios.h"
+#include "listaprodutos.h"
 
 void menu_c();
 void menu_f();
+void menu_stq(int tipo);
 
 int main()
 {
+    Lista_p* prod;
     char nome[50];
     int senha;
-    int ext = 0, esc_t, saida = 0, tam_s, esc_a;
+    int ext = 0, esc_t, saida = 0, tam_s, esc_a, esc_in;
 
     //entrar como funcionario ou cliente
     do
@@ -70,17 +75,29 @@ int main()
 
         if(esc_a < 0) printf("Escolha invalida\n");
         else if((esc_t == 2) && (esc_a > 5)) printf("Escolha invalida\n");
-        else if((esc_t == 1) && (esc_a > 4)) printf("Escolha invalida\n");
+        else if((esc_t == 3) && (esc_a > 4)) printf("Escolha invalida\n");
 
         switch(esc_a)
         {
         case 1:
             ext = 1;
             break;
+        case 2:
+            menu_stq(esc_t);
+            scanf("%i", &esc_in);
 
+            if(esc_in < 0) printf("Escolha invalida\n");
+            else if((esc_t == 2) && (esc_in >3)) printf("Escolha invalida");
+            else if((esc_t == 3) && (esc_in >2)) printf("Escolha invalida");
+
+            if(esc_in == 1) break;
+            else if(esc_in == 2) Mostrar_p(prod);
+           /* else if((esc_in == 3) && (esc_t == 2))
+            {
+
+            }*/
         }
     }
-    return 0;
 }
 
 void menu_c()
@@ -90,4 +107,10 @@ void menu_c()
 void menu_f()
 {
     printf("Escolha:\n1)Sair\n2)Acessar o estoque\n3)Acessar os gastos mensais do mercado\n4)Registrar compras\n5)Cadastrar pessoas\n");
+}
+
+void menu_stq(int tipo)
+{
+    printf("Escolha:\n1)Sair\n2)Ver o estoque\n");
+    if(tipo == 1) printf("3)Modificar o estoque\n");
 }
