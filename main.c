@@ -1,152 +1,93 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>//vamos precisar da string.h para realizar comparacoes com os elementos no file.
+#include <string.h>
 
-typedef struct dados
-{
-    char CPF[12], Senha[7];//os dois esta com uma casa a mais por causa do fgets
-} Dados;
-
-void menu(int tipo);
-void menu_estoque(int tipo);
+void menu_c();
+void menu_f();
 
 int main()
 {
-    int esc1, err = 0, err_in = 0, mn, ext = 0, endcod = 0, opc;
-    Dados* info = (Dados *) malloc(sizeof(Dados));
+    char nome[50];
+    int senha;
+    int ext = 0, esc_t, saida = 0, tam_s, esc_a;
 
-    //insercao de dados para entrar no sistema
+    //entrar como funcionario ou cliente
     do
     {
-        /*esse verifica qual opcao o funcionario deseja para o login
-        (vai ser importante durante todo o codigo) entao nao reutilizar a variavel esc1*/
-        do
+        printf("Escolha:\n1)Sair\n2)Entrar como funcionario\n3)Entrar como cliente\n");
+        scanf("%i", &esc_t);
+
+        if((esc_t < 0) || (esc_t > 3)) printf("Escolha invalida\n");
+
+        system("cls");
+        switch(esc_t)
         {
-            printf("Escolha uma opcao para entrar no programa\n(1) - Cliente\n(2) - Funcionario\n(3) - Sair\n");
-            scanf("%i", &esc1);
+        //saida do programa
+        case 1:
+            ext = 1;
+            saida = 1;
+            break;
 
-            if(esc1 < 1 || esc1 > 3)
-            {
-                printf("Escolha invalida.Por favor reensira-a\n");
-            }
+        //Entrar como funcionario
+        case 2:
+
+            //alocar lista de funcionario aqui
+            printf("A SENHA 0000 VOLTA PARA A TELA ANTERIOR\nInsira seu nome e sua senha nessa ordem:\n");
+            setbuf(stdin, NULL);
+            fgets(nome, 50, stdin);
+
+            tam_s = strlen(nome);
+            nome[tam_s - 1] = '\0';
+
+            scanf("%i", &senha);
+            if(senha) saida = 1;
+
+            break;
+
+        //acessar como cliente
+        case 3:
+            //alocar lista de clientes aqui
+            printf("A SENHA 0000 VOLTA PARA A TELA ANTERIOR\nInsira seu nome e sua senha nessa ordem:\n");
+            setbuf(stdin, NULL);
+            fgets(nome, 50, stdin);
+
+            tam_s = strlen(nome);
+            nome[tam_s - 1] = '\0';
+
+            scanf("%i", &senha);
+            if(senha) saida = 1;
+
+            break;
         }
-        while(esc1 < 1 || esc1 > 3) ;
+        system("cls");
+    }while(!saida);
 
-        switch(esc1)
+    while(!ext)
+    {
+        if(esc_t == 2) menu_f();
+        else menu_c();
+        scanf("%i", &esc_a);
+
+        if(esc_a < 0) printf("Escolha invalida\n");
+        else if((esc_t == 2) && (esc_a > 5)) printf("Escolha invalida\n");
+        else if((esc_t == 1) && (esc_a > 4)) printf("Escolha invalida\n");
+
+        switch(esc_a)
         {
         case 1:
-            do
-            {
-                //aqui é onde aloca a lista com os clientes.
-                printf("INSIRA A SENHA 000000 PARA RETORNAR A TELA ANTERIOR\n");
-                printf("Insira seu CPF: ");
-                fflush(stdin);
-                fgets(info->CPF, 12, stdin);
-                printf("Insira sua senha: ");
-                fflush(stdin);
-                fgets(info->Senha, 7, stdin);
-
-                if((strcmp((info ->Senha), "000000")) == 0)
-                {
-                    break;
-                }
-                else
-                {
-                    //passar verificando cada elemento da lista, para verificar se de fato esse usuario existe e fazer ext = 1 se sim;
-                    //para facilitar fazer a funcao de busca retornar os mesmos valores e fazer duas funcoes de busca uma de CPF e uma de Senha
-
-                    ext = 1;
-                }
-            }
-            while(!ext);
-            break;
-        case 2:
-            do
-            {
-                //aqui é onde aloca a lista com os clientes.
-                printf("INSIRA A SENHA 000000 PARA RETORNAR A TELA ANTERIOR\n");
-                printf("Insira seu CPF: ");
-                fflush(stdin);
-                fgets(info->CPF, 12, stdin);
-                printf("Insira sua senha: ");
-                fflush(stdin);
-                fgets(info->Senha, 7, stdin);
-
-                if((strcmp((info ->Senha), "000000")) == 0)
-                {
-                    break;
-                }
-                else
-                {
-                    //passar verificando cada elemento da lista, para verificar se de fato esse usuario existe e fazer ext = 1 se sim;
-                    ext = 1;
-                }
-            }
-            while(!ext);
-            break;
-        case 3:
-            endcod = 1;
             ext = 1;
             break;
+
         }
     }
-    while(!ext);
-
-    while(!endcod){
-        err = 0;
-
-        menu(esc1);
-        scanf("%i", &mn);
-
-        if((mn < 0) || (mn > 9)) err++;
-        else if((esc1 == 1) && ((mn > 3) && (mn < 9))) err++;
-        else if((esc1 == 2) && ((mn > 4) && (mn < 9))) err++;
-
-        if(err) printf("Escolha invalida, refaca-a\n");
-        else
-        {
-            switch(mn)
-            {
-            case 1:
-                do
-                {
-                    err_in = 0;
-                    menu_estoque(esc1);
-                    scanf("%i", &opc);
-                    if((opc < 0) || (opc > 3)) err_in = 1;
-                    if((esc1 == 1) && (opc == 2)) err_in = 1;
-                    if(err_in) printf("Escolha invalida refaca-a");
-                    else
-                    {
-                        if(opc == 1) continue;
-                            //aqui sera chamado uma funcao de mostrar lista
-                        else if(opc == 2) continue;
-                            //mostra a lista e depois permite modificar, **MELHOR SER INSERCAO POR CHAVE, COMO CODIGO DO PRODUTO**
-                        else break;
-                    }
-                }while(1);
-                break;
-            case 9:
-                endcod = 1;
-            }
-        }
-    }
-
+    return 0;
 }
 
-void menu(int tipo)
+void menu_c()
 {
-    printf("Escolha uma opcao:\n\n");
-    printf("1) Acessar o estoque\n2) Acessar o gasto\n3) Acessar a area de compra\n");
-    if(tipo == 2) printf("4) Cadastrar Clientes ou Funcionarios\n");
-    printf("9) Sair\n");
+    printf("Escolha:\n1)Sair\n2)Acessar o estoque\n3)Acessar seus gastos mensais\n4)Comprar produtos\n");
 }
-
-void menu_estoque(int tipo)
+void menu_f()
 {
-    printf("Escolha uma opcao:\n");
-    printf("1) Mostrar o estoque\n");
-    if(tipo == 2) printf("2) Modificar o estoque\n");
-    printf("3) Sair\n");
+    printf("Escolha:\n1)Sair\n2)Acessar o estoque\n3)Acessar os gastos mensais do mercado\n4)Registrar compras\n5)Cadastrar pessoas\n");
 }
-
