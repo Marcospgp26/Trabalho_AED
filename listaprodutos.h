@@ -3,6 +3,7 @@
 
 typedef struct produto
 {
+    char nome[50];
     char codigo[10];
     char tipo[50];
     int quantidade;
