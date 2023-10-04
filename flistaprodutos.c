@@ -75,30 +75,6 @@ int Remover_inicio_p(Lista_p *l)
 }
 
 //===================================================================================================================================================
-int Remover_fim_p(Lista_p *l, Produto it)
-{
-    if(l == NULL) return 2;
-    if(ListaVazia_p(l) == 0) return 1;
-    No_p* n = l->inicio;
-    No_p* aux = NULL;
-
-    while(n->prox != NULL)
-    {
-        aux = n;
-        n = n->prox;
-    }
-
-    if(aux == NULL)
-    {
-        l->inicio = NULL;
-    }
-    else
-    {
-        aux->prox = NULL;
-    }
-    free(n);
-    return 0;
-}
 
 int MostraOcorrencia_p(Lista_p *l, Produto it)
 {
