@@ -91,7 +91,7 @@ int main()
             else if((esc_t == 3) && (esc_in >2)) printf("Escolha invalida");
 
             if(esc_in == 1) break;
-            else if(esc_in == 2) Mostrar_p(prod);
+            //else if(esc_in == 2) Mostrar_p(prod);
            /* else if((esc_in == 3) && (esc_t == 2))
             {
 
