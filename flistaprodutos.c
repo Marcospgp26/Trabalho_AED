@@ -86,12 +86,13 @@ int MostraOcorrencia_p(Lista_p *l, Produto it)
 
     while(n != NULL)
     {
-        a = strcmp((n->valor.nome), (n->valor.nome));
-        b = strcmp((n->valor.codigo), (n->valor.codigo));
+        a = strcmp((n->valor.nome), (it.nome));
+        b = strcmp((n->valor.codigo), (it.codigo));
         if((a == 0) && (b == 0))
         {
             return 0;
         }
+        n = n->prox;
     }
     return 3;
 }
