@@ -11,10 +11,11 @@ void menu_stq(int tipo);
 
 int main()
 {
-    Lista_p* prod;
+    Lista_p* prod = Criar_p();
+    Produto insere_p;
     char nome[50];
     int senha;
-    int ext = 0, esc_t, saida = 0, tam_s, esc_a, esc_in;
+    int ext = 0, esc_t, saida = 0, tam_s, esc_a, esc_in, verif;
 
     //entrar como funcionario ou cliente
     do
@@ -65,10 +66,12 @@ int main()
             break;
         }
         system("cls");
-    }while(!saida);
+    }
+    while(!saida);
 
     while(!ext)
     {
+        //imprime as informacoes iniciais
         if(esc_t == 2) menu_f();
         else menu_c();
         scanf("%i", &esc_a);
@@ -77,25 +80,78 @@ int main()
         else if((esc_t == 2) && (esc_a > 5)) printf("Escolha invalida\n");
         else if((esc_t == 3) && (esc_a > 4)) printf("Escolha invalida\n");
 
+        system("cls");
         switch(esc_a)
         {
+        //sai do sistema
         case 1:
             ext = 1;
             break;
         case 2:
-            menu_stq(esc_t);
-            scanf("%i", &esc_in);
-
-            if(esc_in < 0) printf("Escolha invalida\n");
-            else if((esc_t == 2) && (esc_in >3)) printf("Escolha invalida");
-            else if((esc_t == 3) && (esc_in >2)) printf("Escolha invalida");
-
-            if(esc_in == 1) break;
-            //else if(esc_in == 2) Mostrar_p(prod);
-           /* else if((esc_in == 3) && (esc_t == 2))
+            //acessa o estoque
+            do
             {
+                menu_stq(esc_t);
+                scanf("%i", &esc_in);
 
-            }*/
+                if(esc_in < 0) printf("Escolha invalida\n");
+                else if((esc_t == 2) && (esc_in >3)) printf("Escolha invalida");
+                else if((esc_t == 3) && (esc_in >4)) printf("Escolha invalida");
+
+                if(esc_in == 2) Mostrar_p(prod);
+                else if(esc_t == 2)
+                {
+                    system("cls");
+                    switch(esc_in)
+                    {
+                    case 3:
+                        setbuf(stdin, NULL);
+                        printf("Insira o nome do produto: ");
+                        fgets(insere_p.nome, 50, stdin);
+                        tam_s = strlen(insere_p.nome);
+                        insere_p.nome[tam_s - 1] = '\0';
+
+                        setbuf(stdin, NULL);
+                        printf("Insira o codigo do produto: ");
+                        fgets(insere_p.codigo, 10, stdin);
+                        tam_s = strlen(insere_p.codigo);
+                        insere_p.codigo[tam_s - 1] = '\0';
+
+                        setbuf(stdin, NULL);
+                        printf("Insira o tipo do produto: ");
+                        fgets(insere_p.tipo, 50, stdin);
+                        tam_s = strlen(insere_p.tipo);
+                        insere_p.tipo[tam_s - 1] = '\0';
+
+                        printf("Insira a quantidade de produtos que vai existir no estoque: ");
+                        scanf("%i", &insere_p.quantidade);
+
+                        printf("Insira o preco do produto: ");
+                        scanf("%f", &insere_p.preco);
+
+                        verif = InsereProduto(prod, insere_p);
+                        if(verif == 0) printf("Produto inserido\n");
+                        else if(verif == 1) printf("O produto ja existe\n");
+                        else printf("Lista nao alocada\n");
+
+                        break;
+                    case 4:
+                        setbuf(stdin, NULL);
+                        printf("Insira o nome do produto: ");
+                        fgets(insere_p.nome, 50, stdin);
+                        tam_s = strlen(insere_p.nome);
+                        insere_p.nome[tam_s - 1] = '\0';
+
+                        verif = RemoveProduto(prod, insere_p);
+                        if(verif == 0) printf("Feito\n");
+                        else if(verif == 2) printf("Lista nao alocada\n");
+                        else if(verif == 1) printf("Lista vazia\n");
+                        else printf("Produto nao encontrado\n");
+                        break;
+
+                    }
+                }
+            }while(esc_in != 1);
         }
     }
 }
@@ -111,6 +167,6 @@ void menu_f()
 
 void menu_stq(int tipo)
 {
-    printf("Escolha:\n1)Sair\n2)Ver o estoque\n");
-    if(tipo == 1) printf("3)Modificar o estoque\n");
+    printf("Escolha:\n1)Voltar para a tela anterior\n2)Ver o estoque\n");
+    if(tipo == 2) printf("3)Inserir Produto\n4)Remover Produto\n");
 }

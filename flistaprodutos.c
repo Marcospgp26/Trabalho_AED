@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "listaprodutos.h"
 
 typedef struct no_p
@@ -16,7 +17,7 @@ typedef struct lista_p
 Lista_p* Criar_p()
 {
     Lista_p *l = (Lista_p*) malloc(sizeof(Lista_p));
-    if(l != NULL) l->inicio = NULL;
+    l->inicio = NULL;
     return l;
 }
 
@@ -38,7 +39,7 @@ void Mostrar_p(Lista_p* l)
 int ListaVazia_p(Lista_p *l)
 {
     if(l == NULL) return 2;
-    if(l ->inicio = NULL) return 0;
+    if(l->inicio == NULL) return 0;
     return 1;
 }
 
@@ -46,7 +47,6 @@ int Inserir_inicio_p(Lista_p *l, Produto it)
 {
     if(l == NULL) return 2;
 
-    No_p* aux = l->inicio;
     No_p* n = (No_p*) malloc(sizeof(No_p));
     n->valor = it;
 
@@ -99,8 +99,9 @@ int MostraOcorrencia_p(Lista_p *l, Produto it)
 int InsereProduto(Lista_p *l, Produto it)
 {
     if(l == NULL) return 2;
-    if(MostraOcorrencia_p(l, it) == 0) return 3;
-    if(ListaVazia_p(l) == 0) return Inserir_inicio_p(l, it);
+    if(ListaVazia_p(l) == 0)
+        return Inserir_inicio_p(l, it);
+    if(MostraOcorrencia_p(l, it) == 0) return 1;
 
     No_p* aux = l->inicio;
     No_p* n = (No_p*) malloc(sizeof(No_p));
@@ -145,5 +146,3 @@ int RemoveProduto(Lista_p *l, Produto it)
     }
     return 3;
 }
-
-
