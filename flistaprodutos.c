@@ -51,16 +51,9 @@ int Inserir_inicio_p(Lista_p *l, Produto it)
     No_p* n = (No_p*) malloc(sizeof(No_p));
     n->valor = it;
 
-    if(n == NULL)
-    {
-        n->prox = NULL;
-        l->inicio = n;
-    }
-    else
-    {
-        n->prox = l->inicio;
-        l->inicio = n;
-    }
+    n->prox = l->inicio;
+    l->inicio = n;
+
     return 0;
 }
 

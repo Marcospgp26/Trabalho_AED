@@ -187,7 +187,12 @@ int main()
                         break;
                     }
                 }
-            }while(esc_in != 1);
+            }
+            while(esc_in != 1);
+            break;
+        case 3:
+            break;
+
         }
     }
 }
@@ -205,4 +210,10 @@ void menu_stq(int tipo)
 {
     printf("Escolha:\n1)Voltar para a tela anterior\n2)Ver o estoque\n");
     if(tipo == 2) printf("3)Inserir Produto\n4)Remover Produto\n5)Modificar a quantidade de um produto\n6)Modificar o preco de um produto\n");
+}
+
+void menu_gst(int tipo)
+{
+    printf("Escolha:\n");
+    if(tipo == 3) printf("2)Acessar os seus gastos\n");
 }
