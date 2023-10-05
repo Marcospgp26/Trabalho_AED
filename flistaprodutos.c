@@ -26,6 +26,7 @@ void Mostrar_p(Lista_p* l)
     if(l != NULL)
     {
         No_p* n = l->inicio;
+        printf("NOME | CODIGO | TIPO | QUANTIDADE | PRECO |");
         printf("[");
         while(n != NULL)
         {
@@ -100,20 +101,31 @@ int MostraOcorrencia_p(Lista_p *l, Produto it)
 int InsereProduto(Lista_p *l, Produto it)
 {
     if(l == NULL) return 2;
+    if(MostraOcorrencia_p(l, it) == 0) return 1;
     if(ListaVazia_p(l) == 0)
         return Inserir_inicio_p(l, it);
-    if(MostraOcorrencia_p(l, it) == 0) return 1;
 
     No_p* aux = l->inicio;
+    No_p* aux2 = NULL;
     No_p* n = (No_p*) malloc(sizeof(No_p));
+    int v;
 
-    while((aux->prox != NULL) || (strcmp((it.nome), aux->prox->valor.nome) < 0))
+    do
     {
+        v = strcmp((aux->valor.nome), (it.nome));
+        if(v > 0)
+            break;
+        aux2 = aux;
         aux = aux->prox;
+    }while(aux != NULL);
+
+    if(aux2 == NULL)
+    {
+        return Inserir_inicio_p(l, it);
     }
 
-    n->prox = aux->prox;
-    aux->prox = n;
+    n->prox = aux2->prox;
+    aux2->prox = n;
     n->valor = it;
     return 0;
 }
@@ -137,12 +149,58 @@ int RemoveProduto(Lista_p *l, Produto it)
             break;
         aux = n;
         n = n->prox;
-    }while(n->prox != NULL);
+    }while(n != NULL);
 
     if(v == 0)
     {
         aux->prox = n->prox;
         free(n);
+        return 0;
+    }
+    return 3;
+}
+
+int ModificarQuantidade(Lista_p *l, Produto it)
+{
+    if(l == NULL) return 2;
+    if(ListaVazia_p(l) == 0) return 1;
+
+    No_p* n= l->inicio;
+    int v;
+    while(n != NULL)
+    {
+        v = strcmp((n->valor.nome), it.nome);
+        if(v == 0)
+            break;
+        n = n->prox;
+    }
+
+    if(v == 0)
+    {
+        n->valor.quantidade = it.quantidade;
+        return 0;
+    }
+    return 3;
+}
+
+int ModificarPreco(Lista_p *l, Produto it)
+{
+    if(l == NULL) return 2;
+    if(ListaVazia_p(l) == 0) return 1;
+
+    No_p* n= l->inicio;
+    int v;
+    while(n != NULL)
+    {
+        v = strcmp((n->valor.nome), it.nome);
+        if(v == 0)
+            break;
+        n = n->prox;
+    }
+
+    if(v == 0)
+    {
+        n->valor.preco = it.preco;
         return 0;
     }
     return 3;

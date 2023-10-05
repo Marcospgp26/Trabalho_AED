@@ -8,6 +8,7 @@ typedef struct produto
     char tipo[50];
     int quantidade;
     float preco;
+    float custo;
 }Produto;
 
 typedef struct lista_p Lista_p;
@@ -22,5 +23,7 @@ int Remover_inicio_p(Lista_p *l);
 int MostraOcorrencia_p(Lista_p *l, Produto it);
 int InsereProduto(Lista_p *l, Produto it);
 int RemoveProduto(Lista_p *l, Produto it);
+int ModificarQuantidade(Lista_p *l, Produto it);
+int ModificarPreco(Lista_p *l, Produto it);
 
 #endif // LISTAPRODUTO_H_INCLUDED
