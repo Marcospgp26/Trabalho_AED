@@ -18,13 +18,13 @@ int Tamanho_c(Lista_c *l);
 
 int Inserir_inicio_c(Lista_c *l, Cliente it);
 int Inserir_fim_c(Lista_c *l, Cliente it);
-int Inserir_posicao_c(Lista_c *l, Cliente it);
+int Inserir_posicao_c(Lista_c *l, Cliente it, int pos);
 
 int Remover_inicio_c(Lista_c *l, Cliente it);
 int Remover_fim_c(Lista_c *l, Cliente it);
-int Remover_posicao_c(Lista_c *l, Cliente it);
+int Remover_posicao_c(Lista_c *l, Cliente it, int pos);
 
 int Buscar_Item_Chave_c(Lista_c *l, Cliente it);
-int Buscar_Posicao_c(Lista_c *l, int pos);
+int Buscar_Posicao_c(Lista_c *l, int pos, Cliente *it);
 
 #endif // LISTACLIENTES_H_INCLUDED
