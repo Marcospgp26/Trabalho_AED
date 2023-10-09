@@ -224,3 +224,26 @@ float verificaGastos(Lista_c *l, int it){
     
     return noLista->valor.gasto;
 }
+
+int aumentaGasto(Lista_c *l, int it, float compra){
+    if(l == NULL){
+        return 1;
+    }
+    
+    if(listaVazia(l) == 0){
+        return 2;
+    }
+    
+    No_c *noLista = l->inicio;
+    
+    while(noLista != NULL){
+        if(noLista->valor.CPF == it){
+            break;
+        }
+        noLista = noLista->prox;
+    }
+    
+    noLista->valor.gasto += compra;
+    
+    return 0;
+}
