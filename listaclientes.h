@@ -27,6 +27,7 @@ int Remover_posicao_c(Lista_c *l, Cliente it, int pos);
 int Buscar_Item_Chave_c(Lista_c *l, Cliente it);
 int Buscar_Posicao_c(Lista_c *l, int pos, Cliente *it);
 
-float verificaGastos(Lista_c *l, Cliente it);
+float verificaGastos(Lista_c *l, int it);
+int aumentaGasto(Lista_c *l, int it, float compra);
 
 #endif // LISTACLIENTES_H_INCLUDED
