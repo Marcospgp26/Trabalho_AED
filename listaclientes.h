@@ -29,5 +29,6 @@ int Buscar_Posicao_c(Lista_c *l, int pos, Cliente *it);
 
 float verificaGastos(Lista_c *l, int it);
 int aumentaGasto(Lista_c *l, int it, float compra);
+int InsereCliente(Lista_c *l, Cliente it);
 
 #endif // LISTACLIENTES_H_INCLUDED

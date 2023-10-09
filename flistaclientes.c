@@ -230,7 +230,7 @@ int aumentaGasto(Lista_c *l, int it, float compra){
         return 1;
     }
     
-    if(listaVazia(l) == 0){
+    if(listaVazia_c(l) == 0){
         return 2;
     }
     
@@ -245,5 +245,31 @@ int aumentaGasto(Lista_c *l, int it, float compra){
     
     noLista->valor.gasto += compra;
     
+    return 0;
+}
+
+int InsereCliente(Lista_c *l, Cliente it)
+{
+    if(l == NULL) return 2;
+    if(MostraOcorrencia_f(l, it) == 0) return 1;
+    if(ListaVazia_c(l) == 0)
+        return Inserir_inicio_c(l, it);
+    No_c* n = (No_c*) malloc(sizeof(No_c));
+    No_c* aux = l->inicio, *aux2 = NULL;
+
+    int v;
+    do
+    {
+        v = strcmp((aux->valor.nome), (it.nome));
+        if(v < 0)
+            break;
+        aux2 = aux;
+        aux = aux->prox;
+    }while(aux != NULL);
+    if(aux2 == NULL)
+        return Inserir_inicio_c(l, it);
+    n->prox = aux2->prox;
+    aux2->prox = n;
+    n->valor = it;
     return 0;
 }
