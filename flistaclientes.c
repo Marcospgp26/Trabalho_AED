@@ -211,3 +211,16 @@ int Buscar_Posicao_c(Lista_c *l, int pos, Cliente *it){
 
     return 0;
 }
+
+float verificaGastos(Lista_c *l, int it){
+    No_c *noLista = l->inicio;
+    
+    while(noLista != NULL){
+        if(noLista->valor.CPF == it){
+            break;
+        }
+        noLista = noLista->prox;
+    }
+    
+    return noLista->valor.gasto;
+}
