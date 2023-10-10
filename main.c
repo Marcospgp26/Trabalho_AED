@@ -1,9 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <conio.h>
 #include "listaclientes.h"
 #include "listafuncionarios.h"
 #include "listaprodutos.h"
+
+#define ENTER 13
+#define TAB 9
+#define BKSP 8
+#define SPACE 32
 
 void menu_c();
 void menu_f();
@@ -14,7 +20,9 @@ int main()
     Lista_p* prod = Criar_p();
     Produto insere_p;
     char nome[50];
-    int senha;
+    char senha[25];
+    char ch;
+    int i = 0;
     int ext = 0, esc_t, saida = 0, tam_s, esc_a, esc_in, verif;
 
     //entrar como funcionario ou cliente
@@ -45,7 +53,31 @@ int main()
             tam_s = strlen(nome);
             nome[tam_s - 1] = '\0';
 
-            scanf("%i", &senha);
+            while(1){
+                ch=getch();
+                if(ch == ENTER){
+                    senha[i] = '\0';
+                    break;
+                }
+                else if(ch == BKSP){
+                    if(i > 0){
+                        i--;
+                        printf("\b \b");
+                    }
+                }
+                else if(ch == TAB || ch == SPACE){
+                    continue;
+                }
+                else{
+                    senha[i] = ch;
+                    i++;
+                    printf("*");
+                }
+
+            }
+
+            printf("%s",senha);
+
             if(senha) saida = 1;
 
             break;
