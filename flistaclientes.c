@@ -90,7 +90,7 @@ int Inserir_fim_c(Lista_c *l, Cliente it){
 int Inserir_posicao_c(Lista_c *l, Cliente it, int pos){
     if (l == NULL) return 2;
     if (pos < 0) return 3;
-    if ((listaVazia(l) == 0)||(pos == 0)){
+    if ((ListaVazia_c(l) == 0)||(pos == 0)){
         return inserirInicio(l,it);
     }
     if(Buscar_Item_Chave_c(l, it) == 0){
@@ -111,7 +111,7 @@ int Inserir_posicao_c(Lista_c *l, Cliente it, int pos){
 
 int Remover_inicio_c(Lista_c *l, Cliente it){
     if(l == NULL) return 2;
-    if(ListaVazia_p(l) == 0) return 1;
+    if(ListaVazia_c(l) == 0) return 1;
 
     No_c* n = l->inicio;
     l->inicio = n->prox;
@@ -122,7 +122,7 @@ int Remover_inicio_c(Lista_c *l, Cliente it){
 int Remover_fim_c(Lista_c *l, Cliente it){
     if (l == NULL)
         return 2;
-    if (listaVazia(l) == 0)
+    if (ListaVazia_c(l) == 0)
         return 1;
     No_c *noAuxiliar = NULL;
     No_c *noLista = l->inicio;
@@ -141,7 +141,7 @@ int Remover_posicao_c(Lista_c *l, Cliente it, int pos){
         return 2;
     }
 
-    if (listaVazia(l) == 0) {
+    if (ListaVazia_c(l) == 0) {
         return 1;
     }
 
@@ -192,7 +192,7 @@ int Buscar_Item_Chave_c(Lista_c *l, Cliente it){
 int Buscar_Posicao_c(Lista_c *l, int pos, Cliente *it){
     if(l == NULL) return 2;
 
-    if(listaVazia(l) == 0){
+    if(ListaVazia_c(l) == 0){
         return 1;
     }
 

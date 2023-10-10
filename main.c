@@ -6,10 +6,12 @@
 #include "listafuncionarios.h"
 #include "listaprodutos.h"
 
-#define ENTER 13
+#define ENTER 13            
 #define TAB 9
 #define BKSP 8
 #define SPACE 32
+
+//define usado para definir códigos ASCII utilizados ao longo do código
 
 void menu_c();
 void menu_f();
@@ -20,7 +22,8 @@ int main()
     Lista_p* prod = Criar_p();
     Produto insere_p;
     char nome[50];
-    char senha[25];
+    char senhaaux[25];
+    int senha;
     char ch;
     int i = 0;
     int ext = 0, esc_t, saida = 0, tam_s, esc_a, esc_in, verif;
@@ -56,7 +59,7 @@ int main()
             while(1){
                 ch=getch();
                 if(ch == ENTER){
-                    senha[i] = '\0';
+                    senhaaux[i] = '\0';
                     break;
                 }
                 else if(ch == BKSP){
@@ -69,14 +72,15 @@ int main()
                     continue;
                 }
                 else{
-                    senha[i] = ch;
+                    senhaaux[i] = ch;
                     i++;
                     printf("*");
                 }
+                //o intuito desse while é, ao inserir a senha, o usuario ver apenas asteriscos por motivos de segurança
 
             }
 
-            printf("%s",senha);
+            senha = atoi(senhaaux);  //essa função converte uma string em número inteiro, pois no código a senha é interpretada como int
 
             if(senha) saida = 1;
 
