@@ -25,7 +25,6 @@ int main()
     char senhaaux[25];
     int senha;
     char ch;
-    int i = 0;
     int ext = 0, esc_t, saida = 0, tam_s, esc_a, esc_in, verif;
 
     //entrar como funcionario ou cliente
@@ -55,6 +54,8 @@ int main()
 
             tam_s = strlen(nome);
             nome[tam_s - 1] = '\0';
+
+            int i = 0;
 
             while(1){
                 ch=getch();
@@ -96,7 +97,32 @@ int main()
             tam_s = strlen(nome);
             nome[tam_s - 1] = '\0';
 
-            scanf("%i", &senha);
+            int j = 0;
+
+            while(1){
+                ch = getch();
+                if(ch == ENTER){
+                    senhaaux[j] = '\0';
+                    break;
+                }
+                else if(ch == BKSP){
+                    if(j > 0){
+                        j--;
+                        printf("\b \b");
+                    }
+                }
+                else if(ch == TAB || ch == SPACE){
+                    continue;
+                }
+                else{
+                    senhaaux[j] = ch;
+                    j++;
+                    printf("*");
+                }
+            }
+
+            senha = atoi(senhaaux);
+
             if(senha) saida = 1;
 
             break;
