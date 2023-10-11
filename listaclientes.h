@@ -20,8 +20,8 @@ int Inserir_inicio_c(Lista_c *l, Cliente it);
 int Inserir_fim_c(Lista_c *l, Cliente it);
 int Inserir_posicao_c(Lista_c *l, Cliente it, int pos);
 
-int Remover_inicio_c(Lista_c *l, Cliente it);
-int Remover_fim_c(Lista_c *l, Cliente it);
+int Remover_inicio_c(Lista_c *l);
+int Remover_fim_c(Lista_c *l);
 int Remover_posicao_c(Lista_c *l, Cliente it, int pos);
 
 int Buscar_Item_Chave_c(Lista_c *l, Cliente it);

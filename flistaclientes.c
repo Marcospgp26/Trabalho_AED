@@ -70,8 +70,8 @@ int Inserir_inicio_c(Lista_c *l, Cliente it){
 int Inserir_fim_c(Lista_c *l, Cliente it){
     if (l == NULL)
     return 2;
-    if (listaVazia(l) == 0){
-        return inserirInicio(l,it);
+    if (ListaVazia_c(l) == 0){
+        return Inserir_inicio_c(l,it);
     }
     if(Buscar_Item_Chave_c(l, it) == 0){
         return 3;
@@ -91,7 +91,7 @@ int Inserir_posicao_c(Lista_c *l, Cliente it, int pos){
     if (l == NULL) return 2;
     if (pos < 0) return 3;
     if ((ListaVazia_c(l) == 0)||(pos == 0)){
-        return inserirInicio(l,it);
+        return Inserir_inicio_c(l,it);
     }
     if(Buscar_Item_Chave_c(l, it) == 0){
         return 4;
@@ -109,7 +109,7 @@ int Inserir_posicao_c(Lista_c *l, Cliente it, int pos){
     return 0;
 }
 
-int Remover_inicio_c(Lista_c *l, Cliente it){
+int Remover_inicio_c(Lista_c *l){
     if(l == NULL) return 2;
     if(ListaVazia_c(l) == 0) return 1;
 
@@ -119,7 +119,7 @@ int Remover_inicio_c(Lista_c *l, Cliente it){
     return 0;
 }
 
-int Remover_fim_c(Lista_c *l, Cliente it){
+int Remover_fim_c(Lista_c *l){
     if (l == NULL)
         return 2;
     if (ListaVazia_c(l) == 0)
@@ -147,7 +147,7 @@ int Remover_posicao_c(Lista_c *l, Cliente it, int pos){
 
     if (pos == 0) {
         
-        return removerInicio(l);
+        return Remover_inicio_c(l);
     }
 
     No_c *noAux = NULL;
@@ -214,9 +214,11 @@ int Buscar_Posicao_c(Lista_c *l, int pos, Cliente *it){
 
 float verificaGastos(Lista_c *l, int it){
     No_c *noLista = l->inicio;
+    int CPF;
     
     while(noLista != NULL){
-        if(noLista->valor.CPF == it){
+        CPF = atoi(noLista->valor.CPF);
+        if(CPF == it){
             break;
         }
         noLista = noLista->prox;
@@ -230,14 +232,16 @@ int aumentaGasto(Lista_c *l, int it, float compra){
         return 1;
     }
     
-    if(listaVazia_c(l) == 0){
+    if(ListaVazia_c(l) == 0){
         return 2;
     }
     
     No_c *noLista = l->inicio;
+    int CPF;
     
     while(noLista != NULL){
-        if(noLista->valor.CPF == it){
+        CPF = atoi(noLista->valor.CPF);
+        if(CPF == it){
             break;
         }
         noLista = noLista->prox;
@@ -251,7 +255,7 @@ int aumentaGasto(Lista_c *l, int it, float compra){
 int InsereCliente(Lista_c *l, Cliente it)
 {
     if(l == NULL) return 2;
-    if(MostraOcorrencia_f(l, it) == 0) return 1;
+    if(Buscar_Item_Chave_c(l, it) == 0) return 1;
     if(ListaVazia_c(l) == 0)
         return Inserir_inicio_c(l, it);
     No_c* n = (No_c*) malloc(sizeof(No_c));
