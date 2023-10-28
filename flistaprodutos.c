@@ -26,14 +26,12 @@ void Mostrar_p(Lista_p* l)
     if(l != NULL)
     {
         No_p* n = l->inicio;
-        printf("NOME | CODIGO | TIPO | QUANTIDADE | PRECO |");
-        printf("[");
+        printf("NOME | CODIGO | TIPO | QUANTIDADE | PRECO |\n");
         while(n != NULL)
         {
             printf("| %s | %s | %s | %d | %f |\n", n->valor.nome, n->valor.codigo, n->valor.tipo, n->valor.quantidade, n->valor.preco);
             n = n->prox;
         }
-        printf("]");
     }
 }
 
