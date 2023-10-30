@@ -94,10 +94,10 @@ int menu_entrada(Lista_f **func, Lista_c **clien, int *tipo)
             saida_menu = 1;
             break;
         case 2:
-            saida_menu = entrada_funcionario(func);
+            saida_menu = entrada_funcionario(*func);
             break;
         case 3:
-            saida_menu = entrada_cliente(clien);
+            saida_menu = entrada_cliente(*clien);
             break;
         }
         system("pause");
@@ -109,14 +109,23 @@ int menu_entrada(Lista_f **func, Lista_c **clien, int *tipo)
 
 int entrada_funcionario(Lista_f **func)
 {
+
     printf("*****ENTRAR COMO FUNCIONARIO*****\n\n");
     Funcionario entrada;
+
+    Funcionario *entrada = (Funcionario *) malloc (sizeof(Funcionario));
+
     char ch, senhaaux[4];
 
-    printf("INSIRA A SENHA 0000 VOLTA PARA VOLTAR A TELA ANTERIOR\nInsira seu CPF e sua senha nessa ordem:\n");
+    printf("INSIRA A SENHA 0000 VOLTA PARA VOLTAR A TELA ANTERIOR:\n");
+    printf("CPF: ");
     setbuf(stdin, NULL);
     fgets(entrada.CPF, 50, stdin);
 
+
+    fgets(entrada->CPF, 10, stdin);
+    
+    printf("Senha: ");
     int i = 0;
     while(i < 4) //maximo de 4 numeros por senha
     {
@@ -155,8 +164,11 @@ int entrada_funcionario(Lista_f **func)
 
 int entrada_cliente(Lista_c **clien)
 {
+
     printf("*****ENTRAR COMO CLIENTE*****\n\n");
     Cliente entrada;
+
+    Cliente *entrada = (Cliente *) malloc (sizeof(Cliente));
     char ch, senhaaux[4];
 
     printf("INSIRA A SENHA 0000 VOLTA PARA VOLTAR A TELA ANTERIOR\nInsira seu CPF e sua senha nessa ordem:\n");
