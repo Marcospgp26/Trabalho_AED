@@ -29,12 +29,12 @@ int ListaVazia_f(Lista_f *l)
 }
 
 
-int Inserir_inicio_f(Lista_f *l, Funcionario it)
+int Inserir_inicio_f(Lista_f *l, Funcionario *it)
 {
     if(l == NULL) return 2;
     No_f* n = (No_f*) malloc(sizeof(No_f));
 
-    n->valor = it;
+    n->valor = *it;
     n->prox = l->inicio;
     l->inicio = n;
 
@@ -71,7 +71,7 @@ void MostrarDadosPagamento(Lista_f *l)
     }
 }
 
-int MostraOcorrencia_f(Lista_f *l, Funcionario it)
+int MostraOcorrencia_f(Lista_f *l, Funcionario *it)
 {
     if(l == NULL) return 2;
     if(ListaVazia_f(l) == 0) return 1;
@@ -81,7 +81,7 @@ int MostraOcorrencia_f(Lista_f *l, Funcionario it)
 
     while(n != NULL)
     {
-        a = strcmp(n->valor.CPF, it.CPF);
+        a = strcmp(n->valor.CPF, it->CPF);
         if(a == 0)
             return 0;
         n = n->prox;
@@ -89,33 +89,42 @@ int MostraOcorrencia_f(Lista_f *l, Funcionario it)
     return 3;
 }
 
-int InsereFuncionario(Lista_f *l, Funcionario it)
+int InsereFuncionario(Lista_f *l, Funcionario *it)
 {
     if(l == NULL) return 2;
     if(MostraOcorrencia_f(l, it) == 0) return 1;
-    if(ListaVazia_f(l) == 0)
-        return Inserir_inicio_f(l, it);
-    No_f* n = (No_f*) malloc(sizeof(No_f));
-    No_f* aux = l->inicio, *aux2 = NULL;
 
-    int v;
-    do
+    if(ListaVazia_f(l) == 0) return Inserir_inicio_f(l, it); //claro que nesse caso é bem mais simples
+
+    No_f *insere = (No_f*) malloc(sizeof(No_f));
+    No_f *percorre = l->inicio, *aux = NULL;
+    int verif;
+
+    insere->valor = *it;
+
+    while(percorre != NULL)
     {
-        v = strcmp((aux->valor.nome), (it.nome));
-        if(v < 0)
+        verif = strcmp((insere->valor.nome), (it->nome)); //precisamos organizar a lista em ordem alfabetica
+
+        if(verif < 0) //nesse caso ja o que percorre esta exatamente no da frente de onde desejamos colocar
             break;
-        aux2 = aux;
-        aux = aux->prox;
-    }while(aux != NULL);
-    if(aux2 == NULL)
-        return Inserir_inicio_f(l, it);
-    n->prox = aux2->prox;
-    aux2->prox = n;
-    n->valor = it;
+
+        aux = percorre;
+        percorre = percorre->prox; //essas duas linhas se explicam, somente o processo de movimentar os ponteiros péla lista;
+    }
+
+    if(aux == NULL) return Inserir_inicio_f(l, it); //Pode ser um nome tipo Aaron, nunca se sabe
+
+    insere->prox = percorre;
+    aux->prox = insere;//somente inserindo
+
     return 0;
 }
 
-int VerificarSenha(Lista_f *l, Funcionario it)
+
+//acho que pode retirar essa funcao - Marcos
+
+/*int VerificarSenha(Lista_f *l, Funcionario it)
 {
     if(l == NULL) return 2;
     if(ListaVazia_f(l) == 0) return 1;
@@ -134,9 +143,9 @@ int VerificarSenha(Lista_f *l, Funcionario it)
         n = n->prox;
     }
     return 3;
-}
+}*/
 
-int MudaSalarioFuncionario(Lista_f *l, Funcionario it)
+int MudaSalarioFuncionario(Lista_f *l, Funcionario *it)
 {
     if(l == NULL) return 2;
     if(ListaVazia_f(l) == 0) return 1;
@@ -146,20 +155,20 @@ int MudaSalarioFuncionario(Lista_f *l, Funcionario it)
 
     while(n != NULL)
     {
-        a = strcmp((n->valor.CPF), it.CPF);
+        a = strcmp((n->valor.CPF), it->CPF);
         if(a == 0)
         {
-            n->valor.pagamento = it.pagamento;
+            n->valor.pagamento = it->pagamento;
             return 0;
         }
         n = n->prox;
     }
-    return 3;
+    return 1;
 }
 
-int MudaSalarioCargo(Lista_f *l, Funcionario it)
+int MudaSalarioCargo(Lista_f *l, Funcionario *it)
 {
-        if(l == NULL) return 2;
+    if(l == NULL) return 2;
     if(ListaVazia_f(l) == 0) return 1;
 
     No_f* n = l->inicio;
@@ -167,10 +176,10 @@ int MudaSalarioCargo(Lista_f *l, Funcionario it)
 
     while(n != NULL)
     {
-        a = strcmp((n->valor.funcao), it.funcao);
+        a = strcmp((n->valor.funcao), it->funcao);
         if(a == 0)
         {
-            n->valor.pagamento = it.pagamento;
+            n->valor.pagamento = it->pagamento;
             verif = 1;
         }
         n = n->prox;
@@ -178,4 +187,26 @@ int MudaSalarioCargo(Lista_f *l, Funcionario it)
     if(verif) return 0;
 
     return 3;
+}
+
+int MudaCargoFuncionario(Lista_f *l, Funcionario *it)
+{
+    if(l == NULL) return 2;
+    if(ListaVazia_f(l) == 0) return 1;
+
+    No_f *percorre = l->inicio;
+
+    while(percorre != NULL)
+    {
+        if((strcmp(percorre->valor.CPF, it->CPF)) == 0) break; //Chegou no funcionario desejado - Marcos
+
+        percorre = percorre->prox;
+    }
+
+    if(percorre != NULL)
+    {
+        strcat(percorre->valor.funcao, it->funcao); //modifica o cargo
+        return 0;
+    }
+    return 1;
 }

@@ -28,5 +28,6 @@ int InsereFuncionario(Lista_f *l, Funcionario it);
 int VerificarSenha(Lista_f *l, Funcionario it);
 int MudaSalarioFuncionario(Lista_f *l, Funcionario it);
 int MudaSalarioCargo(Lista_f *l, Funcionario it);
+int MudaCargoFuncionario(Lista_f *l, Funcionario *it);
 
 #endif // LISTAFUNCIONARIOS_H_INCLUDED
