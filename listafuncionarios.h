@@ -30,4 +30,9 @@ int MudaSalarioFuncionario(Lista_f *l, Funcionario *it);
 int MudaSalarioCargo(Lista_f *l, Funcionario *it);
 int MudaCargoFuncionario(Lista_f *l, Funcionario *it);
 
+//===================================================================================================================================================
+FILE *FLf_abrir();
+int FLf_carregar(Lista_f *l, FILE *pf);
+int FLf_salvar(Lista_f *l, FILE *pf);
+
 #endif // LISTAFUNCIONARIOS_H_INCLUDED

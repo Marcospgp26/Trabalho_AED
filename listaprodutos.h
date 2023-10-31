@@ -26,4 +26,9 @@ int RemoveProduto(Lista_p *l, Produto it);
 int ModificarQuantidade(Lista_p *l, Produto it);
 int ModificarPreco(Lista_p *l, Produto it);
 
+//===================================================================================================================================================
+FILE *FLp_abrir();
+int FLp_carregar(Lista_p *l, FILE *pp);
+int FLp_salvar(Lista_p *l, FILE *pp);
+
 #endif // LISTAPRODUTO_H_INCLUDED
