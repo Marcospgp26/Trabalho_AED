@@ -94,10 +94,10 @@ int menu_entrada(Lista_f **func, Lista_c **clien, int *tipo)
             saida_menu = 1;
             break;
         case 2:
-            saida_menu = entrada_funcionario(*func);
+            saida_menu = entrada_funcionario(func);
             break;
         case 3:
-            saida_menu = entrada_cliente(*clien);
+            saida_menu = entrada_cliente(clien);
             break;
         }
         system("pause");
@@ -111,7 +111,6 @@ int entrada_funcionario(Lista_f **func)
 {
 
     printf("*****ENTRAR COMO FUNCIONARIO*****\n\n");
-    Funcionario entrada;
 
     Funcionario *entrada = (Funcionario *) malloc (sizeof(Funcionario));
 
@@ -125,15 +124,15 @@ int entrada_funcionario(Lista_f **func)
 
     while(k < 11){
         ch = getch();
-        entrada.CPF[k] = ch;
+        entrada->CPF[k] = ch;
         k++;
         printf("%c",ch);
-    }
+    } //loop para entrada do CPF do funcionario
 
 
 
     
-    printf("Senha: ");
+    printf("\nSenha: ");
     int i = 0;
     while(i < 4) //maximo de 4 numeros por senha
     {
@@ -164,9 +163,9 @@ int entrada_funcionario(Lista_f **func)
         //o intuito desse while é, ao inserir a senha, o usuario ver apenas asteriscos por motivos de segurança
     }
 
-    entrada.senha = atoi(senhaaux);  //essa função converte uma string em número inteiro, pois no código a senha é interpretada como int
+    entrada->senha = atoi(senhaaux);  //essa função converte uma string em número inteiro, pois no código a senha é interpretada como int
 
-    if(entrada.senha) return 1;
+    if(entrada->senha) return 1;
     return 0;
 }
 
@@ -174,23 +173,24 @@ int entrada_cliente(Lista_c **clien)
 {
 
     printf("*****ENTRAR COMO CLIENTE*****\n\n");
-    Cliente entrada;
 
     Cliente *entrada = (Cliente *) malloc (sizeof(Cliente));
     char ch, senhaaux[5];
 
-    printf("INSIRA A SENHA 0000 VOLTA PARA VOLTAR A TELA ANTERIOR\nInsira seu CPF e sua senha nessa ordem:\n");
+    printf("INSIRA A SENHA 0000 VOLTA PARA VOLTAR A TELA ANTERIOR\n");
     setbuf(stdin, NULL);
     
     int k = 0;
 
+    printf("CPF: ");
     while(k < 11){
         ch = getch();
-        entrada.CPF[k] = ch;
+        entrada->CPF[k] = ch;
         k++;
         printf("%c",ch);
-    }
+    } //loop para entrada do CPF do cliente
 
+    printf("\nSenha: ");
     int j = 0;
     while(j < 4) //Maximo de 4 numeros por senha
     {
@@ -220,9 +220,9 @@ int entrada_cliente(Lista_c **clien)
         }
     }
 
-    entrada.senha = atoi(senhaaux);
+    entrada->senha = atoi(senhaaux);
 
-    if(entrada.senha) return 1;
+    if(entrada->senha) return 1;
     return 0;
 }
 
@@ -486,7 +486,7 @@ void Insere_Funcionario_main(Lista_f *func)  //Nesse caso considere que o gerent
     printf("Insira o pagamento: ");
     scanf("%f", &it.pagamento);
 
-    aprova = InsereFuncionario(func, it); //Basciamente essa funcao verifica se o funcionario ja existe pelo CPF e coloca ele em ordem alfabetica - Marcos
+    aprova = InsereFuncionario(func, &it); //Basciamente essa funcao verifica se o funcionario ja existe pelo CPF e coloca ele em ordem alfabetica - Marcos
     if(aprova == 2) printf("Lista nao alocada\n");
     else if(aprova == 1) printf("O funcionario ja existe\n");
     else printf("Funcionario adicionado\n");
@@ -540,7 +540,7 @@ void Modifica_Salario_Func_main(Lista_f *func)
     printf("Insira o novo salario do funcionario: ");
     scanf("%f", &it.pagamento);
 
-    verif = MudaSalarioFuncionario(func, it);
+    verif = MudaSalarioFuncionario(func, &it);
 
     if(verif == 2) printf("Lista nao alocada\n");
     else if(verif == 1) printf("Funcionario nao encontrado\n");
