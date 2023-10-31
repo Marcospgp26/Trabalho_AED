@@ -115,7 +115,7 @@ int entrada_funcionario(Lista_f **func)
 
     Funcionario *entrada = (Funcionario *) malloc (sizeof(Funcionario));
 
-    char ch, senhaaux[4];
+    char ch, senhaaux[5];
 
     printf("INSIRA A SENHA 0000 VOLTA PARA VOLTAR A TELA ANTERIOR:\n");
     printf("CPF: ");
@@ -169,7 +169,7 @@ int entrada_cliente(Lista_c **clien)
     Cliente entrada;
 
     Cliente *entrada = (Cliente *) malloc (sizeof(Cliente));
-    char ch, senhaaux[4];
+    char ch, senhaaux[5];
 
     printf("INSIRA A SENHA 0000 VOLTA PARA VOLTAR A TELA ANTERIOR\nInsira seu CPF e sua senha nessa ordem:\n");
     setbuf(stdin, NULL);
