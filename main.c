@@ -120,10 +120,18 @@ int entrada_funcionario(Lista_f **func)
     printf("INSIRA A SENHA 0000 VOLTA PARA VOLTAR A TELA ANTERIOR:\n");
     printf("CPF: ");
     setbuf(stdin, NULL);
-    fgets(entrada.CPF, 50, stdin);
+    
+    int k = 0;
+
+    while(k < 11){
+        ch = getch();
+        entrada.CPF[k] = ch;
+        k++;
+        printf("%c",ch);
+    }
 
 
-    fgets(entrada->CPF, 10, stdin);
+
     
     printf("Senha: ");
     int i = 0;
@@ -173,7 +181,15 @@ int entrada_cliente(Lista_c **clien)
 
     printf("INSIRA A SENHA 0000 VOLTA PARA VOLTAR A TELA ANTERIOR\nInsira seu CPF e sua senha nessa ordem:\n");
     setbuf(stdin, NULL);
-    fgets(entrada.CPF, 50, stdin);
+    
+    int k = 0;
+
+    while(k < 11){
+        ch = getch();
+        entrada.CPF[k] = ch;
+        k++;
+        printf("%c",ch);
+    }
 
     int j = 0;
     while(j < 4) //Maximo de 4 numeros por senha
@@ -470,7 +486,7 @@ void Insere_Funcionario_main(Lista_f *func)  //Nesse caso considere que o gerent
     printf("Insira o pagamento: ");
     scanf("%f", &it.pagamento);
 
-    aprova = InsereFuncionario(func, &it); //Basciamente essa funcao verifica se o funcionario ja existe pelo CPF e coloca ele em ordem alfabetica - Marcos
+    aprova = InsereFuncionario(func, it); //Basciamente essa funcao verifica se o funcionario ja existe pelo CPF e coloca ele em ordem alfabetica - Marcos
     if(aprova == 2) printf("Lista nao alocada\n");
     else if(aprova == 1) printf("O funcionario ja existe\n");
     else printf("Funcionario adicionado\n");
@@ -524,7 +540,7 @@ void Modifica_Salario_Func_main(Lista_f *func)
     printf("Insira o novo salario do funcionario: ");
     scanf("%f", &it.pagamento);
 
-    verif = MudaSalarioFuncionario(func, &it);
+    verif = MudaSalarioFuncionario(func, it);
 
     if(verif == 2) printf("Lista nao alocada\n");
     else if(verif == 1) printf("Funcionario nao encontrado\n");
