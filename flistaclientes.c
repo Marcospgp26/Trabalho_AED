@@ -277,3 +277,22 @@ int InsereCliente(Lista_c *l, Cliente it)
     n->valor = it;
     return 0;
 }
+
+FILE *FLc_abrir(){
+    FILE *p;
+
+    p = fopen("clientes.txt", "r+"); //assume que o arquivo já existe
+
+    if(p == NULL) {
+        printf("Registro de clientes não foi criado!\nCriando novo arquivo...\n");
+        p = fopen("clientes.txt", "w"); 
+        fclose(p);
+        p = fopen("clientes.txt", "r+");
+        if(p == NULL) {
+            printf("Nao foi possivel acessar o registro de clientes.\n");
+            return 0;
+        } else return p;
+    }
+
+    return p;
+} 

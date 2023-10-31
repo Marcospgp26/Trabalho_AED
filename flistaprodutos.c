@@ -196,3 +196,22 @@ int ModificarPreco(Lista_p *l, Produto it)
     }
     return 3;
 }
+
+FILE *FLp_abrir(){
+    FILE *p;
+
+    p = fopen("produtos.txt", "r+"); //assume que o arquivo já existe
+
+    if(p == NULL) {
+        printf("Registro do estoque nao foi criado!\nCriando novo arquivo...\n");
+        p = fopen("produtos.txt", "w"); 
+        fclose(p);
+        p = fopen("produtos", "r+");
+        if(p == NULL) {
+            printf("Nao foi possivel acessar o registro de produtos.\n");
+            return 0;
+        } else return p;
+    }
+
+    return p;
+} 
