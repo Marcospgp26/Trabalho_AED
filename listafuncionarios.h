@@ -4,7 +4,7 @@
 typedef struct funcionario
 {
     int senha;
-    char CPF[11];
+    char CPF[12];
     char nome[50];
     char funcao[50];
     float pagamento;

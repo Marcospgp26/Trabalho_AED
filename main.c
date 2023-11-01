@@ -162,6 +162,7 @@ int entrada_funcionario(Lista_f **func)
         }
         //o intuito desse while é, ao inserir a senha, o usuario ver apenas asteriscos por motivos de segurança
     }
+    printf("\n");
 
     entrada->senha = atoi(senhaaux);  //essa função converte uma string em número inteiro, pois no código a senha é interpretada como int
 
@@ -184,11 +185,30 @@ int entrada_cliente(Lista_c **clien)
 
     printf("CPF: ");
     while(k < 11){
-        ch = getch();
-        entrada->CPF[k] = ch;
-        k++;
-        printf("%c",ch);
-    } //loop para entrada do CPF do cliente
+            ch = getch();
+            if(ch == ENTER)
+            {
+                entrada->CPF[k] = '\0';
+                break;
+            }
+            else if(ch == BKSP)
+            {
+                if(k > 0)
+                {
+                    k--;
+                    printf("\b \b");
+                }
+            }
+            else if(ch == TAB || ch == SPACE)
+            {
+                continue;
+            }
+            else{
+                entrada->CPF[k] = ch;
+                k++;
+                printf("%c",ch);
+            }
+        }  //loop para entrada do CPF do cliente
 
     printf("\nSenha: ");
     int j = 0;
@@ -219,6 +239,7 @@ int entrada_cliente(Lista_c **clien)
             printf("*");
         }
     }
+    printf("\n");
 
     entrada->senha = atoi(senhaaux);
 
@@ -464,8 +485,37 @@ void Insere_Funcionario_main(Lista_f *func)  //Nesse caso considere que o gerent
         aprova = 0;
         setbuf(stdin, NULL);
         printf("Insira o CPF: "); //O CPF eh algo que por si so eh mto complexo, entao vamos usar uma funcao para verifica-lo (se voce esta testando essa parte isso pode ser um pouco chato, uma dica, use seu proprio CPF ou de alguem que voce conheca)
-        fgets(it.CPF, 12, stdin); //Isso nao permite que \n seja colocado, ate por que eh essencial que as 11 casas estejam ocupadas
+        int k = 0;
+        char ch;
 
+        while(k < 11){
+            ch = getch();
+            if(ch == ENTER)
+            {
+                it.CPF[k] = '\0';
+                break;
+            }
+            else if(ch == BKSP)
+            {
+                if(k > 0)
+                {
+                    k--;
+                    printf("\b \b");
+                }
+            }
+            else if(ch == TAB || ch == SPACE)
+            {
+                continue;
+            }
+            else{
+                it.CPF[k] = ch;
+                k++;
+                printf("%c",ch);
+            }
+        } 
+        printf("\n");
+
+        it.CPF[11] = '\0';
         tam_s = strlen(it.CPF);
         if(tam_s != 11) aprova = 1;
         else if(VerificaCPF(it.CPF, tam_s)) aprova = 1;
@@ -497,13 +547,39 @@ void Muda_Cargo_main(Lista_f *func)
 {
     Funcionario it;
     int verif;
+    char ch;
+    int k = 0;
 
     printf("*****MUDAR CARGO DE UM FUNCIONARIO*****\n\n");
     do
     {
         setbuf(stdin, NULL);
         printf("Insira o CPF do funcionario: ");
-        fgets(it.CPF, 12, stdin);
+        while(k < 11){
+            ch = getch();
+            if(ch == ENTER)
+            {
+                it.CPF[k] = '\0';
+                break;
+            }
+            else if(ch == BKSP)
+            {
+                if(k > 0)
+                {
+                    k--;
+                    printf("\b \b");
+                }
+            }
+            else if(ch == TAB || ch == SPACE)
+            {
+                continue;
+            }
+            else{
+                it.CPF[k] = ch;
+                k++;
+                printf("%c",ch);
+            }
+        } 
         if(strlen(it.CPF) != 11) printf("\nCPF invalido\n");
 
     }
@@ -553,7 +629,7 @@ void Modifica_Salario_Func_main(Lista_f *func)
 //ESSA FUNCAO VERIFICA O CPF - NAO CONFIRMEI SE ELA FUNCIONA PQ SE EU FECHAR ESSE PROJETO ELE NAO ABRE MAIS (CODEBLOCKS), ALGUEM POR FAVOR VERIFICA - Marcos
 int VerificaCPF(char *str, int tam)
 {
-    int i, numeros[11], DV1 = 0, DV2;
+    int i, numeros[11], DV1 = 0, DV2 = 0;
     for(i = 0; i < 11; i++)
     {
         numeros[i] = (((int) str[i]) - 48);
