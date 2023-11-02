@@ -5,8 +5,8 @@ typedef struct funcionario
 {
     int senha;
     char CPF[12];
-    char nome[50];
-    char funcao[50];
+    char nome[51];
+    char funcao[51];
     float pagamento;
 }Funcionario;
 
@@ -29,6 +29,7 @@ int VerificarSenha(Lista_f *l, Funcionario *it);
 int MudaSalarioFuncionario(Lista_f *l, Funcionario *it);
 int MudaSalarioCargo(Lista_f *l, Funcionario *it);
 int MudaCargoFuncionario(Lista_f *l, Funcionario *it);
+int RemoveFuncionario(Lista_f *l, Funcionario *it);
 
 //===================================================================================================================================================
 FILE *FLf_abrir();

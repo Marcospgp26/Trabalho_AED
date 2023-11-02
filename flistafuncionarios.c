@@ -121,30 +121,6 @@ int InsereFuncionario(Lista_f *l, Funcionario *it)
     return 0;
 }
 
-
-//acho que pode retirar essa funcao - Marcos
-
-/*int VerificarSenha(Lista_f *l, Funcionario it)
-{
-    if(l == NULL) return 2;
-    if(ListaVazia_f(l) == 0) return 1;
-
-    No_f* n = l->inicio;
-    int a, b;
-
-    while(n != NULL)
-    {
-        a = strcmp((n->valor.nome), (it.nome));
-        b = strcmp((n->valor.CPF), (it.CPF));
-        if((a == 0) && (b == 0))
-        {
-            return 0;
-        }
-        n = n->prox;
-    }
-    return 3;
-}*/
-
 int MudaSalarioFuncionario(Lista_f *l, Funcionario *it)
 {
     if(l == NULL) return 2;
@@ -186,7 +162,7 @@ int MudaSalarioCargo(Lista_f *l, Funcionario *it)
     }
     if(verif) return 0;
 
-    return 3;
+    return 1;
 }
 
 int MudaCargoFuncionario(Lista_f *l, Funcionario *it)
@@ -211,6 +187,37 @@ int MudaCargoFuncionario(Lista_f *l, Funcionario *it)
     return 1;
 }
 
+int RemoveFuncionario(Lista_f *l, Funcionario *it)
+{
+    if(l == NULL) return 2;
+    if(ListaVazia_f(l) == 0) return 1;
+
+    No_f *n = l->inicio;
+    No_f *aux = NULL;
+
+    if(strcmp(it->CPF, n->valor.CPF) == 0) //verifica o primeiro funcionario (poderia ser verificado depois, mas prefiro assim - Marcos
+        return Remover_inicio_f(l);
+
+    while(n != NULL)
+    {
+        if(strcmp(it->CPF, n->valor.CPF) == 0) //Esse aqui somente procura o funcionario
+        {
+            break;
+        }
+        aux = n;
+        n = n->prox;
+    }
+
+    if(n != NULL) //Se ele nao chegou no fim
+    {
+        aux->prox = n->prox;
+        free(n);
+        return 0;
+    }
+
+    return 1;
+
+}
 FILE *FLf_abrir(){
     FILE *p;
 
@@ -218,7 +225,7 @@ FILE *FLf_abrir(){
 
     if(p == NULL) {
         printf("Registro de funcionarios nao foi criado!\nCriando novo arquivo...\n");
-        p = fopen("funcionarios.txt", "w"); 
+        p = fopen("funcionarios.txt", "w");
         fclose(p);
         p = fopen("funcionarios", "r+");
         if(p == NULL) {
@@ -228,4 +235,4 @@ FILE *FLf_abrir(){
     }
 
     return p;
-} 
+}

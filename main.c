@@ -33,6 +33,8 @@ void Cadastro(Lista_f *func, Lista_c *clien);
 void Insere_Funcionario_main(Lista_f *func);
 void Muda_Cargo_main(Lista_f *func);
 void Modifica_Salario_Func_main(Lista_f *func);
+void Modifica_Salario_Cargo_main(Lista_f *func);
+void Remove_Funcionario_main(Lista_f *func);
 
 int VerificaCPF(char *str, int tam);
 
@@ -79,6 +81,7 @@ int menu_entrada(Lista_f **func, Lista_c **clien, int *tipo)
 {
     int esc_t;
     int saida_completa = 0, saida_menu= 0;
+    system("cls");
     do
     {
         printf("*****SEJA BEM VINDO AO MERCADO BIG BOM*****\n\n");
@@ -119,7 +122,7 @@ int entrada_funcionario(Lista_f **func)
     printf("INSIRA A SENHA 0000 VOLTA PARA VOLTAR A TELA ANTERIOR:\n");
     printf("CPF: ");
     setbuf(stdin, NULL);
-    
+
     int k = 0;
 
     while(k < 11){
@@ -131,7 +134,7 @@ int entrada_funcionario(Lista_f **func)
 
 
 
-    
+
     printf("\nSenha: ");
     int i = 0;
     while(i < 4) //maximo de 4 numeros por senha
@@ -180,7 +183,7 @@ int entrada_cliente(Lista_c **clien)
 
     printf("INSIRA A SENHA 0000 VOLTA PARA VOLTAR A TELA ANTERIOR\n");
     setbuf(stdin, NULL);
-    
+
     int k = 0;
 
     printf("CPF: ");
@@ -447,8 +450,10 @@ void Cadastro(Lista_f *func, Lista_c *clien)
     int esc = 0;
     do
     {
-        printf("Escolha:\n1)Sair\n2)Inserir funcionario\n3)Modificar cargo de funcionario\n4)Modificar salario de funcionario\n5)Modificar salario de um cargo\n6)Remover funcionario\n7)Inserir cliente\n");
+        printf("Escolha:\n1)Sair\n2)Inserir funcionario\n3)Modificar cargo de funcionario\n4)Modificar salario de funcionario\n5)Modificar salario de um cargo\n6)Remover funcionario\n");
         scanf("%i", &esc);
+
+        if((esc < 1) || (esc > 6)) printf("Escolha invalida\n");
 
         system("cls");
         switch(esc)
@@ -461,6 +466,13 @@ void Cadastro(Lista_f *func, Lista_c *clien)
             break;
         case 4:
             Modifica_Salario_Func_main(func);
+            break;
+        case 5:
+            Modifica_Salario_Cargo_main(func);
+            break;
+        case 6:
+            Remove_Funcionario_main(func);
+            break;
 
         }
     }
@@ -484,7 +496,7 @@ void Insere_Funcionario_main(Lista_f *func)  //Nesse caso considere que o gerent
 
         aprova = 0;
         setbuf(stdin, NULL);
-        printf("Insira o CPF: "); //O CPF eh algo que por si so eh mto complexo, entao vamos usar uma funcao para verifica-lo (se voce esta testando essa parte isso pode ser um pouco chato, uma dica, use seu proprio CPF ou de alguem que voce conheca)
+        printf("Insira o CPF: ");
         int k = 0;
         char ch;
 
@@ -512,13 +524,13 @@ void Insere_Funcionario_main(Lista_f *func)  //Nesse caso considere que o gerent
                 k++;
                 printf("%c",ch);
             }
-        } 
+        }
         printf("\n");
 
         it.CPF[11] = '\0';
         tam_s = strlen(it.CPF);
         if(tam_s != 11) aprova = 1;
-        else if(VerificaCPF(it.CPF, tam_s)) aprova = 1;
+        else if(VerificaCPF(it.CPF, tam_s)) aprova = 1; //O CPF eh algo que por si so eh mto complexo, entao vamos usar uma funcao para verifica-lo (se voce esta testando essa parte isso pode ser um pouco chato, uma dica, use seu proprio CPF ou de alguem que voce conheca)
 
         if(aprova) printf("\nCPF Invalido, por favor reensira- o\n\n");
 
@@ -555,6 +567,7 @@ void Muda_Cargo_main(Lista_f *func)
     {
         setbuf(stdin, NULL);
         printf("Insira o CPF do funcionario: ");
+        //Aqui voce insere o CPF para encontrar o funcionario
         while(k < 11){
             ch = getch();
             if(ch == ENTER)
@@ -579,7 +592,7 @@ void Muda_Cargo_main(Lista_f *func)
                 k++;
                 printf("%c",ch);
             }
-        } 
+        }
         if(strlen(it.CPF) != 11) printf("\nCPF invalido\n");
 
     }
@@ -587,7 +600,7 @@ void Muda_Cargo_main(Lista_f *func)
 
     setbuf(stdin, NULL);
     printf("Insira o novo cargo do funcionario: ");
-    fgets(it.funcao, 50, stdin);
+    fgets(it.funcao, 50, stdin); //Insere o novo cargo
 
     verif = MudaCargoFuncionario(func, &it); //Tenta mudar a situacao do funcionario
 
@@ -599,19 +612,55 @@ void Muda_Cargo_main(Lista_f *func)
 void Modifica_Salario_Func_main(Lista_f *func)
 {
     Funcionario it;
-    int verif;
+    int verif, aprova, tam_s;
 
     printf("*****MUDAR SALARIO DE UM FUNCIONARIO*****\n\n");
 
     do
     {
+
+        aprova = 0;
         setbuf(stdin, NULL);
-        printf("Insira o CPF do funcionario: ");
-        fgets(it.CPF, 12, stdin);
-        if(strlen(it.CPF) != 11) printf("\nCPF invalido\n");
+        printf("Insira o CPF: ");
+        int k = 0;
+        char ch;
+
+        while(k < 11){
+            ch = getch();
+            if(ch == ENTER)
+            {
+                it.CPF[k] = '\0';
+                break;
+            }
+            else if(ch == BKSP)
+            {
+                if(k > 0)
+                {
+                    k--;
+                    printf("\b \b");
+                }
+            }
+            else if(ch == TAB || ch == SPACE)
+            {
+                continue;
+            }
+            else{
+                it.CPF[k] = ch;
+                k++;
+                printf("%c",ch);
+            }
+        }
+        printf("\n");
+
+        it.CPF[11] = '\0';
+        tam_s = strlen(it.CPF);
+        if(tam_s != 11) aprova = 1;
+        else if(VerificaCPF(it.CPF, tam_s)) aprova = 1; //O CPF eh algo que por si so eh mto complexo, entao vamos usar uma funcao para verifica-lo (se voce esta testando essa parte isso pode ser um pouco chato, uma dica, use seu proprio CPF ou de alguem que voce conheca)
+
+        if(aprova) printf("\nCPF Invalido, por favor reensira- o\n\n");
 
     }
-    while(strlen(it.CPF) != 11);
+    while(aprova);
 
     printf("Insira o novo salario do funcionario: ");
     scanf("%f", &it.pagamento);
@@ -624,9 +673,88 @@ void Modifica_Salario_Func_main(Lista_f *func)
 
 }
 
+void Modifica_Salario_Cargo_main(Lista_f *func)
+{
+    Funcionario it;
+    int verif;
+
+    printf("*****MUDAR SALARIO DE UM CARGO*****\n\n");
+
+    printf("Insira o cargo: ");
+    fgets(it.funcao, 50, stdin);
+
+    printf("Insira o novo salario: ");
+    scanf("%f", &it.pagamento);
+
+    verif = MudaSalarioCargo(func, &it);
+
+    if(verif == 0) printf("Salario modificado\n");
+    else if(verif == 2) printf("Sem lista\n");
+    else printf("Cargo nao econtrado\n");
+}
+
+void Remove_Funcionario_main(Lista_f *func)
+{
+    Funcionario it;
+    int verif, aprova, tam_s;
+
+    printf("*****REMOVER UM FUNCIONARIO*****\n\n");
+
+    do
+    {
+
+        aprova = 0;
+        setbuf(stdin, NULL);
+        printf("Insira o CPF: ");
+        int k = 0;
+        char ch;
+
+        while(k < 11){
+            ch = getch();
+            if(ch == ENTER)
+            {
+                it.CPF[k] = '\0';
+                break;
+            }
+            else if(ch == BKSP)
+            {
+                if(k > 0)
+                {
+                    k--;
+                    printf("\b \b");
+                }
+            }
+            else if(ch == TAB || ch == SPACE)
+            {
+                continue;
+            }
+            else{
+                it.CPF[k] = ch;
+                k++;
+                printf("%c",ch);
+            }
+        }
+        printf("\n");
+
+        it.CPF[11] = '\0';
+        tam_s = strlen(it.CPF);
+        if(tam_s != 11) aprova = 1;
+        else if(VerificaCPF(it.CPF, tam_s)) aprova = 1; //O CPF eh algo que por si so eh mto complexo, entao vamos usar uma funcao para verifica-lo (se voce esta testando essa parte isso pode ser um pouco chato, uma dica, use seu proprio CPF ou de alguem que voce conheca)
+        //Tecnicamente essa funcao de verificar o CPF nao he necessaria aqui, mas como aviso eh algo muito bom;
+        if(aprova) printf("\nCPF Invalido, por favor reensira- o\n\n");
+
+    }
+    while(aprova);
+
+    verif = RemoveFuncionario(func, &it); //Procura o funcionario e depois remover ele
+
+    if(verif == 2) printf("Sem Lista\n");
+    else if(verif == 1) printf("Funcionario nao encontrado\n");
+    else printf("Funcionario Removido\n");
 
 
-//ESSA FUNCAO VERIFICA O CPF - NAO CONFIRMEI SE ELA FUNCIONA PQ SE EU FECHAR ESSE PROJETO ELE NAO ABRE MAIS (CODEBLOCKS), ALGUEM POR FAVOR VERIFICA - Marcos
+}
+//FUNCAO DE VERIFICAR CPF
 int VerificaCPF(char *str, int tam)
 {
     int i, numeros[11], DV1 = 0, DV2 = 0;
