@@ -4,7 +4,7 @@
 typedef struct funcionario
 {
     int senha;
-    char CPF[11];
+    char CPF[12];
     char nome[50];
     char funcao[50];
     float pagamento;
@@ -14,7 +14,7 @@ typedef struct lista_f Lista_f;
 
 Lista_f* Criar_f();
 int ListaVazia_f(Lista_f *l);
-int Inserir_inicio_f(Lista_f *l, Funcionario it);
+int Inserir_inicio_f(Lista_f *l, Funcionario *it);
 int Remover_inicio_f(Lista_f *l);
 
 
@@ -23,11 +23,16 @@ int Buscar_Posicao_f(Lista_f *l, int pos);
 
 //===================================================================================================================================================
 void MostrarDadosPagamento(Lista_f *l);
-int MostraOcorrencia_f(Lista_f *l, Funcionario it);
-int InsereFuncionario(Lista_f *l, Funcionario it);
-int VerificarSenha(Lista_f *l, Funcionario it);
-int MudaSalarioFuncionario(Lista_f *l, Funcionario it);
-int MudaSalarioCargo(Lista_f *l, Funcionario it);
+int MostraOcorrencia_f(Lista_f *l, Funcionario *it);
+int InsereFuncionario(Lista_f *l, Funcionario *it);
+int VerificarSenha(Lista_f *l, Funcionario *it);
+int MudaSalarioFuncionario(Lista_f *l, Funcionario *it);
+int MudaSalarioCargo(Lista_f *l, Funcionario *it);
 int MudaCargoFuncionario(Lista_f *l, Funcionario *it);
+
+//===================================================================================================================================================
+FILE *FLf_abrir();
+int FLf_carregar(Lista_f *l, FILE *pf);
+int FLf_salvar(Lista_f *l, FILE *pf);
 
 #endif // LISTAFUNCIONARIOS_H_INCLUDED

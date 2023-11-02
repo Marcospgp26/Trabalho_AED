@@ -31,4 +31,9 @@ float verificaGastos(Lista_c *l, int it);
 int aumentaGasto(Lista_c *l, int it, float compra);
 int InsereCliente(Lista_c *l, Cliente it);
 
+//===================================================================================================================================================
+FILE *FLc_abrir();
+int FLc_carregar(Lista_c *l, FILE *pc);
+int FLc_salvar(Lista_c *l, FILE *pc);
+
 #endif // LISTACLIENTES_H_INCLUDED

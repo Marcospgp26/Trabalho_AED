@@ -210,3 +210,22 @@ int MudaCargoFuncionario(Lista_f *l, Funcionario *it)
     }
     return 1;
 }
+
+FILE *FLf_abrir(){
+    FILE *p;
+
+    p = fopen("funcionarios.txt", "r+"); //assume que o arquivo já existe
+
+    if(p == NULL) {
+        printf("Registro de funcionarios nao foi criado!\nCriando novo arquivo...\n");
+        p = fopen("funcionarios.txt", "w"); 
+        fclose(p);
+        p = fopen("funcionarios", "r+");
+        if(p == NULL) {
+            printf("Nao foi possivel acessar o registro de funcionarios.\n");
+            return 0;
+        } else return p;
+    }
+
+    return p;
+} 
