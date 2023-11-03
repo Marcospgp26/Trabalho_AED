@@ -1,0 +1,35 @@
+#ifndef FUNCOESMAIN_H_INCLUDED
+#define FUNCOESMAIN_H_INCLUDED
+
+int menu_entrada(Lista_f **func, Lista_c **clien, int *tipo,  Cliente *pessoa);
+int entrada_funcionario(Lista_f **func);
+int entrada_cliente(Lista_c **clien,  Cliente *pessoa);
+void menu_escolhas(int tipo, int *retorno, Cliente *pessoa);
+
+//A PARTE DO ESTOQUE
+void menu_estoque(int tipo, Lista_p **l);
+void Inserir_Produtos_main(Lista_p **l);
+void Remover_Produto_main(Lista_p **l);
+void Modifica_Quantidade_main(Lista_p **l);
+void Modifica_Preco_main(Lista_p **l);
+
+//CONTROLE DE GASTOS
+
+//RESERVA DE ALIMENTOS
+void Menu_Caixa(Lista_c *clien, Lista_p *prod, int tipo, Cliente *pessoa);
+void Caixa(Lista_c *clien, Lista_p *prod, Cliente *pessoa);
+void Reservar_Alimentos(Lista_c *clien, Lista_p *prod, Cliente *pessoa);
+void Insere_carro(Lista_c *clien, Lista_p *prod, Cliente *pessoa);
+void Retira_carro(Lista_c *clien, Lista_p *prod, Cliente *pessoa);
+
+
+//INSERCAO
+void Cadastro(Lista_f *func, Lista_c *clien);
+void Insere_Funcionario_main(Lista_f *func);
+void Muda_Cargo_main(Lista_f *func);
+void Modifica_Salario_Func_main(Lista_f *func);
+void Modifica_Salario_Cargo_main(Lista_f *func);
+void Remove_Funcionario_main(Lista_f *func);
+
+int VerificaCPF(char *str, int tam);
+#endif // FUNCOESMAIN_H_INCLUDED

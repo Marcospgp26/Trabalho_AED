@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "listaclientes.h"
+#include "listaprodutos.h"
+#include "pilhacarrinho.h"
 
 typedef struct no_c{
     Cliente valor;
@@ -146,7 +148,7 @@ int Remover_posicao_c(Lista_c *l, Cliente it, int pos){
     }
 
     if (pos == 0) {
-        
+
         return Remover_inicio_c(l);
     }
 
@@ -154,19 +156,19 @@ int Remover_posicao_c(Lista_c *l, Cliente it, int pos){
     No_c *noLista = l->inicio;
     int p = 0;
 
-   
+
     while (p < pos - 1 && noLista->prox != NULL) {
         noAux = noLista;
         p++;
         noLista = noLista->prox;
     }
 
-    
+
     if (noLista->prox == NULL) {
-        return 1; 
+        return 1;
     }
 
-   
+
     noAux = noLista;
     noLista = noLista->prox;
     noAux->prox = noLista->prox;
@@ -215,7 +217,7 @@ int Buscar_Posicao_c(Lista_c *l, int pos, Cliente *it){
 float verificaGastos(Lista_c *l, int it){
     No_c *noLista = l->inicio;
     int CPF;
-    
+
     while(noLista != NULL){
         CPF = atoi(noLista->valor.CPF);
         if(CPF == it){
@@ -223,7 +225,7 @@ float verificaGastos(Lista_c *l, int it){
         }
         noLista = noLista->prox;
     }
-    
+
     return noLista->valor.gasto;
 }
 
@@ -231,14 +233,14 @@ int aumentaGasto(Lista_c *l, int it, float compra){
     if(l == NULL){
         return 1;
     }
-    
+
     if(ListaVazia_c(l) == 0){
         return 2;
     }
-    
+
     No_c *noLista = l->inicio;
     int CPF;
-    
+
     while(noLista != NULL){
         CPF = atoi(noLista->valor.CPF);
         if(CPF == it){
@@ -246,14 +248,13 @@ int aumentaGasto(Lista_c *l, int it, float compra){
         }
         noLista = noLista->prox;
     }
-    
+
     noLista->valor.gasto += compra;
-    
+
     return 0;
 }
 
-int InsereCliente(Lista_c *l, Cliente it)
-{
+int InsereCliente(Lista_c *l, Cliente it){
     if(l == NULL) return 2;
     if(Buscar_Item_Chave_c(l, it) == 0) return 1;
     if(ListaVazia_c(l) == 0)
@@ -278,6 +279,64 @@ int InsereCliente(Lista_c *l, Cliente it)
     return 0;
 }
 
+int modificaHistorico(Lista_c *l, Cliente *pessoa, Produto it){
+    if(l == NULL) return 2;
+    if(ListaVazia_c(l) == 0) return 1;
+
+    No_c *n = l->inicio;
+
+    while(n != NULL)
+    {
+        if(strcmp(n->valor.CPF, pessoa->CPF) == 0)
+        {
+            if(n->valor.historico == NULL) n->valor.historico = CriarPilha();
+            Push(n->valor.historico, it);
+            break;
+        }
+        n = n->prox;
+    }
+    if(n == NULL) return 1;
+    return 0;
+}
+
+int insereCarrinho(Lista_c *l, Cliente *pessoa, Produto it){
+    if(l == NULL) return 2;
+    if(ListaVazia_c(l) == 0) return 1;
+
+    No_c *n = l->inicio;
+
+    while(n != NULL)
+    {
+        if(strcmp(n->valor.CPF, pessoa->CPF) == 0)
+        {
+            if(n->valor.carrinho == NULL) n->valor.carrinho = Criar_p();
+            InsereProduto(n->valor.carrinho, it);
+            break;
+        }
+        n = n->prox;
+    }
+    if(n != NULL) return 0;
+    return 1;
+
+}
+
+int removeCarrinho(Lista_c *l, Cliente *pessoa, Produto *it){
+    if(l == NULL) return 2;
+    if(ListaVazia_c(l) == 0) return 4;
+
+    No_c *n = l->inicio;
+    while(n != NULL)
+    {
+        if(strcmp(n->valor.CPF, pessoa->CPF) == 0)
+        {
+            return ReduzX(n->valor.carrinho, it);
+            break;
+        }
+        n = n->prox;
+    }
+    return 4;
+}
+
 FILE *FLc_abrir(){
     FILE *p;
 
@@ -285,7 +344,7 @@ FILE *FLc_abrir(){
 
     if(p == NULL) {
         printf("Registro de clientes não foi criado!\nCriando novo arquivo...\n");
-        p = fopen("clientes.txt", "w"); 
+        p = fopen("clientes.txt", "w");
         fclose(p);
         p = fopen("clientes.txt", "r+");
         if(p == NULL) {
@@ -295,4 +354,4 @@ FILE *FLc_abrir(){
     }
 
     return p;
-} 
+}

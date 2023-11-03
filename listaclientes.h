@@ -1,12 +1,18 @@
 #ifndef LISTACLIENTES_H_INCLUDED
 #define LISTACLIENTES_H_INCLUDED
 
+typedef struct lista_p Lista_p;
+typedef struct produto Produto;
+typedef struct pilha Pilha;
+
 typedef struct cliente
 {
     int senha;
     char CPF[11];
     char nome[50];
     float gasto;
+    Pilha *historico;
+    Lista_p *carrinho;
 }Cliente;
 
 typedef struct lista_c Lista_c;
@@ -31,6 +37,9 @@ float verificaGastos(Lista_c *l, int it);
 int aumentaGasto(Lista_c *l, int it, float compra);
 int InsereCliente(Lista_c *l, Cliente it);
 
+int modificaHistorico(Lista_c *l, Cliente *pessoa, Produto it);
+int insereCarrinho(Lista_c *l, Cliente *pessoa, Produto it);
+int removeCarrinho(Lista_c *l, Cliente *pessoa, Produto *it);
 //===================================================================================================================================================
 FILE *FLc_abrir();
 int FLc_carregar(Lista_c *l, FILE *pc);

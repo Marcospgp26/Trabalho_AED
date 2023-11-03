@@ -3,9 +3,9 @@
 
 typedef struct produto
 {
-    char nome[50];
-    char codigo[10];
-    char tipo[50];
+    char nome[51];
+    char codigo[11];
+    char tipo[51];
     int quantidade;
     float preco;
     float custo;
@@ -25,7 +25,8 @@ int InsereProduto(Lista_p *l, Produto it);
 int RemoveProduto(Lista_p *l, Produto it);
 int ModificarQuantidade(Lista_p *l, Produto it);
 int ModificarPreco(Lista_p *l, Produto it);
-
+int ReduzX(Lista_p *l, Produto *it);
+int AumentaX(Lista_p *l, Produto it);
 //===================================================================================================================================================
 FILE *FLp_abrir();
 int FLp_carregar(Lista_p *l, FILE *pp);

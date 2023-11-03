@@ -197,6 +197,58 @@ int ModificarPreco(Lista_p *l, Produto it)
     return 3;
 }
 
+int ReduzX(Lista_p *l, Produto *it)
+{
+    if(l == NULL) return 2;
+    if(ListaVazia_p(l) == 0) return 1;
+
+    No_p* n= l->inicio;
+    int v;
+    while(n != NULL)
+    {
+        v = strcmp((n->valor.codigo), it->codigo);
+        if(v == 0)
+            break;
+        n = n->prox;
+    }
+
+    if(n == NULL) return 1;
+
+    if(n->valor.quantidade < it->quantidade) return 3;
+
+    strcpy(it->nome, n->valor.nome);
+    strcpy(it->tipo, n->valor.tipo);
+    it->preco = n->valor.preco;
+    it->custo = 0;
+
+    n->valor.quantidade -= it->quantidade;
+    if(n->valor.quantidade == 0)
+        RemoveProduto(l, n->valor);
+
+    return 0;
+}
+
+int AumentaX(Lista_p *l, Produto it)
+{
+    if(l == NULL) return 2;
+
+    No_p* n= l->inicio;
+    int v;
+
+    while(n != NULL)
+    {
+        v = strcmp((n->valor.codigo), it.codigo);
+        if(v == 0)
+            break;
+        n = n->prox;
+    }
+
+    if(n == NULL) return InsereProduto(l, it);
+    n->valor.quantidade += it.quantidade;
+    return 0;
+
+}
+
 FILE *FLp_abrir(){
     FILE *p;
 
@@ -204,7 +256,7 @@ FILE *FLp_abrir(){
 
     if(p == NULL) {
         printf("Registro do estoque nao foi criado!\nCriando novo arquivo...\n");
-        p = fopen("produtos.txt", "w"); 
+        p = fopen("produtos.txt", "w");
         fclose(p);
         p = fopen("produtos", "r+");
         if(p == NULL) {
@@ -214,4 +266,4 @@ FILE *FLp_abrir(){
     }
 
     return p;
-} 
+}
