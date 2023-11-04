@@ -262,3 +262,37 @@
 
         return 0;
     }
+
+    int FLf_carregar(Lista_f *l, FILE *pf){
+        if(pf == NULL) return 2;
+
+        No_f *noLista = l->inicio;
+
+        //Lista_f *aux = Criar_f();
+        //No_f *noListaAux = aux->inicio;
+
+        if((fscanf(pf, "%i %s %s %s %f\n", &noLista->valor.senha, &noLista->valor.CPF, &noLista->valor.nome, &noLista->valor.funcao, &noLista->valor.pagamento)) != 5) {
+            printf("Nao foi detectado nenhum campo no arquivo, ou houve erro na hora da leitura, para carregar informacoes, primeiro salve alguma coisa no arquivo!\n");
+            return 1;
+        }
+
+        while((fscanf(pf, "%i %s %s %s %f\n", &noLista->valor.senha, &noLista->valor.CPF, &noLista->valor.nome, &noLista->valor.funcao, &noLista->valor.pagamento)) == 5) {
+            noLista = noLista ->prox;
+        }
+
+        return 0;
+    }
+
+    int FLf_salvar(Lista_f *l, FILE *pf){
+        if(pf == NULL) return 2;
+        if(l == NULL) return 1;
+
+        No_f *noLista = l->inicio;
+
+        while(noLista != NULL) {
+            fprintf(pf, "%i %s %s %s %f\n", noLista->valor.senha, noLista->valor.CPF, noLista->valor.nome, noLista->valor.funcao, noLista->valor.pagamento);
+            noLista = noLista->prox;
+        }
+
+        return 0;
+    }

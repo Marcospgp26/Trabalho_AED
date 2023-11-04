@@ -380,3 +380,14 @@ int FLc_fechar(FILE *pc){
 
     return 0;
 }
+
+/*int FLc_carregar(Lista_c *l, FILE *pc){
+    if(pc == NULL) return 1;
+    
+    NoPilha *nop
+    Lista_c *aux = Criar_c();
+    No_c *noLista = l->inicio;
+    No_c *noListaAux = aux->inicio;
+
+    if(fscanf(pc, ""))
+}*/

@@ -292,3 +292,38 @@ int FLp_fechar(FILE *pp){
 
     return 0;
 }
+
+
+int FLp_carregar(Lista_p *l, FILE *pp){
+        if(pp == NULL) return 2;
+
+        No_p *noLista = l->inicio;
+
+        //Lista_f *aux = Criar_f();
+        //No_f *noListaAux = aux->inicio;
+
+        if((fscanf(pp, "%s %s %s %i %f %f\n", &noLista->valor.nome, &noLista->valor.codigo, &noLista->valor.tipo, &noLista->valor.quantidade, &noLista->valor.preco, &noLista->valor.custo)) != 6) {
+            printf("Nao foi detectado nenhum campo no arquivo, ou houve erro na hora da leitura, para carregar informacoes, primeiro salve alguma coisa no arquivo!\n");
+            return 1;
+        }
+
+        while((fscanf(pp, "%s %s %s %i %f %f\n", &noLista->valor.nome, &noLista->valor.codigo, &noLista->valor.tipo, &noLista->valor.quantidade, &noLista->valor.preco, &noLista->valor.custo)) == 6) {
+            noLista = noLista ->prox;
+        }
+
+        return 0;
+    }
+
+int FLp_salvar(Lista_p *l, FILE *pp){
+        if(pp == NULL) return 2;
+        if(l == NULL) return 1;
+
+        No_p *noLista = l->inicio;
+
+        while(noLista != NULL) {
+            fprintf(pp, "%s %s %s %i %f %f\n", noLista->valor.nome, noLista->valor.codigo, noLista->valor.tipo, noLista->valor.quantidade, noLista->valor.preco, noLista->valor.custo);
+            noLista = noLista->prox;
+        }
+
+        return 0;
+    }
