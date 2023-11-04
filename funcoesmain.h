@@ -4,7 +4,7 @@
 int menu_entrada(Lista_f **func, Lista_c **clien, int *tipo,  Cliente *pessoa);
 int entrada_funcionario(Lista_f **func);
 int entrada_cliente(Lista_c **clien,  Cliente *pessoa);
-void menu_escolhas(int tipo, int *retorno, Cliente *pessoa);
+void menu_escolhas(int tipo, int *retorno);
 
 //A PARTE DO ESTOQUE
 void menu_estoque(int tipo, Lista_p **l);
@@ -14,6 +14,8 @@ void Modifica_Quantidade_main(Lista_p **l);
 void Modifica_Preco_main(Lista_p **l);
 
 //CONTROLE DE GASTOS
+void FluxoDeCaixa(Lista_c *clien, Lista_p *prod, Lista_f *func);
+void AcessaGastos(int tipo, Lista_c *clien, Lista_p *prod, Lista_f *func);
 
 //RESERVA DE ALIMENTOS
 void Menu_Caixa(Lista_c *clien, Lista_p *prod, int tipo, Cliente *pessoa);

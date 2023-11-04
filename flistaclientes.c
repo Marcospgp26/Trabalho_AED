@@ -279,6 +279,21 @@ int InsereCliente(Lista_c *l, Cliente it){
     return 0;
 }
 
+float GastoTotalClientes(Lista_c *l){
+    if(l == NULL) return -2;
+    if(ListaVazia_c(l) == 0) return 0;
+
+    No_c *no = l->inicio;
+    float GastoTot = 0;
+
+    while(no != NULL){
+        GastoTot += no->valor.gasto;
+        no = no->prox;
+    }
+
+    return GastoTot;
+}
+
 int modificaHistorico(Lista_c *l, Cliente *pessoa, Produto it){
     if(l == NULL) return 2;
     if(ListaVazia_c(l) == 0) return 1;

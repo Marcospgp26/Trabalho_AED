@@ -27,6 +27,7 @@ int ModificarQuantidade(Lista_p *l, Produto it);
 int ModificarPreco(Lista_p *l, Produto it);
 int ReduzX(Lista_p *l, Produto *it);
 int AumentaX(Lista_p *l, Produto it);
+float GastoTotalProdutos(Lista_p *l);
 //===================================================================================================================================================
 FILE *FLp_abrir();
 int FLp_carregar(Lista_p *l, FILE *pp);

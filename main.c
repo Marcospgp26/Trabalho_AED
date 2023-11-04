@@ -23,7 +23,7 @@ int main()
     {
         //imprime o primeiro menu efetivo do programa
         system("cls");
-        menu_escolhas(esc_t, &esc_a, pessoa);
+        menu_escolhas(esc_t, &esc_a);
         switch(esc_a)
         {
         //sai do sistema
@@ -35,6 +35,7 @@ int main()
             menu_estoque(esc_t, &prod);
             break;
         case 3:
+            AcessaGastos(esc_t,clien,prod,func);
             break;
         case 4:
             Menu_Caixa(clien, prod, esc_t, pessoa);

@@ -219,6 +219,21 @@
 
     }
 
+    float GastoTotalFuncionarios(Lista_f *l){
+        if(l == NULL) return -2;
+        if(ListaVazia_f(l) == 0) return 0;
+
+        No_f *no = l->inicio;
+        float SalarioTot = 0;
+
+        while(no != NULL){
+            SalarioTot += no->valor.pagamento;
+            no = no->prox;
+        }
+
+        return SalarioTot;
+    }
+
     FILE *FLf_abrir(){
         FILE *p;
 

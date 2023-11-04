@@ -190,12 +190,12 @@ int entrada_cliente(Lista_c **clien, Cliente *pessoa)
     return 0;
 }
 
-void menu_escolhas(int tipo, int *retorno,  Cliente *pessoa)
+void menu_escolhas(int tipo, int *retorno)
 {
     // imprime as informações iniciais
     printf("*****MENU DO MERCADO BIG BOM*****\n\n");
     if (tipo == 2)
-        printf("Escolha:\n1)Sair\n2)Acessar o estoque\n3)Acessar os gastos mensais do mercado\n4)Registrar compras\n5)Cadastrar pessoas\n");
+        printf("Escolha:\n1)Sair\n2)Acessar o estoque\n3)Acessar o fluxo de caixa do mercado\n4)Registrar compras\n5)Cadastrar pessoas\n");
     else
         printf("Escolha:\n1)Sair\n2)Acessar o estoque\n3)Acessar seus gastos mensais\n4)Comprar produtos\n");
 
@@ -382,6 +382,32 @@ void Modifica_Preco_main(Lista_p **l)
         printf("Produto nao encontrado\n");
 }
 //==================================================================================================================================================================================================
+
+void FluxoDeCaixa(Lista_c *clien, Lista_p *prod, Lista_f *func){
+    float gastoFunc = GastoTotalFuncionarios(func), gastoClien = GastoTotalClientes(clien), gastoProd = GastoTotalProdutos(prod);
+    float saldo = gastoClien - gastoFunc - gastoProd;
+
+    system("cls");
+    printf("*****FLUXO DE CAIXA*****\n");
+    printf("+ RS%.2f - Receita\n",gastoClien);
+    printf("- RS%.2f - Salarios dos funcionarios\n",gastoFunc);
+    printf("- RS%.2f - Custo do estoque\n",gastoProd);
+    printf("Saldo: RS%.2f\n",saldo);
+
+    system("pause");
+}
+
+void AcessaGastos(int tipo, Lista_c *clien, Lista_p *prod, Lista_f *func){
+    switch(tipo){
+        case 3:
+            break;
+        case 2:
+            FluxoDeCaixa(clien,prod,func);
+            break;
+    }
+}
+
+
 //==================================================================================================================================================================================================
 void Menu_Caixa(Lista_c *clien, Lista_p *prod, int tipo, Cliente *pessoa)
 {

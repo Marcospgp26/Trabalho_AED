@@ -30,6 +30,7 @@ int MudaSalarioFuncionario(Lista_f *l, Funcionario *it);
 int MudaSalarioCargo(Lista_f *l, Funcionario *it);
 int MudaCargoFuncionario(Lista_f *l, Funcionario *it);
 int RemoveFuncionario(Lista_f *l, Funcionario *it);
+float GastoTotalFuncionarios(Lista_f *l);
 
 //===================================================================================================================================================
 FILE *FLf_abrir();

@@ -249,6 +249,21 @@ int AumentaX(Lista_p *l, Produto it)
 
 }
 
+float GastoTotalProdutos(Lista_p *l){
+    if(l == NULL) return -2;
+    if(ListaVazia_p(l) == 0) return 0;
+
+    No_p *no = l->inicio;
+    float CustoTot = 0;
+
+    while(no != NULL){
+        CustoTot += (no->valor.custo * no->valor.quantidade);
+        no = no->prox;
+    }
+
+    return CustoTot;
+}
+
 FILE *FLp_abrir(){
     FILE *p;
 
