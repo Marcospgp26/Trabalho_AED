@@ -267,3 +267,13 @@ FILE *FLp_abrir(){
 
     return p;
 }
+
+int FLp_fechar(FILE *pp){
+    if(pp == NULL) return 1;
+    
+    fclose(pp);
+    free(pp);
+    pp = NULL;
+
+    return 0;
+}

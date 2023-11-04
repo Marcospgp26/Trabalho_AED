@@ -8,6 +8,9 @@
 
 int main()
 {
+    FILE *arqCL = FLc_abrir();
+    FILE *arqFNC = FLf_abrir();
+    FILE *arqESTQ = FLp_abrir();
     Lista_p* prod = Criar_p();
     Lista_c* clien = Criar_c();
     Lista_f* func = Criar_f();

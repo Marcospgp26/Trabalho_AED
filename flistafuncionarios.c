@@ -218,6 +218,7 @@
         return 1;
 
     }
+
     FILE *FLf_abrir(){
         FILE *p;
 
@@ -235,4 +236,14 @@
         }
 
         return p;
+    }
+
+    int FLf_fechar(FILE *pf){
+        if(pf == NULL) return 1;
+    
+        fclose(pf);
+        free(pf);
+        pf = NULL;
+
+        return 0;
     }

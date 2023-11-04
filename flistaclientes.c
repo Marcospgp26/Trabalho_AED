@@ -355,3 +355,13 @@ FILE *FLc_abrir(){
 
     return p;
 }
+
+int FLf_fechar(FILE *pc){
+    if(pc == NULL) return 1;
+    
+    fclose(pc);
+    free(pc);
+    pc = NULL;
+
+    return 0;
+}
