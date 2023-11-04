@@ -356,7 +356,7 @@ FILE *FLc_abrir(){
     return p;
 }
 
-int FLf_fechar(FILE *pc){
+int FLc_fechar(FILE *pc){
     if(pc == NULL) return 1;
     
     fclose(pc);

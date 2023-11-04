@@ -10,7 +10,7 @@
 #define ENTER 13
 #define TAB 9
 #define BKSP 8
-#define SPACE 32
+#define SPACE 32    //codigos ASCII que serao uteis ao decorrer do código
 
 int menu_entrada(Lista_f **func, Lista_c **clien, int *tipo,  Cliente *pessoa)
 {
