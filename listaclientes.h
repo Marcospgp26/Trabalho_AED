@@ -42,7 +42,7 @@ int modificaHistorico(Lista_c *l, Cliente *pessoa, Produto it);
 int insereCarrinho(Lista_c *l, Cliente *pessoa, Produto it);
 int removeCarrinho(Lista_c *l, Cliente *pessoa, Produto *it);
 //===================================================================================================================================================
-FILE *FLc_abrir();
+FILE *FLc_criar();
 int FLc_carregar(Lista_c *l, FILE *pc);
 int FLc_salvar(Lista_c *l, FILE *pc);
 

@@ -264,60 +264,56 @@ float GastoTotalProdutos(Lista_p *l){
     return CustoTot;
 }
 
-FILE *FLp_abrir(){
-    FILE *p;
+FILE *FLp_criar(){
+    FILE *p; 
 
-    p = fopen("produtos.txt", "r+"); //assume que o arquivo já existe
+    
+    printf("Registro do estoque nao foi criado!\nCriando novo arquivo...\n");
+    p = fopen("produtos.txt", "w");
+    fclose(p);
 
-    if(p == NULL) {
-        printf("Registro do estoque nao foi criado!\nCriando novo arquivo...\n");
-        p = fopen("produtos.txt", "w");
-        fclose(p);
-        p = fopen("produtos", "r+");
-        if(p == NULL) {
-            printf("Nao foi possivel acessar o registro de produtos.\n");
-            return 0;
-        } else return p;
-    }
 
     return p;
 }
 
 int FLp_carregar(Lista_p *l, FILE *pp){
-        if(pp == NULL) return 2;
-
+        
+        pp = fopen("produtos.txt", "r");
+        if(pp == NULL){
+            pp = FLp_criar();
+            pp = fopen("produtos.txt", "r");
+        }
         No_p *noLista = l->inicio;
+        Produto it;
 
-
-        if((fscanf(pp, "%s %s %s %i %f %f\n", noLista->valor.nome, noLista->valor.codigo, noLista->valor.tipo, &noLista->valor.quantidade, &noLista->valor.preco, &noLista->valor.custo)) != 6) {
+        if((fscanf(pp, "%[^,],%[^,],%[^,],%i,%f,%f\n", it.nome, it.codigo, it.tipo, &it.quantidade, &it.preco, &it.custo)) != 6) {
             printf("Nao foi detectado nenhum campo no arquivo (produtos), ou houve erro na hora da leitura, para carregar informacoes, primeiro salve alguma coisa no arquivo!\n");
             return 1;
         }
+        InsereProduto(l, it);
 
-        while((fscanf(pp, "%s %s %s %i %f %f\n", noLista->valor.nome, noLista->valor.codigo, noLista->valor.tipo, &noLista->valor.quantidade, &noLista->valor.preco, &noLista->valor.custo)) == 6) {
-            noLista = noLista ->prox;
+        while((fscanf(pp, "%[^,],%[^,],%[^,],%i,%f,%f\n", it.nome, it.codigo, it.tipo, &it.quantidade, &it.preco, &it.custo)) == 6) {
+            InsereProduto(l, it);
+            //noLista = noLista->prox;
         }
+        fclose(pp);
 
         return 0;
     }
 
 int FLp_salvar(Lista_p *l, FILE *pp){
-        if(pp == NULL) return 2;
+
         if(l == NULL) return 1;
 
-        FILE *temp;
-        temp = fopen("temp_produtos.txt", "w");
+        pp = fopen("produtos.txt", "w");
 
         No_p *noLista = l->inicio;
 
         while(noLista != NULL) {
-            fprintf(temp, "%s %s %s %i %f %f\n", noLista->valor.nome, noLista->valor.codigo, noLista->valor.tipo, noLista->valor.quantidade, noLista->valor.preco, noLista->valor.custo);
+            fprintf(pp, "%s,%s,%s,%i,%f,%f\n", noLista->valor.nome, noLista->valor.codigo, noLista->valor.tipo, noLista->valor.quantidade, noLista->valor.preco, noLista->valor.custo);
             noLista = noLista->prox;
         }
-
-        fclose(temp);
-        remove("produtos.txt");
-        rename("temp_produtos.txt", "produtos.txt");
+        fclose(pp);
 
         return 0;
     }

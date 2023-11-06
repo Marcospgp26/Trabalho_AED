@@ -8,14 +8,17 @@
 
 int main()
 {
-    FILE *arqCL = FLc_abrir();
-    FILE *arqFNC = FLf_abrir();
-    FILE *arqESTQ = FLp_abrir();
+    FILE *arqCL = NULL;
+    FILE *arqFNC = NULL;
+    FILE *arqESTQ = NULL;
     Lista_p* prod = Criar_p();
     Lista_c* clien = Criar_c();
     Lista_f* func = Criar_f();
     Cliente* pessoa = NULL;
     int ext = 0, esc_t, esc_a;
+    FLp_carregar(prod, arqESTQ);
+    FLf_carregar(func,arqFNC);
+    FLc_carregar(clien, arqCL);
 
     ext = menu_entrada(&func, &clien, &esc_t, pessoa);
 
@@ -50,9 +53,9 @@ int main()
     FLp_salvar(prod, arqESTQ);
     FLc_salvar(clien, arqCL);
     FLf_salvar(func, arqFNC);
-    fecharF(arqESTQ);
-    fecharF(arqCL);
-    fecharF(arqFNC);
+    //fecharF(arqESTQ);
+    //fecharF(arqCL);
+    //fecharF(arqFNC);
     
     printf("\n");
     system("pause");

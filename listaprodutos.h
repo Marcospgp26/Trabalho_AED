@@ -29,7 +29,7 @@ int ReduzX(Lista_p *l, Produto *it);
 int AumentaX(Lista_p *l, Produto it);
 float GastoTotalProdutos(Lista_p *l);
 //===================================================================================================================================================
-FILE *FLp_abrir();
+FILE *FLp_criar();
 int FLp_carregar(Lista_p *l, FILE *pp);
 int FLp_salvar(Lista_p *l, FILE *pp);
 

@@ -33,7 +33,7 @@ int RemoveFuncionario(Lista_f *l, Funcionario *it);
 float GastoTotalFuncionarios(Lista_f *l);
 
 //===================================================================================================================================================
-FILE *FLf_abrir();
+FILE *FLf_criar();
 int FLf_carregar(Lista_f *l, FILE *pf);
 int FLf_salvar(Lista_f *l, FILE *pf);
 

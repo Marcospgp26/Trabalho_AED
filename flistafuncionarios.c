@@ -253,62 +253,55 @@
         return SalarioTot;
     }
 
-    FILE *FLf_abrir(){
+    FILE *FLf_criar(){
         FILE *p;
 
-        p = fopen("funcionarios.txt", "r+"); //assume que o arquivo já existe
-
-        if(p == NULL) {
-            printf("Registro de funcionarios nao foi criado!\nCriando novo arquivo...\n");
-            p = fopen("funcionarios.txt", "w");
-            fclose(p);
-            p = fopen("funcionarios.txt", "r+");
-            if(p == NULL) {
-                printf("Nao foi possivel acessar o registro de funcionarios.\n");
-                return 0;
-            } else return p;
-        }
+        printf("Registro de funcionarios nao foi criado!\nCriando novo arquivo...\n");
+        system("pause");
+        p = fopen("funcionarios.txt", "w");
+        fclose(p);
 
         return p;
     }
 
     int FLf_carregar(Lista_f *l, FILE *pf){
-        if(pf == NULL) return 2;
+        
+        pf = fopen("funcionarios.txt", "r");
+        if(pf == NULL){
+            pf = FLf_criar();
+            pf = fopen("funcionarios.txt", "r");
+        }
 
         No_f *noLista = l->inicio;
+        Funcionario it;
 
-        //Lista_f *aux = Criar_f();
-        //No_f *noListaAux = aux->inicio;
-
-        if((fscanf(pf, "%i %s %s %s %f\n", &noLista->valor.senha, &noLista->valor.CPF, &noLista->valor.nome, &noLista->valor.funcao, &noLista->valor.pagamento)) != 5) {
+        if((fscanf(pf, "%i,%[^,],%[^,],%[^,],%f\n", &it.senha, it.CPF, it.nome, it.funcao, &it.pagamento)) != 5) {
             printf("Nao foi detectado nenhum campo no arquivo (funcionarios), ou houve erro na hora da leitura, para carregar informacoes, primeiro salve alguma coisa no arquivo!\n");
             return 1;
         }
+        InsereFuncionario(l, &it);
 
-        while((fscanf(pf, "%i %s %s %s %f\n", &noLista->valor.senha, &noLista->valor.CPF, &noLista->valor.nome, &noLista->valor.funcao, &noLista->valor.pagamento)) == 5) {
-            noLista = noLista ->prox;
+        while((fscanf(pf, "%i,%[^,],%[^,],%[^,],%f\n", &it.senha, it.CPF, it.nome, it.funcao, &it.pagamento)) == 5) {
+            InsereFuncionario(l, &it);
         }
 
         return 0;
     }
 
     int FLf_salvar(Lista_f *l, FILE *pf){
-        if(pf == NULL) return 2;
+        
         if(l == NULL) return 1;
 
-        FILE *temp;
-        temp = fopen("temp_funcionarios.txt", "w");
+        pf = fopen("funcionarios.txt", "w");
 
         No_f *noLista = l->inicio;
 
         while(noLista != NULL) {
-            fprintf(temp, "%i %s %s %s %f\n", noLista->valor.senha, noLista->valor.CPF, noLista->valor.nome, noLista->valor.funcao, noLista->valor.pagamento);
+            fprintf(pf, "%i,%s,%s,%s,%f\n", noLista->valor.senha, noLista->valor.CPF, noLista->valor.nome, noLista->valor.funcao, noLista->valor.pagamento);
             noLista = noLista->prox;
         }
 
-        fclose(temp);
-        remove("funcionarios.txt");
-        rename("temp_funcionarios.txt", "funcionarios.txt");
+        fclose(pf);
 
         return 0;
     }

@@ -352,76 +352,70 @@ int removeCarrinho(Lista_c *l, Cliente *pessoa, Produto *it){
     return 4;
 }
 
-FILE *FLc_abrir(){
+FILE *FLc_criar(){
     FILE *p;
 
-    p = fopen("clientes.txt", "r+"); //assume que o arquivo já existe
-
-    if(p == NULL) {
-        printf("Registro de clientes não foi criado!\nCriando novo arquivo...\n");
-        p = fopen("clientes.txt", "w");
-        fclose(p);
-        p = fopen("clientes.txt", "r+");
-        if(p == NULL) {
-            printf("Nao foi possivel acessar o registro de clientes.\n");
-            return 0;
-        } else return p;
-    }
+    printf("Nao foi criado o registro de clientes!\nCriando novo arquivo...");
+    system("pause");
+    p = fopen("clientes.txt", "w");
+    fclose(p);
 
     return p;
 }
 
 int FLc_carregar(Lista_c *l, FILE *pc){
-    if(pc == NULL) return 2;
+    pc = fopen("clientes.txt", "r");
+    if(pc == NULL){
+        pc = FLc_criar();
+        pc = fopen("clientes.txt", "r");
+    }
+
     Pilha *aux = CriarPilha();
     No_c *noLista = l->inicio;
     Produto it;
+    Cliente itc;
 
-    if((fscanf(pc, "%i %s %s %f\n", &noLista->valor.senha, &noLista->valor.CPF, &noLista->valor.nome, &noLista->valor.gasto)) != 4){
+    if((fscanf(pc, "%i,%[^,],%[^,],%f\n", &itc.senha, itc.CPF, itc.nome, &itc.gasto)) != 4){
         printf("Nao foi detectado nenhum campo no arquivo (clientes), ou houve erro na hora da leitura, para carregar informacoes, primeiro salve alguma coisa no arquivo!\n");
         return 1;
     }
+    Inserir_fim_c(l, itc);
 
-    while((fscanf(pc, "%i %s %s %f\n", &noLista->valor.senha, &noLista->valor.CPF, &noLista->valor.nome, &noLista->valor.gasto)) == 4){
-        while((fscanf(pc, "%s %s %s %i %f %f   ", &it.nome, &it.codigo, &it.tipo, &it.quantidade, &it.preco, &it.custo)) == 6){
+    while((fscanf(pc, "%i,%[^,],%[^,],%f\n", &itc.senha, itc.CPF, itc.nome, &itc.gasto)) == 4){
+        while((fscanf(pc, "%[^,],%[^,],%[^,],%i,%f,%f   ", it.nome, it.codigo, it.tipo, &it.quantidade, &it.preco, &it.custo)) == 6){
             Push(aux, it);
+            while(PilhaVazia(aux) != 0){
+                Pop(aux, &it);
+                Push(noLista->valor.historico, it);
+            }
         }
-
-        noLista = noLista->prox;
-    }
-
-    while(PilhaVazia(aux) != 0){
-        Pop(aux, &it);
-        Push(noLista->valor.historico, it);
+        Inserir_fim_c(l, itc);     
     }
     
     return 0;
 }
 
 int FLc_salvar(Lista_c *l, FILE *pc){
-    if(pc == NULL) return 1;
-
-    FILE *temp;
-    temp = fopen("temp_clientes.txt", "w");
    
+    if(l == NULL) return 1;
+
+    pc = fopen("clientes.txt", "w");   
+       
     No_c *noLista = l->inicio;
 
     Produto it;
     
     while(noLista != NULL){
-        fprintf(temp, "%i %s %s %f\n", noLista->valor.senha, noLista->valor.CPF, noLista->valor.nome, noLista->valor.gasto);
+        fprintf(pc, "%i,%s,%s,%f\n", noLista->valor.senha, noLista->valor.CPF, noLista->valor.nome, noLista->valor.gasto);
         
         while(noLista->valor.historico != NULL){
             Pop(noLista->valor.historico, &it);
-            fprintf(temp, "%s %s %s %i %f %f   ", it.nome, it.codigo, it.tipo, it.quantidade, it.preco, it.custo);
+            fprintf(pc, "%s,%s,%s,%i,%f,%f   ", it.nome, it.codigo, it.tipo, it.quantidade, it.preco, it.custo);
         }
 
         noLista = noLista->prox;
     }
-
-    fclose(temp);
-    remove("clientes.txt");
-    rename("temp_clientes.txt", "clientes.txt");
-
+    fclose(pc);
+     
     return 0;
 }
