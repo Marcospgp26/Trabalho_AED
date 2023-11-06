@@ -381,13 +381,54 @@ int FLc_fechar(FILE *pc){
     return 0;
 }
 
-/*int FLc_carregar(Lista_c *l, FILE *pc){
-    if(pc == NULL) return 1;
-    
-    NoPilha *nop
-    Lista_c *aux = Criar_c();
+int FLc_carregar(Lista_c *l, FILE *pc){
+    if(pc == NULL) return 2;
+    Lista_p *aux = Criar_p();
     No_c *noLista = l->inicio;
-    No_c *noListaAux = aux->inicio;
+    No_p *noAux = aux->inicio;
+    
+    if((fscanf(pc, "%i %s %s %f %s %s %s %i %f %f\n")) != 10){
+        printf("Nao foi detectado nenhum campo no arquivo, ou houve erro na hora da leitura, para carregar informacoes, primeiro salve alguma coisa no arquivo!\n");
+        return 1;
+    }
 
-    if(fscanf(pc, ""))
-}*/
+    while((fscanf(pc, "%i %s %s %f %s %s %s %i %f %f\n")) == 10){
+        fscanf(pc, "%i %s %s %f %s %s %s %i %f %f\n", &noLista->valor.senha, &noLista->valor.CPF, &noLista->valor.nome, &noLista->valor.gasto, &noAux->valor.nome, &noAux->valor.codigo, &noAux->valor.tipo, &noAux->valor.quantidade, &noAux->valor.preco, &noAux->valor.custo);
+        noLista = noLista->prox;
+        noAux = noAux->prox;
+    }
+
+    noAux = aux->inicio;
+    noLista = l->inicio;
+
+    while(noAux != NULL){
+        push(noLista->valor.historico, noAux->valor);
+        noLista = noLista->prox;
+        noAux = noAux->prox;    
+    }
+
+    return 0;
+}
+
+int FLc_salvar(Lista_c *l, FILE *pc){
+    if(pc == NULL) return 1;
+    Lista_p *aux = Criar_p();
+    No_c *noLista = l->inicio;
+    
+
+    Produto it;
+    while(noLista->valor.historico != NULL){
+        pop(noLista->valor.historico, &it);
+        Inserir_inicio_p(aux, it);
+    }
+
+    No_p *noAux = aux->inicio;
+
+    while(noLista != NULL) {
+        fprintf(pc, "%i %s %s %f %s %s %s %i %f %f\n", noLista->valor.senha, noLista->valor.CPF, noLista->valor.nome, noLista->valor.gasto, noAux->valor.nome, noAux->valor.codigo, noAux->valor.tipo, noAux->valor.quantidade, noAux->valor.preco, noAux->valor.custo);
+        noLista = noLista->prox;
+        noAux = noAux->prox;
+    }
+
+    return 0;
+}
