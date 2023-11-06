@@ -18,7 +18,7 @@ void FluxoDeCaixa(Lista_c *clien, Lista_p *prod, Lista_f *func);
 void AcessaGastos(int tipo, Lista_c *clien, Lista_p *prod, Lista_f *func);
 
 //RESERVA DE ALIMENTOS
-void Menu_Caixa(Lista_c *clien, Lista_p *prod, Cliente *pessoa)
+void Menu_Caixa(Lista_c *clien, Lista_p *prod, Cliente *pessoa);
 void Reservar_Alimentos(Lista_c *clien, Lista_p *prod, Cliente *pessoa);
 void Insere_carro(Lista_c *clien, Lista_p *prod, Cliente *pessoa);
 void Retira_carro(Lista_c *clien, Lista_p *prod, Cliente *pessoa);
@@ -33,4 +33,7 @@ void Modifica_Salario_Cargo_main(Lista_f *func);
 void Remove_Funcionario_main(Lista_f *func);
 
 int VerificaCPF(char *str, int tam);
+
+//FILE
+int fecharF(FILE *p);
 #endif // FUNCOESMAIN_H_INCLUDED

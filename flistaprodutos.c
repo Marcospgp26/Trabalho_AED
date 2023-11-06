@@ -283,17 +283,6 @@ FILE *FLp_abrir(){
     return p;
 }
 
-int FLp_fechar(FILE *pp){
-    if(pp == NULL) return 1;
-    
-    fclose(pp);
-    free(pp);
-    pp = NULL;
-
-    return 0;
-}
-
-
 int FLp_carregar(Lista_p *l, FILE *pp){
         if(pp == NULL) return 2;
 
@@ -302,12 +291,12 @@ int FLp_carregar(Lista_p *l, FILE *pp){
         //Lista_f *aux = Criar_f();
         //No_f *noListaAux = aux->inicio;
 
-        if((fscanf(pp, "%s %s %s %i %f %f\n", &noLista->valor.nome, &noLista->valor.codigo, &noLista->valor.tipo, &noLista->valor.quantidade, &noLista->valor.preco, &noLista->valor.custo)) != 6) {
-            printf("Nao foi detectado nenhum campo no arquivo, ou houve erro na hora da leitura, para carregar informacoes, primeiro salve alguma coisa no arquivo!\n");
+        if((fscanf(pp, "%s %s %s %i %f %f\n", noLista->valor.nome, noLista->valor.codigo, noLista->valor.tipo, &noLista->valor.quantidade, &noLista->valor.preco, &noLista->valor.custo)) != 6) {
+            printf("Nao foi detectado nenhum campo no arquivo (produtos), ou houve erro na hora da leitura, para carregar informacoes, primeiro salve alguma coisa no arquivo!\n");
             return 1;
         }
 
-        while((fscanf(pp, "%s %s %s %i %f %f\n", &noLista->valor.nome, &noLista->valor.codigo, &noLista->valor.tipo, &noLista->valor.quantidade, &noLista->valor.preco, &noLista->valor.custo)) == 6) {
+        while((fscanf(pp, "%s %s %s %i %f %f\n", noLista->valor.nome, noLista->valor.codigo, noLista->valor.tipo, &noLista->valor.quantidade, &noLista->valor.preco, &noLista->valor.custo)) == 6) {
             noLista = noLista ->prox;
         }
 

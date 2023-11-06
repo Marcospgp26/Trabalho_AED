@@ -253,16 +253,6 @@
         return p;
     }
 
-    int FLf_fechar(FILE *pf){
-        if(pf == NULL) return 1;
-    
-        fclose(pf);
-        free(pf);
-        pf = NULL;
-
-        return 0;
-    }
-
     int FLf_carregar(Lista_f *l, FILE *pf){
         if(pf == NULL) return 2;
 
@@ -272,7 +262,7 @@
         //No_f *noListaAux = aux->inicio;
 
         if((fscanf(pf, "%i %s %s %s %f\n", &noLista->valor.senha, &noLista->valor.CPF, &noLista->valor.nome, &noLista->valor.funcao, &noLista->valor.pagamento)) != 5) {
-            printf("Nao foi detectado nenhum campo no arquivo, ou houve erro na hora da leitura, para carregar informacoes, primeiro salve alguma coisa no arquivo!\n");
+            printf("Nao foi detectado nenhum campo no arquivo (funcionarios), ou houve erro na hora da leitura, para carregar informacoes, primeiro salve alguma coisa no arquivo!\n");
             return 1;
         }
 

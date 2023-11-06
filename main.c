@@ -47,6 +47,13 @@ int main()
             Menu_Caixa(clien, prod, esc_t, pessoa);
         }
     }
+    //FLp_salvar(prod, arqESTQ);
+    //FLc_salvar(clien, arqCL);
+    //FLf_salvar(func, arqFNC);
+    fecharF(arqESTQ);
+    fecharF(arqCL);
+    fecharF(arqFNC);
+    
     printf("\n");
     system("pause");
     return 0;

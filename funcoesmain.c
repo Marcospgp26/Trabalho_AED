@@ -965,3 +965,13 @@ int VerificaCPF(char *str, int tam)
 
     return 0;
 }
+
+int fecharF(FILE *p){
+        if(p == NULL) return 1;
+    
+        fclose(p);
+        free(p);
+        p = NULL;
+
+        return 0;
+    }

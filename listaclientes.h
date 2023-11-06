@@ -45,6 +45,5 @@ int removeCarrinho(Lista_c *l, Cliente *pessoa, Produto *it);
 FILE *FLc_abrir();
 int FLc_carregar(Lista_c *l, FILE *pc);
 int FLc_salvar(Lista_c *l, FILE *pc);
-int FLc_fechar(FILE *pc);
 
 #endif // LISTACLIENTES_H_INCLUDED
