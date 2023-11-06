@@ -195,7 +195,7 @@ void menu_escolhas(int tipo, int *retorno)
     // imprime as informações iniciais
     printf("*****MENU DO MERCADO BIG BOM*****\n\n");
     if (tipo == 2)
-        printf("Escolha:\n1)Sair\n2)Acessar o estoque\n3)Acessar o fluxo de caixa do mercado\n4)Registrar compras\n5)Cadastrar pessoas\n");
+        printf("Escolha:\n1)Sair\n2)Acessar o estoque\n3)Acessar o fluxo de caixa do mercado\n4)Modificar dados de funcionarios\n");
     else
         printf("Escolha:\n1)Sair\n2)Acessar o estoque\n3)Acessar seus gastos mensais\n4)Comprar produtos\n");
 
@@ -409,89 +409,21 @@ void AcessaGastos(int tipo, Lista_c *clien, Lista_p *prod, Lista_f *func){
 
 
 //==================================================================================================================================================================================================
-void Menu_Caixa(Lista_c *clien, Lista_p *prod, int tipo, Cliente *pessoa)
+void Menu_Caixa(Lista_c *clien, Lista_p *prod, Cliente *pessoa)
 {
     int esc;
     system("cls");
     while(esc != 1)
     {
         system("cls");
-        if(tipo == 2) printf("*****PASSAR PRODUTOS*****\n\n");
-        else printf("*****RESERVAR PRODUTOS *****\n\n");
+        printf("*****RESERVAR PRODUTOS *****\n\n");
 
         printf("Escolha uma opcao\n1)Sair\n");
-        if(tipo == 2) printf("2)Registrar produtos do Cliente\n");
-        else printf("2)Reservar produtos\n");
+        printf("2)Reservar produtos\n");
 
         scanf("%i", &esc);
-        if((tipo == 2 ) && (esc == 2)) Caixa(clien, prod, pessoa);
-        else if((tipo == 3) && (esc == 2)) Reservar_Alimentos(clien, prod, pessoa);
+        if(esc == 2) Reservar_Alimentos(clien, prod, pessoa);
     }
-
-}
-
-void Caixa(Lista_c *clien, Lista_p *prod, Cliente *pessoa)
-{
-    int aprova, tam_s, esc = 0;
-    char ch;
-
-    do
-    {
-
-        aprova = 0;
-        setbuf(stdin, NULL);
-        printf("CPF: ");
-        int k = 0;
-
-        while(k < 11)
-        {
-            ch = getch();
-            if(ch == ENTER)
-            {
-                pessoa->CPF[k] = '\0';
-                break;
-            }
-            else if(ch == BKSP)
-            {
-                if(k > 0)
-                {
-                    k--;
-                    printf("\b \b");
-                }
-            }
-            else if(ch == TAB || ch == SPACE)
-            {
-                continue;
-            }
-            else
-            {
-                pessoa->CPF[k] = ch;
-                k++;
-                printf("%c",ch);
-            }
-        }
-        printf("\n");
-
-        pessoa->CPF[11] = '\0';
-        tam_s = strlen(pessoa->CPF);
-        if(tam_s != 11) aprova = 1;
-        else if(VerificaCPF(pessoa->CPF, tam_s)) aprova = 1; //O CPF eh algo que por si so eh mto complexo, entao vamos usar uma funcao para verifica-lo (se voce esta testando essa parte isso pode ser um pouco chato, uma dica, use seu proprio CPF ou de alguem que voce conheca)
-
-        if(aprova) printf("\nCPF Invalido, por favor reensira- o\n\n");
-
-    }while(aprova);
-
-    do
-    {
-        system("cls");
-        printf("Escolha:\n1)Sair\n2)Passar o produto no caixa\n3)Remover Produto\n");
-        if(esc == 2) Insere_carro(clien, prod, pessoa);
-        else if(esc == 3) Retira_carro(clien, prod, pessoa);
-        system("pause");
-
-    }while(esc != 1);
-
-    printf("*****OBRIGADO PELA COMPRA*****");
 
 }
 

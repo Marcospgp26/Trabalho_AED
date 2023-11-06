@@ -37,13 +37,17 @@ int main()
         case 3:
             AcessaGastos(esc_t,clien,prod,func);
             break;
-        case 4:
-            Menu_Caixa(clien, prod, esc_t, pessoa);
-            break;
         }
-        if((esc_t == 2) && (esc_a == 5))
+        if((esc_t == 2) && (esc_a == 4))
         {
             Cadastro(func, clien);
         }
+        if((esc_t == 3) && (esc_a == 4))
+        {
+            Menu_Caixa(clien, prod, esc_t, pessoa);
+        }
     }
+    printf("\n");
+    system("pause");
+    return 0;
 }
