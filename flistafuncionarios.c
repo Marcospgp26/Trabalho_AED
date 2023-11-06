@@ -181,7 +181,7 @@
 
         if(percorre != NULL)
         {
-            strcat(percorre->valor.funcao, it->funcao); //modifica o cargo
+            strpy(percorre->valor.funcao, it->funcao); //modifica o cargo
             return 0;
         }
         return 1;
