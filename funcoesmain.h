@@ -6,6 +6,7 @@ int entrada_funcionario(Lista_f **func);
 int entrada_cliente(Lista_c **clien,  Cliente *pessoa);
 void menu_escolhas(int tipo, int *retorno);
 
+
 //A PARTE DO ESTOQUE
 void menu_estoque(int tipo, Lista_p **l);
 void Inserir_Produtos_main(Lista_p **l);

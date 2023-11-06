@@ -55,59 +55,67 @@ int entrada_funcionario(Lista_f **func)
 
     char ch, senhaaux[5];
 
-    printf("INSIRA A SENHA 0000 VOLTA PARA VOLTAR A TELA ANTERIOR:\n");
-    printf("CPF: ");
-    setbuf(stdin, NULL);
+    while(1){
+        printf("INSIRA A SENHA 0000 VOLTA PARA VOLTAR A TELA ANTERIOR:\n");
+        printf("CPF: ");
+        setbuf(stdin, NULL);
 
-    int k = 0;
+        int k = 0;
 
-    while(k < 11)
-    {
-        ch = getch();
-        entrada->CPF[k] = ch;
-        k++;
-        printf("%c",ch);
-    } //loop para entrada do CPF do funcionario
-
-
-
-
-    printf("\nSenha: ");
-    int i = 0;
-    while(i < 4) //maximo de 4 numeros por senha
-    {
-        ch=getch();
-        if(ch == ENTER)
+        while(k < 11)
         {
-            senhaaux[i] = '\0';
-            break;
-        }
-        else if(ch == BKSP)
+            ch = getch();
+            entrada->CPF[k] = ch;
+            k++;
+            printf("%c",ch);
+        } //loop para entrada do CPF do funcionario
+
+
+
+
+        printf("\nSenha: ");
+        int i = 0;
+        while(i < 4) //maximo de 4 numeros por senha
         {
-            if(i > 0)
+            ch=getch();
+            if(ch == ENTER)
             {
-                i--;
-                printf("\b \b");
+                senhaaux[i] = '\0';
+                break;
             }
+            else if(ch == BKSP)
+            {
+                if(i > 0)
+                {
+                    i--;
+                    printf("\b \b");
+                }
+            }
+            else if(ch == TAB || ch == SPACE)
+            {
+                continue;
+            }
+            else
+            {
+                senhaaux[i] = ch;
+                i++;
+                printf("*");
+            }
+            //o intuito desse while é, ao inserir a senha, o usuario ver apenas asteriscos por motivos de segurança
         }
-        else if(ch == TAB || ch == SPACE)
-        {
-            continue;
-        }
-        else
-        {
-            senhaaux[i] = ch;
-            i++;
-            printf("*");
-        }
-        //o intuito desse while é, ao inserir a senha, o usuario ver apenas asteriscos por motivos de segurança
-    }
-    printf("\n");
+        printf("\n");
 
-    entrada->senha = atoi(senhaaux);  //essa função converte uma string em número inteiro, pois no código a senha é interpretada como int
+        entrada->senha = atoi(senhaaux);  //essa função converte uma string em número inteiro, pois no código a senha é interpretada como int
+        entrada->CPF[11] = '\0';
+        int saida = Buscar_Item_Chave_f(*func,*entrada);
 
-    if(entrada->senha) return 1;
-    return 0;
+        if(saida == 0) return 1;
+
+        else{
+            if(entrada->senha == 0) return 0;
+            printf("Dados incorretos/Nao foram encontrados\n");
+        }
+    }    
 }
 
 int entrada_cliente(Lista_c **clien, Cliente *pessoa)
@@ -208,6 +216,8 @@ void menu_escolhas(int tipo, int *retorno)
     else if ((tipo == 3) && (*retorno > 4))
         printf("Escolha inválida\n");
 }
+
+
 
 //==================================================================================================================================================================================================
 void menu_estoque(int tipo, Lista_p **l)

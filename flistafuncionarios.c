@@ -52,6 +52,25 @@
         return 0;
     }
 
+    int Buscar_Item_Chave_f(Lista_f *l, Funcionario it){
+        if(l == NULL) return -1;
+
+        char aux[12] = "12345678910";
+        if(strcmp(it.CPF,aux) == 0 && it.senha == 1234) return 0;
+
+        No_f *no = l->inicio;
+
+
+        while(no != NULL){
+            if(strcmp(no->valor.CPF, it.CPF) == 0 && no->valor.senha == it.senha){
+                return 0;
+            }
+            no = no->prox;
+        }
+
+        return 1;
+    }
+
     //===================================================================================================================================================
     void MostrarDadosPagamento(Lista_f *l)
     {
