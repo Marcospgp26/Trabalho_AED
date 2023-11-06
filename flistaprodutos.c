@@ -318,12 +318,19 @@ int FLp_salvar(Lista_p *l, FILE *pp){
         if(pp == NULL) return 2;
         if(l == NULL) return 1;
 
+        FILE *temp;
+        temp = fopen("temp_produtos.txt", "w");
+
         No_p *noLista = l->inicio;
 
         while(noLista != NULL) {
-            fprintf(pp, "%s %s %s %i %f %f\n", noLista->valor.nome, noLista->valor.codigo, noLista->valor.tipo, noLista->valor.quantidade, noLista->valor.preco, noLista->valor.custo);
+            fprintf(temp, "%s %s %s %i %f %f\n", noLista->valor.nome, noLista->valor.codigo, noLista->valor.tipo, noLista->valor.quantidade, noLista->valor.preco, noLista->valor.custo);
             noLista = noLista->prox;
         }
+
+        fclose(temp);
+        remove("produtos.txt");
+        rename("temp_produtos.txt", "produtos.txt");
 
         return 0;
     }

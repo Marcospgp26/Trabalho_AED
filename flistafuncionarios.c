@@ -243,7 +243,7 @@
             printf("Registro de funcionarios nao foi criado!\nCriando novo arquivo...\n");
             p = fopen("funcionarios.txt", "w");
             fclose(p);
-            p = fopen("funcionarios", "r+");
+            p = fopen("funcionarios.txt", "r+");
             if(p == NULL) {
                 printf("Nao foi possivel acessar o registro de funcionarios.\n");
                 return 0;
@@ -287,12 +287,19 @@
         if(pf == NULL) return 2;
         if(l == NULL) return 1;
 
+        FILE *temp;
+        temp = fopen("temp_funcionarios.txt", "w");
+
         No_f *noLista = l->inicio;
 
         while(noLista != NULL) {
-            fprintf(pf, "%i %s %s %s %f\n", noLista->valor.senha, noLista->valor.CPF, noLista->valor.nome, noLista->valor.funcao, noLista->valor.pagamento);
+            fprintf(temp, "%i %s %s %s %f\n", noLista->valor.senha, noLista->valor.CPF, noLista->valor.nome, noLista->valor.funcao, noLista->valor.pagamento);
             noLista = noLista->prox;
         }
+
+        fclose(temp);
+        remove("funcionarios.txt");
+        rename("temp_funcionarios.txt", "funcionarios.txt");
 
         return 0;
     }
