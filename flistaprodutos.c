@@ -288,8 +288,6 @@ int FLp_carregar(Lista_p *l, FILE *pp){
 
         No_p *noLista = l->inicio;
 
-        //Lista_f *aux = Criar_f();
-        //No_f *noListaAux = aux->inicio;
 
         if((fscanf(pp, "%s %s %s %i %f %f\n", noLista->valor.nome, noLista->valor.codigo, noLista->valor.tipo, &noLista->valor.quantidade, &noLista->valor.preco, &noLista->valor.custo)) != 6) {
             printf("Nao foi detectado nenhum campo no arquivo (produtos), ou houve erro na hora da leitura, para carregar informacoes, primeiro salve alguma coisa no arquivo!\n");
