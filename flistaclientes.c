@@ -258,42 +258,46 @@ int InsereCliente(Lista_c *l, Cliente it){
     if(l == NULL) return 2;
     if(Buscar_Item_Chave_c(l, it) == 0) return 1;
     if(ListaVazia_c(l) == 0)
-        return Inserir_inicio_c(l, it);
+        return Inserir_inicio_c(l, it); //se vazia insere no inicio
     No_c* n = (No_c*) malloc(sizeof(No_c));
     No_c* aux = l->inicio, *aux2 = NULL;
 
     int v;
     do
     {
-        v = strcmp((aux->valor.nome), (it.nome));
+        v = strcmp((aux->valor.nome), (it.nome)); //compara o nome do ponteiro ao do cliente
         if(v < 0)
-            break;
+            break; //sai do loop
         aux2 = aux;
         aux = aux->prox;
-    }while(aux != NULL);
+    }while(aux != NULL); //percorre ate o fim da lista
     if(aux2 == NULL)
-        return Inserir_inicio_c(l, it);
+        return Inserir_inicio_c(l, it); //nao movimentou
     n->prox = aux2->prox;
     aux2->prox = n;
-    n->valor = it;
+    n->valor = it; //insere o cliente
     return 0;
 }
 
+
+//PARTE ECONOMICA
 float GastoTotalClientes(Lista_c *l){
     if(l == NULL) return -2;
     if(ListaVazia_c(l) == 0) return 0;
 
     No_c *no = l->inicio;
-    float GastoTot = 0;
+    float GastoTot = 0; //cria um float
 
-    while(no != NULL){
-        GastoTot += no->valor.gasto;
+    while(no != NULL){ //vai ate o fim da lisa de clientes
+        GastoTot += no->valor.gasto; //adiciona o gasto de cada cliente
         no = no->prox;
     }
 
-    return GastoTot;
+    return GastoTot; //retorna todos os gastos somados
 }
 
+
+//PARTE DE COMPRAS
 int modificaHistorico(Lista_c *l, Cliente *pessoa, Produto it){
     if(l == NULL) return 2;
     if(ListaVazia_c(l) == 0) return 1;
@@ -302,10 +306,10 @@ int modificaHistorico(Lista_c *l, Cliente *pessoa, Produto it){
 
     while(n != NULL)
     {
-        if(strcmp(n->valor.CPF, pessoa->CPF) == 0)
+        if(strcmp(n->valor.CPF, pessoa->CPF) == 0) //procura o historico da pessoa passada
         {
-            if(n->valor.historico == NULL) n->valor.historico = CriarPilha();
-            Push(n->valor.historico, it);
+            if(n->valor.historico == NULL) n->valor.historico = CriarPilha(); //se nao existir, cria ele
+            Push(n->valor.historico, it); //insere um produto nele
             break;
         }
         n = n->prox;
@@ -320,12 +324,12 @@ int insereCarrinho(Lista_c *l, Cliente *pessoa, Produto it){
 
     No_c *n = l->inicio;
 
-    while(n != NULL)
+    while(n != NULL) //vai ate o fim da lista
     {
-        if(strcmp(n->valor.CPF, pessoa->CPF) == 0)
+        if(strcmp(n->valor.CPF, pessoa->CPF) == 0) //procura a pessoa passada para acessar seu carrinho
         {
-            if(n->valor.carrinho == NULL) n->valor.carrinho = Criar_p();
-            InsereProduto(n->valor.carrinho, it);
+            if(n->valor.carrinho == NULL) n->valor.carrinho = Criar_p(); //se o carrinho nao existe, cria
+            InsereProduto(n->valor.carrinho, it); //insere o produto
             break;
         }
         n = n->prox;
@@ -340,11 +344,11 @@ int removeCarrinho(Lista_c *l, Cliente *pessoa, Produto *it){
     if(ListaVazia_c(l) == 0) return 4;
 
     No_c *n = l->inicio;
-    while(n != NULL)
+    while(n != NULL) //vai ate o fim da lista
     {
-        if(strcmp(n->valor.CPF, pessoa->CPF) == 0)
+        if(strcmp(n->valor.CPF, pessoa->CPF) == 0) //encontra a pessoa passada como parametro
         {
-            return ReduzX(n->valor.carrinho, it);
+            return ReduzX(n->valor.carrinho, it); //reduz uma quantidade X do carrinho
             break;
         }
         n = n->prox;
@@ -352,6 +356,8 @@ int removeCarrinho(Lista_c *l, Cliente *pessoa, Produto *it){
     return 4;
 }
 
+
+//PARTE DE FILE
 FILE *FLc_criar(){
     FILE *p;
 

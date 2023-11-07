@@ -332,12 +332,12 @@ int cadastrar_cliente(Lista_c **clien, Cliente *pessoa)
     if(aprova == 2) printf("Lista nao alocada\n");
     else if(aprova == 1)
     {
-        printf("O funcionario ja existe\n");
+        printf("O cliente ja existe\n");
         return 0;
     }
     else
     {
-        printf("Funcionario adicionado\n");
+        printf("Cliente adicionado\n");
         return 1;
     }
 }
