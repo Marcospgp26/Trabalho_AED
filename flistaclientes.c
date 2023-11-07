@@ -24,11 +24,11 @@ void Mostrar_c(Lista_c* l){
     if(l != NULL)
     {
         No_c* n = l->inicio;
-        printf("SENHA | CPF | NOME | GASTO |");
+        printf("SENHA | CPF | GASTO |");
         printf("[");
         while(n != NULL)
         {
-            printf("| %d | %s | %s | RS%.2f |\n",n->valor.senha,n->valor.CPF,n->valor.nome,n->valor.gasto);
+            printf("| %d | %s | %s | RS%.2f |\n",n->valor.senha,n->valor.CPF,n->valor.gasto);
             n = n->prox;
         }
         printf("]");
@@ -209,7 +209,6 @@ int Buscar_Posicao_c(Lista_c *l, int pos, Cliente *it){
     strcpy(it->CPF,noLista->valor.CPF); 
     it->senha = noLista->valor.senha;
     it->gasto = noLista->valor.gasto;
-    strcpy(it->nome,noLista->valor.nome);
     it->historico = noLista->valor.historico; 
     //retorna o elemento com todas as informações
 
@@ -230,7 +229,7 @@ int InsereCliente(Lista_c *l, Cliente it)
     int v;
     do
     {
-        v = strcmp((aux->valor.nome), (it.nome)); //compara o nome do ponteiro ao do cliente
+        v = strcmp((aux->valor.CPF), (it.CPF)); //compara o CPF do ponteiro ao do cliente
         if(v < 0)
             break; //sai do loop
         aux2 = aux;
@@ -384,13 +383,13 @@ int FLc_carregar(Lista_c *l, FILE *pc){
     Produto it;
     Cliente itc;
 
-    if((fscanf(pc, "%i,%[^,],%[^,],%f\n", &itc.senha, itc.CPF, itc.nome, &itc.gasto)) != 4){
+    if((fscanf(pc, "%i,%[^,],%f\n", &itc.senha, itc.CPF, &itc.gasto)) != 4){
         printf("Nao foi detectado nenhum campo no arquivo (clientes), ou houve erro na hora da leitura, para carregar informacoes, primeiro salve alguma coisa no arquivo!\n");
         return 1;
     }
     Inserir_fim_c(l, itc);
 
-    while((fscanf(pc, "%i,%[^,],%[^,],%f\n", &itc.senha, itc.CPF, itc.nome, &itc.gasto)) == 4){
+    while((fscanf(pc, "%i,%[^,],%[^,],%f\n", &itc.senha, itc.CPF, &itc.gasto)) == 4){
         while((fscanf(pc, "%[^,],%[^,],%[^,],%i,%f,%f   ", it.nome, it.codigo, it.tipo, &it.quantidade, &it.preco, &it.custo)) == 6){
             Push(aux, it);
             while(PilhaVazia(aux) != 0){
@@ -415,7 +414,7 @@ int FLc_salvar(Lista_c *l, FILE *pc){
     Produto it;
     
     while(noLista != NULL){
-        fprintf(pc, "%i,%s,%s,%f\n", noLista->valor.senha, noLista->valor.CPF, noLista->valor.nome, noLista->valor.gasto);
+        fprintf(pc, "%i,%s,%f\n", noLista->valor.senha, noLista->valor.CPF, noLista->valor.gasto);
         
         while(noLista->valor.historico != NULL){
             Pop(noLista->valor.historico, &it);

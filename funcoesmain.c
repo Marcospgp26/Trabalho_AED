@@ -266,10 +266,6 @@ int cadastrar_cliente(Lista_c **clien, Cliente *pessoa)
 
     printf("*****CADASTRO DE CLIENTE*****\n\n");
     //Processo basico de insercao de dados
-    setbuf(stdin, NULL);
-    printf("Nome: ");
-    fgets(it->nome, 51, stdin);
-    it->nome[strlen(it->nome) - 1] = it->nome[strlen(it->nome)];
 
     do
     {

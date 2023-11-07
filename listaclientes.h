@@ -9,7 +9,6 @@ typedef struct cliente
 {
     int senha;
     char CPF[11];
-    char nome[50];
     float gasto;
     Pilha *historico;
     Lista_p *carrinho;
