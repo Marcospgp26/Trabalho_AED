@@ -97,12 +97,8 @@ void MostrarPilha(Pilha *p)
         NoPilha *n = p->topo;
         while(n != NULL)
         {
-            printf("NOME | CODIGO | TIPO | QUANTIDADE | PRECO |");
-            puts(n->valor.nome);
-            printf(" | ");
-            puts(n->valor.codigo);
-            printf(" | ");
-            puts(n->valor.tipo);
+            printf("NOME | CODIGO | TIPO | QUANTIDADE | PRECO |\n");
+            printf("%s | %s | %s",n->valor.nome,n->valor.codigo, n->valor.tipo);
             printf(" | %i | %f |", n->valor.quantidade, n->valor.preco);
             printf("\n");
             n = n->prox;

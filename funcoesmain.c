@@ -249,7 +249,12 @@ int logar_cliente(Lista_c **clien, Cliente *pessoa) //Acredita que o cliente ja 
         entrada->CPF[11] = '\0';
         int saida = Buscar_Item_Chave_c(*clien,*entrada);
         
-        pessoa = entrada;
+        pessoa->carrinho = entrada->carrinho;
+        strcpy(pessoa->CPF,entrada->CPF);
+        pessoa->gasto = entrada->gasto;
+        pessoa->historico = entrada->historico;
+        pessoa->senha = entrada->senha;
+        
         if(saida == 0) return 1;
         else{
             if(entrada->senha == 0) return 0;
@@ -355,11 +360,12 @@ int cadastrar_cliente(Lista_c **clien, Cliente *pessoa) //Cadastro de novos clie
     }
     while(it->senha == 0);
 
-    it->historico = NULL;
-    it->gasto = 0;
-    it->carrinho = NULL;
+    pessoa->historico = NULL;
+    pessoa->gasto = 0;
+    pessoa->carrinho = NULL;
 
-    pessoa = it;
+    pessoa->senha = it->senha;
+    strcpy(pessoa->CPF,it->CPF);
 
     aprova = InsereCliente(*clien, *it); //Basciamente essa funcao verifica se o funcionario ja existe pelo CPF e coloca ele em ordem alfabetica - Marcos
     
@@ -634,6 +640,7 @@ void Reserva_Menu(Lista_c *clien, Lista_p *prod, Cliente *pessoa)
         {
             case 2:
             Mostrar_p(prod);
+            system("pause");
             break;
             case 3:
             mostracarrinho(clien, pessoa);
@@ -653,15 +660,16 @@ void Reserva_Menu(Lista_c *clien, Lista_p *prod, Cliente *pessoa)
 
 void Reservar(Lista_c *clien, Lista_p *prod, Cliente *pessoa)
 {
-    int tam_s, verif, verif2;
+    int tam_s, verif, verif2, code;
     Produto insere;
 
     printf("*****INSERIR NO CARRINHO*****\n");
     setbuf(stdin, NULL);
     printf("Insira o codigo do produto: ");
-    fgets(insere.codigo, 10, stdin);
+    scanf("%d",&code);
+    itoa(code,insere.codigo,10);
     tam_s = strlen(insere.codigo);
-    insere.codigo[tam_s - 1] = '\0';
+    
 
     printf("Insira quantas quantidades voce deseja comprar: ");
     scanf("%i", &insere.quantidade);

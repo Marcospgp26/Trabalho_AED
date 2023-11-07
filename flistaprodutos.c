@@ -39,7 +39,6 @@ void Mostrar_p(Lista_p* l)
 int ListaVazia_p(Lista_p *l)
 {
     if(l == NULL) return 2;
-    if(l->inicio == NULL) return 0;
     return 1;
 }
 
@@ -98,7 +97,7 @@ int InsereProduto(Lista_p *l, Produto it)
     if(ListaVazia_p(l) == 0)
         return Inserir_inicio_p(l, it);
 
-    No_p* aux = l->inicio;
+    No_p* aux = (No_p*)malloc(sizeof(No_p));
     No_p* aux2 = NULL;
     No_p* n = (No_p*) malloc(sizeof(No_p));
     int v;
@@ -106,7 +105,7 @@ int InsereProduto(Lista_p *l, Produto it)
     do
     {
         v = strcmp((aux->valor.nome), (it.nome));
-        if(v > 0)
+        if(v != 0)
             break;
         aux2 = aux;
         aux = aux->prox;

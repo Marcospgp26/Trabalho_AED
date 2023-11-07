@@ -14,7 +14,7 @@ int main()
     Lista_p* prod = Criar_p();
     Lista_c* clien = Criar_c();
     Lista_f* func = Criar_f();
-    Cliente* pessoa = NULL;
+    Cliente* pessoa = (Cliente *) malloc(sizeof(Cliente));
     int ext = 0, esc_t, esc_a;
     FLp_carregar(prod, arqESTQ);
     FLf_carregar(func,arqFNC);

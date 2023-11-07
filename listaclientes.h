@@ -1,6 +1,7 @@
 #ifndef LISTACLIENTES_H_INCLUDED
 #define LISTACLIENTES_H_INCLUDED
 
+
 typedef struct lista_p Lista_p;
 typedef struct produto Produto;
 typedef struct pilha Pilha;
@@ -8,7 +9,7 @@ typedef struct pilha Pilha;
 typedef struct cliente
 {
     int senha;
-    char CPF[11];
+    char CPF[12];
     float gasto;
     Pilha *historico;
     Lista_p *carrinho;

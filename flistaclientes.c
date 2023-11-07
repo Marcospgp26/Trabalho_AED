@@ -183,7 +183,7 @@ int Buscar_Item_Chave_c(Lista_c *l, Cliente it){
         return 2;
     No_c *noLista = l->inicio;
     while ((noLista != NULL)) {
-        if ((noLista->valor).CPF == it.CPF) {
+        if (strcmp(noLista->valor.CPF, it.CPF) == 0 && noLista->valor.senha == it.senha) {
             return 0;
         }
         noLista = noLista->prox;
@@ -239,6 +239,8 @@ int InsereCliente(Lista_c *l, Cliente it)
         return Inserir_inicio_c(l, it); //nao movimentou
     n->prox = aux2->prox;
     aux2->prox = n;
+    it.carrinho = Criar_p();
+    it.historico = CriarPilha();
     n->valor = it; //insere o cliente
     return 0;
 }
@@ -273,6 +275,7 @@ void MostraHistorico(Lista_c *l, Cliente *pessoa)
                 MostrarPilha(n->valor.historico);
                 printf("\nGastos totais: ");
                 printf("%i", &n->valor.gasto);
+                system("pause");
             }
             n = n->prox;
         }
@@ -305,7 +308,7 @@ int inserecarrinho(Lista_c *l, Cliente *pessoa, Produto *it)
     No_c *noLista = l->inicio;
     while(noLista != NULL)
     {
-        if(strcmp(noLista->valor.CPF, pessoa->CPF))
+        if(strcmp(noLista->valor.CPF,pessoa->CPF) == 0)
         {
             if(noLista->valor.carrinho == NULL) noLista->valor.carrinho = Criar_p();
             else if(MostraOcorrencia_p(noLista->valor.carrinho, *it) == 0) return Aumenta_X(noLista->valor.carrinho, it);
