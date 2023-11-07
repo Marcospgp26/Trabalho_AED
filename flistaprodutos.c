@@ -278,12 +278,15 @@ FILE *FLp_criar(){
     return p;
 }
 int FLp_carregar(Lista_p *l, FILE *pp){
-        
+        //assume que o arquivo já existe e tenta ler os dados
         pp = fopen("produtos.txt", "r");
+
         if(pp == NULL){
             pp = FLp_criar();
             pp = fopen("produtos.txt", "r");
         }
+        //caso não exista, um novo arquivo é criado, normalmente ocorre durante a primeira execução
+
         No_p *noLista = l->inicio;
         Produto it;
 
@@ -291,12 +294,17 @@ int FLp_carregar(Lista_p *l, FILE *pp){
             printf("Nao foi detectado nenhum campo no arquivo (produtos), ou houve erro na hora da leitura, para carregar informacoes, primeiro salve alguma coisa no arquivo!\n");
             return 1;
         }
+        //leitura dos dados do arquivo
+
         InsereProduto(l, it);
+        //caso o if falhe, insere o primeiro elemento já lido pelo carrinho de leitura
 
         while((fscanf(pp, "%[^,],%[^,],%[^,],%i,%f,%f\n", it.nome, it.codigo, it.tipo, &it.quantidade, &it.preco, &it.custo)) == 6) {
             InsereProduto(l, it);
-            //noLista = noLista->prox;
+            
         }
+        //inserção dos dados do arquivo para a memória do programa
+
         fclose(pp);
 
         return 0;
@@ -306,7 +314,7 @@ int FLp_salvar(Lista_p *l, FILE *pp){
 
         if(l == NULL) return 1;
 
-        pp = fopen("produtos.txt", "w");
+        pp = fopen("produtos.txt", "w"); //abre em modo de escrita e exclui o arquivo antigo
 
         No_p *noLista = l->inicio;
 
@@ -314,6 +322,8 @@ int FLp_salvar(Lista_p *l, FILE *pp){
             fprintf(pp, "%s,%s,%s,%i,%f,%f\n", noLista->valor.nome, noLista->valor.codigo, noLista->valor.tipo, noLista->valor.quantidade, noLista->valor.preco, noLista->valor.custo);
             noLista = noLista->prox;
         }
+        //salva os dados modificados/utilizados durante a execução em um arquivo .txt
+        
         fclose(pp);
 
         return 0;

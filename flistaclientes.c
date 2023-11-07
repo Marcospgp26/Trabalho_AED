@@ -283,6 +283,25 @@ void MostraHistorico(Lista_c *l, Cliente *pessoa)
 }
 
 //PARTE DE COMPRAS
+int aumentaGasto(Lista_c *l, Cliente *pessoa, float compra)
+{
+    if(l == NULL) return 2;
+    if(ListaVazia_c(l) == 0) return 1;
+
+    No_c *n = l->inicio;
+
+    while(n != NULL)
+    {
+        if(strcmp(n->valor.CPF,pessoa->CPF) == 0)
+        {
+            n->valor.gasto += compra;
+            return 0;
+        }
+        n = n->prox;
+    }
+    return 1;
+}
+
 void mostracarrinho(Lista_c *l, Cliente *pessoa)
 {
     if(l != NULL)
@@ -353,6 +372,7 @@ int apagacarrinho(Lista_c *l, Cliente *pessoa)
             {
                 ConsultaPrimeiro(n->valor.carrinho, &it);
                 Push(n->valor.historico, it);
+                aumentaGasto(l, pessoa, it.preco);
                 Reduz_X(n->valor.carrinho, &it);
             }
             free(n->valor.carrinho);
@@ -377,10 +397,13 @@ FILE *FLc_criar(){
 
 int FLc_carregar(Lista_c *l, FILE *pc){
     pc = fopen("clientes.txt", "r");
+    //assume que o arquivo já existe e tenta ler os dados
+
     if(pc == NULL){
         pc = FLc_criar();
         pc = fopen("clientes.txt", "r");
     }
+    //caso não exista, um novo arquivo é criado, normalmente ocorre durante a primeira execução
 
     Pilha *aux = CriarPilha();
     No_c *noLista = l->inicio;
@@ -390,8 +413,11 @@ int FLc_carregar(Lista_c *l, FILE *pc){
     if((fscanf(pc, "%i,%[^,],%f\n", &itc.senha, itc.CPF, &itc.gasto)) != 3){
         printf("Nao foi detectado nenhum campo no arquivo (clientes), ou houve erro na hora da leitura, para carregar informacoes, primeiro salve alguma coisa no arquivo!\n");
         return 1;
-    }
-    Inserir_fim_c(l, itc);
+    } 
+    //leitura dos dados do arquivo
+
+    InsereCliente(l, itc);
+    //caso o if falhe, insere o primeiro elemento já lido pelo carrinho de leitura
 
     while((fscanf(pc, "%i,%[^,],%f\n", &itc.senha, itc.CPF, &itc.gasto)) == 3){
         while((fscanf(pc, "%[^,],%[^,],%[^,],%i,%f,%f   ", it.nome, it.codigo, it.tipo, &it.quantidade, &it.preco, &it.custo)) == 6){
@@ -401,8 +427,11 @@ int FLc_carregar(Lista_c *l, FILE *pc){
                 Push(noLista->valor.historico, it);
             }
         }
-        Inserir_fim_c(l, itc);     
+        InsereCliente(l, itc);     
     }
+    //inserção dos dados do arquivo para a memória do programa
+
+    fclose(pc);
     
     return 0;
 }
@@ -411,7 +440,7 @@ int FLc_salvar(Lista_c *l, FILE *pc){
    
     if(l == NULL) return 1;
 
-    pc = fopen("clientes.txt", "w");   
+    pc = fopen("clientes.txt", "w"); //abre em modo de escrita e exclui o arquivo antigo  
        
     No_c *noLista = l->inicio;
 
@@ -427,6 +456,8 @@ int FLc_salvar(Lista_c *l, FILE *pc){
 
         noLista = noLista->prox;
     }
+    //salva os dados modificados/utilizados durante a execução em um arquivo .txt
+
     fclose(pc);
      
     return 0;
