@@ -269,6 +269,7 @@ FILE *FLp_criar(){
 
     
     printf("Registro do estoque nao foi criado!\nCriando novo arquivo...\n");
+    system("pause");
     p = fopen("produtos.txt", "w");
     fclose(p);
 
