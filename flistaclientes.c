@@ -383,13 +383,13 @@ int FLc_carregar(Lista_c *l, FILE *pc){
     Produto it;
     Cliente itc;
 
-    if((fscanf(pc, "%i,%[^,],%f\n", &itc.senha, itc.CPF, &itc.gasto)) != 4){
+    if((fscanf(pc, "%i,%[^,],%f\n", &itc.senha, itc.CPF, &itc.gasto)) != 3){
         printf("Nao foi detectado nenhum campo no arquivo (clientes), ou houve erro na hora da leitura, para carregar informacoes, primeiro salve alguma coisa no arquivo!\n");
         return 1;
     }
     Inserir_fim_c(l, itc);
 
-    while((fscanf(pc, "%i,%[^,],%[^,],%f\n", &itc.senha, itc.CPF, &itc.gasto)) == 4){
+    while((fscanf(pc, "%i,%[^,],%f\n", &itc.senha, itc.CPF, &itc.gasto)) == 3){
         while((fscanf(pc, "%[^,],%[^,],%[^,],%i,%f,%f   ", it.nome, it.codigo, it.tipo, &it.quantidade, &it.preco, &it.custo)) == 6){
             Push(aux, it);
             while(PilhaVazia(aux) != 0){
