@@ -120,82 +120,226 @@ int entrada_funcionario(Lista_f **func)
 
 int entrada_cliente(Lista_c **clien, Cliente *pessoa)
 {
+    int esc, verif, saida, ext = 0;
+    do
+    {
+        system("cls");
+        printf("Escolha:\n1)Voltar\n2)Logar\n3)Cadastrar\n");
+        scanf("%i", &esc);
 
-    printf("*****ENTRAR COMO CLIENTE*****\n\n");
+        if((esc < 0) || (esc > 3)) printf("Escolha invalida, por favor, reensira-a\n");
+        switch(esc)
+        {
+            case 1:
+            verif = 0;
+            ext = 1;
+            break;
+            return 0;
+            case 2:
+            verif = logar_cliente(clien, pessoa);
+            break;
+            case 3:
+            verif = cadastrar_cliente(clien, pessoa)
 
-    Cliente *entrada = (Cliente *) malloc (sizeof(Cliente));
+        }
+        if(ext) break;
+    }while(!verif);
+    
+    return verif;
+}
+
+int logar_cliente(Lista_c **clien, Cliente *pessoa)
+{
+    printf("*****LOGAR COMO CLIENTE*****\n\n");
+
+    Funcionario *entrada = (Cliente *) malloc (sizeof(Cliente));
+
     char ch, senhaaux[5];
 
-    printf("INSIRA A SENHA 0000 VOLTA PARA VOLTAR A TELA ANTERIOR\n");
-    setbuf(stdin, NULL);
+    while(1){
+        printf("INSIRA A SENHA 0000 VOLTA PARA VOLTAR A TELA ANTERIOR:\n");
+        printf("CPF: ");
+        setbuf(stdin, NULL);
 
-    int k = 0;
+        int k = 0;
 
-    printf("CPF: ");
-    while(k < 11)
-    {
-        ch = getch();
-        if(ch == ENTER)
+        while(k < 11)
         {
-            entrada->CPF[k] = '\0';
-            break;
-        }
-        else if(ch == BKSP)
-        {
-            if(k > 0)
-            {
-                k--;
-                printf("\b \b");
-            }
-        }
-        else if(ch == TAB || ch == SPACE)
-        {
-            continue;
-        }
-        else
-        {
+            ch = getch();
             entrada->CPF[k] = ch;
             k++;
             printf("%c",ch);
-        }
-    }  //loop para entrada do CPF do cliente
+        } //loop para entrada do CPF do funcionario
 
-    printf("\nSenha: ");
-    int j = 0;
-    while(j < 4) //Maximo de 4 numeros por senha
-    {
-        ch = getch();
-        if(ch == ENTER)
+
+
+
+        printf("\nSenha: ");
+        int i = 0;
+        while(i < 4) //maximo de 4 numeros por senha
         {
-            senhaaux[j] = '\0';
-            break;
-        }
-        else if(ch == BKSP)
-        {
-            if(j > 0)
+            ch=getch();
+            if(ch == ENTER)
             {
-                j--;
-                printf("\b \b");
+                senhaaux[i] = '\0';
+                break;
             }
+            else if(ch == BKSP)
+            {
+                if(i > 0)
+                {
+                    i--;
+                    printf("\b \b");
+                }
+            }
+            else if(ch == TAB || ch == SPACE)
+            {
+                continue;
+            }
+            else
+            {
+                senhaaux[i] = ch;
+                i++;
+                printf("*");
+            }
+            //o intuito desse while é, ao inserir a senha, o usuario ver apenas asteriscos por motivos de segurança
         }
-        else if(ch == TAB || ch == SPACE)
-        {
-            continue;
-        }
-        else
-        {
-            senhaaux[j] = ch;
-            j++;
-            printf("*");
+        printf("\n");
+
+        entrada->senha = atoi(senhaaux);  //essa função converte uma string em número inteiro, pois no código a senha é interpretada como int
+        entrada->CPF[11] = '\0';
+        int saida = Buscar_Item_Chave_c(*clien,*entrada);
+        
+        if(saida == 0) return 1;
+        pessoa = entrada;
+
+        else{
+            if(entrada->senha == 0) return 0;
+            printf("Dados incorretos/Nao foram encontrados\n");
         }
     }
-    printf("\n");
+}
 
-    entrada->senha = atoi(senhaaux);
+int cadastrar_cliente(Lista_c **clien, Cliente *pessoa)
+{
+    Cliente it;
+    int tam_s, aprova, i =0;
+    char ch, senhaaux[5];
 
-    pessoa = entrada;
-    if(entrada->senha) return 1;
-    return 0;
+    printf("*****CADASTRO DE CLIENTE*****\n\n");
+    //Processo basico de insercao de dados
+    setbuf(stdin, NULL);
+    printf("Nome: ");
+    fgets(it.nome, 51, stdin);
+    it.nome[strlen(it.nome) - 1] = it.nome[strlen(it.nome)];
+
+    do
+    {
+
+        aprova = 0;
+        setbuf(stdin, NULL);
+        printf("CPF: ");
+        int k = 0;
+
+        while(k < 11)
+        {
+            ch = getch();
+            if(ch == ENTER)
+            {
+                it.CPF[k] = '\0';
+                break;
+            }
+            else if(ch == BKSP)
+            {
+                if(k > 0)
+                {
+                    k--;
+                    printf("\b \b");
+                }
+            }
+            else if(ch == TAB || ch == SPACE)
+            {
+                continue;
+            }
+            else
+            {
+                it.CPF[k] = ch;
+                k++;
+                printf("%c",ch);
+            }
+        }
+        printf("\n");
+
+        it.CPF[11] = '\0';
+        tam_s = strlen(it.CPF);
+        if(tam_s != 11) aprova = 1;
+        else if(VerificaCPF(it.CPF, tam_s)) aprova = 1; //O CPF eh algo que por si so eh mto complexo, entao vamos usar uma funcao para verifica-lo (se voce esta testando essa parte isso pode ser um pouco chato, uma dica, use seu proprio CPF ou de alguem que voce conheca)
+
+        if(aprova) printf("\nCPF Invalido, por favor reensira- o\n\n");
+
+    }
+    while(aprova);
+
+    //aqui da para colocar os asteriscos dnv se quiser, podemos colocar toda a p-arte dos asteriscos numa funcao separada e reutilizar ela
+    printf("Senha: ");
+    do
+    {
+        while(i < 4) //maximo de 4 numeros por senha
+        {
+            setbuf(stdin, NULL);
+            ch=getch();
+            if(ch == ENTER)
+            {
+                senhaaux[i] = '\0';
+                break;
+            }
+            else if(ch == BKSP)
+            {
+                if(i > 0)
+                {
+                    i--;
+                    printf("\b \b");
+                }
+            }
+            else if(ch == TAB || ch == SPACE)
+            {
+                continue;
+            }
+            else
+            {
+                senhaaux[i] = ch;
+                i++;
+                printf("*");
+            }
+            //o intuito desse while é, ao inserir a senha, o usuario ver apenas asteriscos por motivos de segurança
+        }
+        printf("\n");
+
+        it.senha = atoi(senhaaux);
+
+        if(it.senha == 0) printf("Senha invalida\n");
+    }
+    while(it.senha == 0);
+
+    it.historico = NULL.
+    it.gastos = 0;
+    it.carrinho = NULL;
+
+    pessoa = &it;
+
+    aprova = InsereCliente(clien, it); //Basciamente essa funcao verifica se o funcionario ja existe pelo CPF e coloca ele em ordem alfabetica - Marcos
+    
+    if(aprova == 2) printf("Lista nao alocada\n");
+    else if(aprova == 1)
+    {
+        printf("O funcionario ja existe\n");
+        return 0;
+    }
+    else
+    {
+        printf("Funcionario adicionado\n");
+        return 1;
+    }
 }
 
 void menu_escolhas(int tipo, int *retorno)

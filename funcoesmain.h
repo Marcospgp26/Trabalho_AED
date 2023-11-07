@@ -4,6 +4,8 @@
 int menu_entrada(Lista_f **func, Lista_c **clien, int *tipo,  Cliente *pessoa);
 int entrada_funcionario(Lista_f **func);
 int entrada_cliente(Lista_c **clien,  Cliente *pessoa);
+int logar_cliente(Lista_c **clien, Cliente *pessoa);
+int cadastrar_cliente(Lista_c **clien, Cliente *pessoa);
 void menu_escolhas(int tipo, int *retorno);
 
 
