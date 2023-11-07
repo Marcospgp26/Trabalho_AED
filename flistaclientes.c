@@ -261,6 +261,24 @@ float GastoTotalClientes(Lista_c *l){
     return GastoTot; //retorna todos os gastos somados
 }
 
+void MostraHistorico(Lista_c *l, Cliente *pessoa)
+{
+    if(l != NULL)
+    {
+        No_c *n = l->inicio;
+        while(n != NULL)
+        {
+            if(strcmp(n->valor.CPF, pessoa->CPF) == 0)
+            {
+                printf("HISTORICO:\n");
+                MostrarPilha(n->valor.historico);
+                printf("\nGastos totais: ");
+                printf("%i", &n->valor.gasto);
+            }
+            n = n->prox;
+        }
+    }
+}
 
 //PARTE DE COMPRAS
 int modificaHistorico(Lista_c *l, Cliente *pessoa, Produto it) //Esssa funcao modifica o historico, aumentando ele

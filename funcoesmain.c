@@ -590,10 +590,11 @@ void FluxoDeCaixa(Lista_c *clien, Lista_p *prod, Lista_f *func) //"Fluxo de Caix
     system("pause");
 }
 
-void AcessaGastos(int tipo, Lista_c *clien, Lista_p *prod, Lista_f *func) //Funcao para guiar os diferentes tipos de entrada até uma aba de economia
+void AcessaGastos(int tipo, Lista_c *clien, Lista_p *prod, Lista_f *func, Cliente *pessoa) //Funcao para guiar os diferentes tipos de entrada até uma aba de economia
 {
     switch(tipo){
         case 3:
+            MostraHistorico(clien, pessoa);
             break;
         case 2:
             FluxoDeCaixa(clien,prod,func);
@@ -638,7 +639,7 @@ void Reservar_Alimentos(Lista_c *clien, Lista_p *prod, Cliente *pessoa)
             Mostrar_p(prod);
             break;
         case 3:
-            Insere_carro(clien, prod, pessoa)
+            Insere_carro(clien, prod, pessoa);
             break;
         case 4:
             printf("Insira o codigo do alimento a ser retirado (ESCREVER SAIDA RETORNA A TELA ANTERIOR): ");

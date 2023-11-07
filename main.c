@@ -38,7 +38,7 @@ int main()
             menu_estoque(esc_t, &prod);
             break;
         case 3:
-            AcessaGastos(esc_t,clien,prod,func);
+            AcessaGastos(esc_t,clien,prod,func, pessoa);
             break;
         }
         if((esc_t == 2) && (esc_a == 4))

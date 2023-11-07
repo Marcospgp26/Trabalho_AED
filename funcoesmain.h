@@ -18,7 +18,7 @@ void Modifica_Preco_main(Lista_p **l);
 
 //CONTROLE DE GASTOS
 void FluxoDeCaixa(Lista_c *clien, Lista_p *prod, Lista_f *func);
-void AcessaGastos(int tipo, Lista_c *clien, Lista_p *prod, Lista_f *func);
+void AcessaGastos(int tipo, Lista_c *clien, Lista_p *prod, Lista_f *func, Cliente *pessoa);
 
 //RESERVA DE ALIMENTOS
 void Menu_Caixa(Lista_c *clien, Lista_p *prod, Cliente *pessoa);
