@@ -47,7 +47,7 @@ int main()
         }
         if((esc_t == 3) && (esc_a == 4))
         {
-            Menu_Caixa(clien, prod, pessoa);
+            Menu_Reserva(clien, prod, pessoa);
         }
     }
     FLp_salvar(prod, arqESTQ);

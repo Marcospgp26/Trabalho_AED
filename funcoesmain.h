@@ -21,7 +21,7 @@ void FluxoDeCaixa(Lista_c *clien, Lista_p *prod, Lista_f *func);
 void AcessaGastos(int tipo, Lista_c *clien, Lista_p *prod, Lista_f *func, Cliente *pessoa);
 
 //RESERVA DE ALIMENTOS
-void Menu_Caixa(Lista_c *clien, Lista_p *prod, Cliente *pessoa);
+void Menu_Reserva(Lista_c *clien, Lista_p *prod, Cliente *pessoa);
 void Reservar_Alimentos(Lista_c *clien, Lista_p *prod, Cliente *pessoa);
 void Insere_carro(Lista_c *clien, Lista_p *prod, Cliente *pessoa);
 void Retira_carro(Lista_c *clien, Lista_p *prod, Cliente *pessoa);
