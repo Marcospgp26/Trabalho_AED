@@ -198,62 +198,26 @@ int Buscar_Posicao_c(Lista_c *l, int pos, Cliente *it){
         return 1;
     }
 
-    No_c *noLista = l->inicio;
+    No_c *noLista = l->inicio; //procura até a posicao
     int p = 0;
 
     while((noLista->prox != NULL) && (p != pos)){
         p++;
-        noLista = noLista->prox;
+        noLista = noLista->prox; //percorre até a posição
     }
 
-    strcpy(it->CPF,noLista->valor.CPF);
+    strcpy(it->CPF,noLista->valor.CPF); 
     it->senha = noLista->valor.senha;
     it->gasto = noLista->valor.gasto;
     strcpy(it->nome,noLista->valor.nome);
+    it->historico = noLista->historico;
+    it->CPF = noLista->CPF; //retorna o elemento com todas as informações
 
     return 0;
 }
 
-float verificaGastos(Lista_c *l, int it){
-    No_c *noLista = l->inicio;
-    int CPF;
 
-    while(noLista != NULL){
-        CPF = atoi(noLista->valor.CPF);
-        if(CPF == it){
-            break;
-        }
-        noLista = noLista->prox;
-    }
-
-    return noLista->valor.gasto;
-}
-
-int aumentaGasto(Lista_c *l, int it, float compra){
-    if(l == NULL){
-        return 1;
-    }
-
-    if(ListaVazia_c(l) == 0){
-        return 2;
-    }
-
-    No_c *noLista = l->inicio;
-    int CPF;
-
-    while(noLista != NULL){
-        CPF = atoi(noLista->valor.CPF);
-        if(CPF == it){
-            break;
-        }
-        noLista = noLista->prox;
-    }
-
-    noLista->valor.gasto += compra;
-
-    return 0;
-}
-
+//Insercao
 int InsereCliente(Lista_c *l, Cliente it){
     if(l == NULL) return 2;
     if(Buscar_Item_Chave_c(l, it) == 0) return 1;
@@ -356,6 +320,23 @@ int removeCarrinho(Lista_c *l, Cliente *pessoa, Produto *it){
     return 4;
 }
 
+int aumentaGastos(Lista_c *l, Cliente *pessoa, Produto it)
+{
+    if(l == NULL) return 2;
+    if(ListaVazia(l) == 0) return 1;
+
+    No_c *n = l->inicio;
+    while(n != NULL)
+    {
+        if(strcmp(n->valor.CPF, it.CPF)) //acha a pessoa
+        {
+            n->valor.gasto =+ (it.quantidade * it.preco); //aumenta o gasto
+            return 0;
+        }
+        n = n->prox;
+    }
+    return 1;
+}
 
 //PARTE DE FILE
 FILE *FLc_criar(){
