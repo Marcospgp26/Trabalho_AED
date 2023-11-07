@@ -280,6 +280,25 @@ void MostraHistorico(Lista_c *l, Cliente *pessoa)
 }
 
 //PARTE DE COMPRAS
+int aumentaGasto(Lista_c *l, Cliente *pessoa, float compra)
+{
+    if(l == NULL) return 2;
+    if(ListaVazia_c(l) == 0) return 1;
+
+    No_c *n = l->inicio;
+
+    while(n != NULL)
+    {
+        if(strcmp(n->valor.CPF,pessoa->CPF) == 0)
+        {
+            n->valor.gasto += compra;
+            return 0;
+        }
+        n = n->prox;
+    }
+    return 1;
+}
+
 void mostracarrinho(Lista_c *l, Cliente *pessoa)
 {
     if(l != NULL)
@@ -350,6 +369,7 @@ int apagacarrinho(Lista_c *l, Cliente *pessoa)
             {
                 ConsultaPrimeiro(n->valor.carrinho, &it);
                 Push(n->valor.historico, it);
+                aumentaGasto(l, pessoa, it.preco);
                 Reduz_X(n->valor.carrinho, &it);
             }
             free(n->valor.carrinho);

@@ -32,8 +32,7 @@ int Buscar_Posicao_c(Lista_c *l, int pos, Cliente *it);
 
 
 //Parte economia
-float verificaGastos(Lista_c *l, int it);
-int aumentaGasto(Lista_c *l, int it, float compra);
+int aumentaGasto(Lista_c *l, Cliente *pessoa, float compra);
 float GastoTotalClientes(Lista_c *l);
 void MostraHistorico(Lista_c *l, Cliente *pessoa);
 
