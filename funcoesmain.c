@@ -139,7 +139,8 @@ int entrada_cliente(Lista_c **clien, Cliente *pessoa)
             verif = logar_cliente(clien, pessoa);
             break;
             case 3:
-            verif = cadastrar_cliente(clien, pessoa)
+            verif = cadastrar_cliente(clien, pessoa);
+            break;
 
         }
         if(ext) break;
@@ -152,7 +153,7 @@ int logar_cliente(Lista_c **clien, Cliente *pessoa)
 {
     printf("*****LOGAR COMO CLIENTE*****\n\n");
 
-    Funcionario *entrada = (Cliente *) malloc (sizeof(Cliente));
+    Cliente *entrada = (Cliente *) malloc (sizeof(Cliente));
 
     char ch, senhaaux[5];
 
@@ -210,9 +211,8 @@ int logar_cliente(Lista_c **clien, Cliente *pessoa)
         entrada->CPF[11] = '\0';
         int saida = Buscar_Item_Chave_c(*clien,*entrada);
         
-        if(saida == 0) return 1;
         pessoa = entrada;
-
+        if(saida == 0) return 1;
         else{
             if(entrada->senha == 0) return 0;
             printf("Dados incorretos/Nao foram encontrados\n");
@@ -222,7 +222,7 @@ int logar_cliente(Lista_c **clien, Cliente *pessoa)
 
 int cadastrar_cliente(Lista_c **clien, Cliente *pessoa)
 {
-    Cliente it;
+    Cliente *it = (Cliente *) malloc(sizeof(Cliente));
     int tam_s, aprova, i =0;
     char ch, senhaaux[5];
 
@@ -230,8 +230,8 @@ int cadastrar_cliente(Lista_c **clien, Cliente *pessoa)
     //Processo basico de insercao de dados
     setbuf(stdin, NULL);
     printf("Nome: ");
-    fgets(it.nome, 51, stdin);
-    it.nome[strlen(it.nome) - 1] = it.nome[strlen(it.nome)];
+    fgets(it->nome, 51, stdin);
+    it->nome[strlen(it->nome) - 1] = it->nome[strlen(it->nome)];
 
     do
     {
@@ -246,7 +246,7 @@ int cadastrar_cliente(Lista_c **clien, Cliente *pessoa)
             ch = getch();
             if(ch == ENTER)
             {
-                it.CPF[k] = '\0';
+                it->CPF[k] = '\0';
                 break;
             }
             else if(ch == BKSP)
@@ -263,17 +263,17 @@ int cadastrar_cliente(Lista_c **clien, Cliente *pessoa)
             }
             else
             {
-                it.CPF[k] = ch;
+                it->CPF[k] = ch;
                 k++;
                 printf("%c",ch);
             }
         }
         printf("\n");
 
-        it.CPF[11] = '\0';
-        tam_s = strlen(it.CPF);
+        it->CPF[11] = '\0';
+        tam_s = strlen(it->CPF);
         if(tam_s != 11) aprova = 1;
-        else if(VerificaCPF(it.CPF, tam_s)) aprova = 1; //O CPF eh algo que por si so eh mto complexo, entao vamos usar uma funcao para verifica-lo (se voce esta testando essa parte isso pode ser um pouco chato, uma dica, use seu proprio CPF ou de alguem que voce conheca)
+        else if(VerificaCPF(it->CPF, tam_s)) aprova = 1; //O CPF eh algo que por si so eh mto complexo, entao vamos usar uma funcao para verifica-lo (se voce esta testando essa parte isso pode ser um pouco chato, uma dica, use seu proprio CPF ou de alguem que voce conheca)
 
         if(aprova) printf("\nCPF Invalido, por favor reensira- o\n\n");
 
@@ -315,19 +315,19 @@ int cadastrar_cliente(Lista_c **clien, Cliente *pessoa)
         }
         printf("\n");
 
-        it.senha = atoi(senhaaux);
+        it->senha = atoi(senhaaux);
 
-        if(it.senha == 0) printf("Senha invalida\n");
+        if(it->senha == 0) printf("Senha invalida\n");
     }
-    while(it.senha == 0);
+    while(it->senha == 0);
 
-    it.historico = NULL.
-    it.gastos = 0;
-    it.carrinho = NULL;
+    it->historico = NULL;
+    it->gasto = 0;
+    it->carrinho = NULL;
 
-    pessoa = &it;
+    pessoa = it;
 
-    aprova = InsereCliente(clien, it); //Basciamente essa funcao verifica se o funcionario ja existe pelo CPF e coloca ele em ordem alfabetica - Marcos
+    aprova = InsereCliente(*clien, *it); //Basciamente essa funcao verifica se o funcionario ja existe pelo CPF e coloca ele em ordem alfabetica - Marcos
     
     if(aprova == 2) printf("Lista nao alocada\n");
     else if(aprova == 1)
