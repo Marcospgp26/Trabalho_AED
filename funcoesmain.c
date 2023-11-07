@@ -65,9 +65,28 @@ int entrada_funcionario(Lista_f **func)
         while(k < 11)
         {
             ch = getch();
-            entrada->CPF[k] = ch;
-            k++;
-            printf("%c",ch);
+            if(ch == ENTER)
+            {
+                entrada->CPF[k] = '\0';
+                break;
+            }
+            else if(ch == BKSP)
+            {
+                if(k > 0)
+                {
+                    k--;
+                    printf("\b \b");
+                }
+            }
+            else if(ch == TAB || ch == SPACE)
+            {
+                continue;
+            }
+            else{
+                entrada->CPF[k] = ch;
+                k++;
+                printf("%c",ch);
+            }
         } //loop para entrada do CPF do funcionario
 
 
@@ -167,10 +186,29 @@ int logar_cliente(Lista_c **clien, Cliente *pessoa)
         while(k < 11)
         {
             ch = getch();
-            entrada->CPF[k] = ch;
-            k++;
-            printf("%c",ch);
-        } //loop para entrada do CPF do funcionario
+            if(ch == ENTER)
+            {
+                entrada->CPF[k] = '\0';
+                break;
+            }
+            else if(ch == BKSP)
+            {
+                if(k > 0)
+                {
+                    k--;
+                    printf("\b \b");
+                }
+            }
+            else if(ch == TAB || ch == SPACE)
+            {
+                continue;
+            }
+            else{
+                entrada->CPF[k] = ch;
+                k++;
+                printf("%c",ch);
+            }
+        } //loop para entrada do CPF do cliente
 
 
 
