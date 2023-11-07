@@ -413,7 +413,7 @@ int FLc_carregar(Lista_c *l, FILE *pc){
     } 
     //leitura dos dados do arquivo
 
-    Inserir_fim_c(l, itc);
+    InsereCliente(l, itc);
     //caso o if falhe, insere o primeiro elemento já lido pelo carrinho de leitura
 
     while((fscanf(pc, "%i,%[^,],%f\n", &itc.senha, itc.CPF, &itc.gasto)) == 3){
@@ -424,7 +424,7 @@ int FLc_carregar(Lista_c *l, FILE *pc){
                 Push(noLista->valor.historico, it);
             }
         }
-        Inserir_fim_c(l, itc);     
+        InsereCliente(l, itc);     
     }
     //inserção dos dados do arquivo para a memória do programa
 
