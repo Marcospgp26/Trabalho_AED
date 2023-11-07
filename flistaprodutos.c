@@ -223,7 +223,7 @@ int ReduzX(Lista_p *l, Produto *it)
 
     n->valor.quantidade -= it->quantidade;
     if(n->valor.quantidade == 0)
-        RemoveProduto(l, n->valor);
+        RemoveProduto(l, *it);
 
     return 0;
 }

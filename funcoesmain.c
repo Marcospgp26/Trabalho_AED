@@ -401,8 +401,8 @@ void menu_escolhas(int tipo, int *retorno)
 
 
 
-//==================================================================================================================================================================================================
-void menu_estoque(int tipo, Lista_p **l)
+//PARTE DE ESTOQUE
+void menu_estoque(int tipo, Lista_p **l) //Esse menu serve para o acesso das funcoes de estoque
 {
     int escolha = 0;
     while(escolha != 1)
@@ -452,7 +452,7 @@ void menu_estoque(int tipo, Lista_p **l)
 
 }
 
-void Inserir_Produtos_main(Lista_p **l)
+void Inserir_Produtos_main(Lista_p **l) //Essa funcao insere um novo produto na lista de estoque
 {
     printf("*****INSERCAO DE NOVOS PRODUTOS*****\n\n");
     int verif;
@@ -496,7 +496,7 @@ void Inserir_Produtos_main(Lista_p **l)
 
 }
 
-void Remover_Produto_main(Lista_p **l)
+void Remover_Produto_main(Lista_p **l) //Essa funcao identifica um produto e remove ele da lista de estoque
 {
     printf("*****REMOCAO DE PRODUTOS*****\n\n");
     int verif;
@@ -520,7 +520,7 @@ void Remover_Produto_main(Lista_p **l)
         printf("Produto nao encontrado\n");
 }
 
-void Modifica_Quantidade_main(Lista_p **l)
+void Modifica_Quantidade_main(Lista_p **l) //Essa funcao modifica a quantidade existente de um produto no estoque
 {
     printf("*****MODIFICAR A QUANTIDADE DOS PRODUTOS*****\n\n");
     int verif;
@@ -547,7 +547,7 @@ void Modifica_Quantidade_main(Lista_p **l)
         printf("Produto nao encontrado\n");
 }
 
-void Modifica_Preco_main(Lista_p **l)
+void Modifica_Preco_main(Lista_p **l) //Essa funcao modifica o preco da venda de um estoque
 {
     printf("*****MODIFICAR O PRECO DOS PRODUTOS*****\n\n");
     int verif;
@@ -573,9 +573,10 @@ void Modifica_Preco_main(Lista_p **l)
     else
         printf("Produto nao encontrado\n");
 }
-//==================================================================================================================================================================================================
 
-void FluxoDeCaixa(Lista_c *clien, Lista_p *prod, Lista_f *func){
+//PARTE DE ECONOMIA
+void FluxoDeCaixa(Lista_c *clien, Lista_p *prod, Lista_f *func) //"Fluxo de Caixa" refere-se a quantidade de lucro de um mercado, essa funcao calcula isso
+{
     float gastoFunc = GastoTotalFuncionarios(func), gastoClien = GastoTotalClientes(clien), gastoProd = GastoTotalProdutos(prod);
     float saldo = gastoClien - gastoFunc - gastoProd;
 
@@ -589,7 +590,8 @@ void FluxoDeCaixa(Lista_c *clien, Lista_p *prod, Lista_f *func){
     system("pause");
 }
 
-void AcessaGastos(int tipo, Lista_c *clien, Lista_p *prod, Lista_f *func){
+void AcessaGastos(int tipo, Lista_c *clien, Lista_p *prod, Lista_f *func) //Funcao para guiar os diferentes tipos de entrada até uma aba de economia
+{
     switch(tipo){
         case 3:
             break;
@@ -600,8 +602,8 @@ void AcessaGastos(int tipo, Lista_c *clien, Lista_p *prod, Lista_f *func){
 }
 
 
-//==================================================================================================================================================================================================
-void Menu_Caixa(Lista_c *clien, Lista_p *prod, Cliente *pessoa)
+//PARTE DE RESERVA
+void Menu_Reserva(Lista_c *clien, Lista_p *prod, Cliente *pessoa)
 {
     int esc;
     system("cls");
@@ -636,31 +638,7 @@ void Reservar_Alimentos(Lista_c *clien, Lista_p *prod, Cliente *pessoa)
             Mostrar_p(prod);
             break;
         case 3:
-            printf("Insira o codigo do alimento a ser reservado (ao digitar SAIDA retornara a tela anterior)");
-            setbuf(stdin, NULL);
-            fgets(it.codigo, 10, stdin);
-            it.codigo[strlen(it.codigo) - 1] = it.codigo[strlen(it.codigo)];
-
-            if(strcmp(it.codigo, "SAIDA") == 0) break;
-
-            printf("Insira quantas unidades desse alimento voce deseja comprar: ");
-            scanf("%i", &it.quantidade);
-
-
-            verif = ReduzX(prod, &it);
-            if(verif == 1) printf("Produto nao encontrado\n");
-            else if(verif == 2) printf("Sem lista\n");
-            else
-            {
-                verif2 = insereCarrinho(clien, pessoa, it);
-                if(verif2 == 0)
-                {
-                    printf("PRODUTO RESERVADO\n");
-                    qnt++;
-                }
-                else if(verif2 == 1) printf("CLIENTE NAO ENCONTRADO\n");
-                else printf("LISTA NAO ENCONTRADA\n");
-            }
+            Insere_carro(clien, prod, pessoa)
             break;
         case 4:
             printf("Insira o codigo do alimento a ser retirado (ESCREVER SAIDA RETORNA A TELA ANTERIOR): ");
@@ -765,9 +743,10 @@ void Retira_carro(Lista_c *clien, Lista_p *prod, Cliente *pessoa)
         else printf("Lista nao alocada\n");
     }
 }
-//==================================================================================================================================================================================================
-void Cadastro(Lista_f *func, Lista_c *clien)
-{
+
+//PARTE DE CADASTRO
+void Cadastro(Lista_f *func, Lista_c *clien) //Esse aqui na verdade é um menu, mostrando as diversas posibilidades de entradas de modificacao/insercao de funcionarios
+{ 
     system("cls");
     printf("*****CADASTRAR FUNCIONARIOS E/OU CLIENTES NO SISTEMA*****\n\n");
     int esc = 0;
@@ -918,7 +897,7 @@ void Insere_Funcionario_main(Lista_f *func)  //Nesse caso considere que o gerent
 
 }
 
-void Muda_Cargo_main(Lista_f *func)
+void Muda_Cargo_main(Lista_f *func) //Essa funcao pega o cargo e muda ela
 {
     Funcionario it;
     int verif;
@@ -975,7 +954,7 @@ void Muda_Cargo_main(Lista_f *func)
     else printf("Cargo modificado!\n");
 }
 
-void Modifica_Salario_Func_main(Lista_f *func)
+void Modifica_Salario_Func_main(Lista_f *func) //Essa funcao modifica o salario de somente um funcionario
 {
     Funcionario it;
     int verif, aprova, tam_s;
@@ -1041,7 +1020,7 @@ void Modifica_Salario_Func_main(Lista_f *func)
 
 }
 
-void Modifica_Salario_Cargo_main(Lista_f *func)
+void Modifica_Salario_Cargo_main(Lista_f *func) //Essa funcao modifica um salario de um cargo em especifico
 {
     Funcionario it;
     int verif;
@@ -1063,7 +1042,7 @@ void Modifica_Salario_Cargo_main(Lista_f *func)
     else printf("Cargo nao encontrado\n");
 }
 
-void Remove_Funcionario_main(Lista_f *func)
+void Remove_Funcionario_main(Lista_f *func) //Essa funcao remove um funcionario da lista de funcionarios
 {
     Funcionario it;
     int verif, aprova, tam_s;
@@ -1129,7 +1108,7 @@ void Remove_Funcionario_main(Lista_f *func)
 
 
 //FUNCAO DE VERIFICAR CPF
-int VerificaCPF(char *str, int tam)
+int VerificaCPF(char *str, int tam) //Esa funcao verifica o CPF para validar na entrada
 {
     int i, numeros[11], DV1 = 0, DV2 = 0;
     for(i = 0; i < 11; i++)
@@ -1159,6 +1138,8 @@ int VerificaCPF(char *str, int tam)
     return 0;
 }
 
+
+//FUNCAO DE FILE
 int fecharF(FILE *p){
         if(p == NULL) return 1;
     

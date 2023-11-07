@@ -4,6 +4,7 @@
 typedef struct produto Produto;
 typedef struct pilha Pilha;
 
+//Funcoes basicas
 Pilha *CriarPilha();
 void LimparPilha(Pilha *p);
 int TamanhoPilha(Pilha *p);

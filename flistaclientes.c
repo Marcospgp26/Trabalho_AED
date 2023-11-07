@@ -218,7 +218,8 @@ int Buscar_Posicao_c(Lista_c *l, int pos, Cliente *it){
 
 
 //Insercao
-int InsereCliente(Lista_c *l, Cliente it){
+int InsereCliente(Lista_c *l, Cliente it)
+{
     if(l == NULL) return 2;
     if(Buscar_Item_Chave_c(l, it) == 0) return 1;
     if(ListaVazia_c(l) == 0)
@@ -262,7 +263,8 @@ float GastoTotalClientes(Lista_c *l){
 
 
 //PARTE DE COMPRAS
-int modificaHistorico(Lista_c *l, Cliente *pessoa, Produto it){
+int modificaHistorico(Lista_c *l, Cliente *pessoa, Produto it) //Esssa funcao modifica o historico, aumentando ele
+{
     if(l == NULL) return 2;
     if(ListaVazia_c(l) == 0) return 1;
 
@@ -282,7 +284,8 @@ int modificaHistorico(Lista_c *l, Cliente *pessoa, Produto it){
     return 0;
 }
 
-int insereCarrinho(Lista_c *l, Cliente *pessoa, Produto it){
+int insereCarrinho(Lista_c *l, Cliente *pessoa, Produto it) //Essa funcao adiciona algum produto ao carrinho
+{
     if(l == NULL) return 2;
     if(ListaVazia_c(l) == 0) return 1;
 
@@ -303,7 +306,8 @@ int insereCarrinho(Lista_c *l, Cliente *pessoa, Produto it){
 
 }
 
-int removeCarrinho(Lista_c *l, Cliente *pessoa, Produto *it){
+int removeCarrinho(Lista_c *l, Cliente *pessoa, Produto *it) //Essa funcao remove algum produto do carrinho
+{
     if(l == NULL) return 2;
     if(ListaVazia_c(l) == 0) return 4;
 
@@ -320,7 +324,7 @@ int removeCarrinho(Lista_c *l, Cliente *pessoa, Produto *it){
     return 4;
 }
 
-int aumentaGastos(Lista_c *l, Cliente *pessoa, Produto it)
+int aumentaGastos(Lista_c *l, Cliente *pessoa, Produto it) //Essa funcao encontra um cliente e aumenta seus gastos totais
 {
     if(l == NULL) return 2;
     if(ListaVazia(l) == 0) return 1;
