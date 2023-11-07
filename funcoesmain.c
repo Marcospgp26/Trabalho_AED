@@ -660,6 +660,7 @@ void Reservar_Alimentos(Lista_c *clien, Lista_p *prod, Cliente *pessoa)
     while(qnt > 0)
     {
         removeCarrinho(clien, pessoa, &it);
+        aumentaGastos(clien, pessoa, it);
         modificaHistorico(clien, pessoa, it);
     }
     printf("\n*****OBRIGADO PELA COMPRA****\n");
