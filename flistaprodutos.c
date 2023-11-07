@@ -200,58 +200,55 @@ int ModificarPreco(Lista_p *l, Produto it)
 }
 
 //Parte de reseva
-int ReduzX(Lista_p *l, Produto *it)
+int Reduz_X(Lista_p *l, Produto *it)
+{
+    if(l == NULL) return 2;
+
+    No_p *noLista = l->inicio;
+
+    while(noLista != NULL)
+    {
+        if(strcmp(noLista->valor.codigo, it->codigo) == 0)
+        {
+            if((noLista->valor.quantidade) < (it->quantidade)) return 3;
+            noLista->valor.quantidade -= it->quantidade;
+            strcpy(it->nome, noLista->valor.nome);
+            strcpy(it->tipo, noLista->valor.tipo);
+            it->preco = noLista->valor.preco;
+            return 0;
+        }
+        noLista = noLista->prox;
+    }
+    return 1;
+}
+
+int Aumenta_X(Lista_p *l, Produto *it)
+{
+    if(l == NULL) return 2;
+
+    No_p *noLista = l->inicio;
+
+    while(noLista != NULL)
+    {
+        if(strcmp(noLista->valor.codigo, it->codigo) == 0)
+        {
+            if((noLista->valor.quantidade) < (it->quantidade)) return 3;
+            noLista->valor.quantidade += it->quantidade;
+            return 0;
+        }
+        noLista = noLista->prox;
+    }
+    if(noLista == NULL) return InsereProduto(l, *it);
+}
+
+int ConsultaPrimeiro(Lista_p *l, Produto *it)
 {
     if(l == NULL) return 2;
     if(ListaVazia_p(l) == 0) return 1;
-
-    No_p* n= l->inicio;
-    int v;
-    while(n != NULL)
-    {
-        v = strcmp((n->valor.codigo), it->codigo);
-        if(v == 0)
-            break;
-        n = n->prox;
-    }
-
-    if(n == NULL) return 1;
-
-    if(n->valor.quantidade < it->quantidade) return 3;
-
-    strcpy(it->nome, n->valor.nome);
-    strcpy(it->tipo, n->valor.tipo);
-    it->preco = n->valor.preco;
-    it->custo = 0;
-
-    n->valor.quantidade -= it->quantidade;
-    if(n->valor.quantidade == 0)
-        RemoveProduto(l, *it);
-
+    No_p *n = l->inicio;
+    n->valor = *it;
     return 0;
 }
-
-int AumentaX(Lista_p *l, Produto it)
-{
-    if(l == NULL) return 2;
-
-    No_p* n= l->inicio;
-    int v;
-
-    while(n != NULL)
-    {
-        v = strcmp((n->valor.codigo), it.codigo);
-        if(v == 0)
-            break;
-        n = n->prox;
-    }
-
-    if(n == NULL) return InsereProduto(l, it);
-    n->valor.quantidade += it.quantidade;
-    return 0;
-
-}
-
 //Parte de Economia
 float GastoTotalProdutos(Lista_p *l){
     if(l == NULL) return -2;

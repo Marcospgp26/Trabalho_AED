@@ -41,10 +41,10 @@ void MostraHistorico(Lista_c *l, Cliente *pessoa);
 int InsereCliente(Lista_c *l, Cliente it);
 
 //Parte de Reserva
-int modificaHistorico(Lista_c *l, Cliente *pessoa, Produto it);
-int insereCarrinho(Lista_c *l, Cliente *pessoa, Produto it);
-int removeCarrinho(Lista_c *l, Cliente *pessoa, Produto *it);
-int aumentaGastos(Lista_c *l, Cliente *pessoa, Produto it);
+void mostracarrinho(Lista_c *l, Cliente *pessoa);
+int inserecarrinho(Lista_c *l, Cliente *pessoa, Produto *it);
+int removecarrinho(Lista_c *l, Cliente *pessoa, Produto *it);
+int apagacarrinho(Lista_c *l, Cliente *pessoa);
 
 //Parte de FILE
 FILE *FLc_criar();

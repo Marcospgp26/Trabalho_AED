@@ -280,81 +280,82 @@ void MostraHistorico(Lista_c *l, Cliente *pessoa)
 }
 
 //PARTE DE COMPRAS
-int modificaHistorico(Lista_c *l, Cliente *pessoa, Produto it) //Esssa funcao modifica o historico, aumentando ele
+void mostracarrinho(Lista_c *l, Cliente *pessoa)
 {
-    if(l == NULL) return 2;
-    if(ListaVazia_c(l) == 0) return 1;
-
-    No_c *n = l->inicio;
-
-    while(n != NULL)
+    if(l != NULL)
     {
-        if(strcmp(n->valor.CPF, pessoa->CPF) == 0) //procura o historico da pessoa passada
+        No_c *n = l->inicio;
+        while(n != NULL)
         {
-            if(n->valor.historico == NULL) n->valor.historico = CriarPilha(); //se nao existir, cria ele
-            Push(n->valor.historico, it); //insere um produto nele
-            break;
+            if(strcmp(n->valor.CPF, pessoa->CPF) == 0)
+            {
+                Mostrar_p(n->valor.carrinho);
+                break;
+            }
+            n = n->prox;
         }
-        n = n->prox;
     }
-    if(n == NULL) return 1;
-    return 0;
 }
 
-int insereCarrinho(Lista_c *l, Cliente *pessoa, Produto it) //Essa funcao adiciona algum produto ao carrinho
+int inserecarrinho(Lista_c *l, Cliente *pessoa, Produto *it)
 {
     if(l == NULL) return 2;
     if(ListaVazia_c(l) == 0) return 1;
 
-    No_c *n = l->inicio;
-
-    while(n != NULL) //vai ate o fim da lista
+    No_c *noLista = l->inicio;
+    while(noLista != NULL)
     {
-        if(strcmp(n->valor.CPF, pessoa->CPF) == 0) //procura a pessoa passada para acessar seu carrinho
+        if(strcmp(noLista->valor.CPF, pessoa->CPF))
         {
-            if(n->valor.carrinho == NULL) n->valor.carrinho = Criar_p(); //se o carrinho nao existe, cria
-            InsereProduto(n->valor.carrinho, it); //insere o produto
-            break;
+            if(noLista->valor.carrinho == NULL) noLista->valor.carrinho = Criar_p();
+            else if(MostraOcorrencia_p(noLista->valor.carrinho, *it) == 0) return Aumenta_X(noLista->valor.carrinho, it);
+            return InsereProduto(noLista->valor.carrinho, *it);
         }
-        n = n->prox;
+        noLista = noLista->prox;
     }
-    if(n != NULL) return 0;
     return 1;
-
 }
 
-int removeCarrinho(Lista_c *l, Cliente *pessoa, Produto *it) //Essa funcao remove algum produto do carrinho
-{
-    if(l == NULL) return 2;
-    if(ListaVazia_c(l) == 0) return 4;
-
-    No_c *n = l->inicio;
-    while(n != NULL) //vai ate o fim da lista
-    {
-        if(strcmp(n->valor.CPF, pessoa->CPF) == 0) //encontra a pessoa passada como parametro
-        {
-            return ReduzX(n->valor.carrinho, it); //reduz uma quantidade X do carrinho
-            break;
-        }
-        n = n->prox;
-    }
-    return 4;
-}
-
-int aumentaGastos(Lista_c *l, Cliente *pessoa, Produto it) //Essa funcao encontra um cliente e aumenta seus gastos totais
+int removecarrinho(Lista_c *l, Cliente *pessoa, Produto *it)
 {
     if(l == NULL) return 2;
     if(ListaVazia_c(l) == 0) return 1;
 
+    No_c *noLista = l->inicio;
+    while(noLista != NULL)
+    {
+        if(strcmp(noLista->valor.CPF, pessoa->CPF))
+        {
+            if(noLista->valor.carrinho == NULL) return 4;
+            else if(MostraOcorrencia_p(noLista->valor.carrinho, *it) == 0) return Reduz_X(noLista->valor.carrinho, it);
+        }
+        noLista = noLista->prox;
+    }
+    return 1;
+}
+
+int apagacarrinho(Lista_c *l, Cliente *pessoa)
+{
+    if(l == NULL) return 2;
+    if(ListaVazia_c(l) == 0) return 1;
     No_c *n = l->inicio;
+    Produto it;
+
     while(n != NULL)
     {
-        if(strcmp(n->valor.CPF, pessoa->CPF)) //acha a pessoa
+        if(strcmp(n->valor.CPF, pessoa->CPF) == 0)
         {
-            n->valor.gasto =+ (it.quantidade * it.preco); //aumenta o gasto
+            if(n->valor.historico == NULL) n->valor.historico = CriarPilha();
+            while(ListaVazia_p(n->valor.carrinho) != 0)
+            {
+                ConsultaPrimeiro(n->valor.carrinho, &it);
+                Push(n->valor.historico, it);
+                Reduz_X(n->valor.carrinho, &it);
+            }
+            free(n->valor.carrinho);
+            n->valor.carrinho = NULL;
             return 0;
         }
-        n = n->prox;
     }
     return 1;
 }

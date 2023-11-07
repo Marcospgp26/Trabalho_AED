@@ -30,8 +30,9 @@ int ModificarQuantidade(Lista_p *l, Produto it);
 int ModificarPreco(Lista_p *l, Produto it);
 
 //Parte de Reserva
-int ReduzX(Lista_p *l, Produto *it);
-int AumentaX(Lista_p *l, Produto it);
+int Reduz_X(Lista_p *l, Produto *it);
+int Aumenta_X(Lista_p *l, Produto *it);
+int ConsultaPrimeiro(Lista_p *l, Produto *it);
 
 //Parte de economia
 float GastoTotalProdutos(Lista_p *l);

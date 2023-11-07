@@ -613,131 +613,96 @@ void Menu_Reserva(Lista_c *clien, Lista_p *prod, Cliente *pessoa)
         printf("2)Reservar produtos\n");
 
         scanf("%i", &esc);
-        if(esc == 2) Reservar_Alimentos(clien, prod, pessoa);
+        if(esc == 2) Reserva_Menu(clien, prod, pessoa);
     }
 
 }
 
-void Reservar_Alimentos(Lista_c *clien, Lista_p *prod, Cliente *pessoa)
+void Reserva_Menu(Lista_c *clien, Lista_p *prod, Cliente *pessoa)
 {
-    Produto it;
-    int verif, verif2, esc, qnt = 0;
+    int esc;
 
-    system("cls");
     do
     {
-        printf("Escolha:\n1)Sair\n2)Ver o Estoque\n3)Inserir produto no carrinho\n4)Remover produto do carrinho\n");
+        system("cls");
+        printf("*****MENU RESERVAR*****\n");
+        printf("Escolha:\n1)Sair\n2)Ver o estoque\n3)Ver o carrinho\n4)Inserir Produto\n5)Retirar Produto\n");
         scanf("%i", &esc);
 
+        system("cls");
         switch(esc)
         {
-        case 2:
+            case 2:
             Mostrar_p(prod);
             break;
-        case 3:
-            Insere_carro(clien, prod, pessoa);
+            case 3:
+            mostracarrinho(clien, pessoa);
             break;
-        case 4:
-            printf("Insira o codigo do alimento a ser retirado (ESCREVER SAIDA RETORNA A TELA ANTERIOR): ");
-            setbuf(stdin, NULL);
-            fgets(it.codigo, 10, stdin);
-            it.codigo[strlen(it.codigo) - 1] = it.codigo[strlen(it.codigo)];
-
-            if(strcmp(it.codigo, "SAIDA") == 0) break;
-
-            printf("Insira quantas unidades desse alimento voce deseja retirar: ");
-            scanf("%i", &it.quantidade);
-
-            verif = removeCarrinho(clien, pessoa, &it);
-            if(verif == 1) printf("Produto nao encontrado\n");
-            else if(verif == 2) printf("Lista(s) nao alocada(s)\n");
-            else if(verif == 3) printf("Quantidade Invalida\n");
-            else if(verif == 4) printf("Cliente nao encontrado\n");
-            else
-            {
-                verif2 = AumentaX(prod, it);
-                if(verif2 == 0)
-                {
-                    printf("Produto retornado ao estoque: ");
-                    qnt--;
-                }
-                else printf("Lista nao alocada\n");
-            }
+            case 4:
+            Reservar(clien, prod, pessoa);
             break;
+            case 5:
+            Retirar(clien, prod, pessoa);
         }
-        system("pause");
+    }while(esc != 1);
 
-    }
-    while(esc != 1);
+    apagacarrinho(clien, pessoa);
+    printf("OBRIGADO POR COMPRAR NO MERCADO BIG BOM!\n");
     system("pause");
-    while(qnt > 0)
-    {
-        removeCarrinho(clien, pessoa, &it);
-        aumentaGastos(clien, pessoa, it);
-        modificaHistorico(clien, pessoa, it);
-    }
-    printf("\n*****OBRIGADO PELA COMPRA****\n");
-    system("pause");
-
 }
 
-void Insere_carro(Lista_c *clien, Lista_p *prod, Cliente *pessoa)
+void Reservar(Lista_c *clien, Lista_p *prod, Cliente *pessoa)
 {
-    Produto it;
-    int verif, verif2, qnt = 0;
+    int tam_s, verif, verif2;
+    Produto insere;
 
-    printf("Insira o codigo do alimento a ser reservado: ");
+    printf("*****INSERIR NO CARRINHO*****\n");
     setbuf(stdin, NULL);
-    fgets(it.codigo, 10, stdin);
-    it.codigo[strlen(it.codigo) - 1] = it.codigo[strlen(it.codigo)];
+    printf("Insira o codigo do produto: ");
+    fgets(insere.codigo, 10, stdin);
+    tam_s = strlen(insere.codigo);
+    insere.codigo[tam_s - 1] = '\0';
 
+    printf("Insira quantas quantidades voce deseja comprar: ");
+    scanf("%i", &insere.quantidade);
 
-    printf("Insira quantas unidades desse alimento voce deseja comprar: ");
-    scanf("%i", &it.quantidade);
-
-
-    verif = ReduzX(prod, &it);
-    if(verif == 1) printf("Produto nao encontrado\n");
-    else if(verif == 2) printf("Sem lista\n");
+    verif = Reduz_X(prod, &insere);
+    if(verif == 3) printf("Valor excedeu o estoque\n");
+    else if(verif == 2) printf("Sem estoque\n");
+    else if(verif == 1) printf("Produto nao encontrado\n");
     else
     {
-        verif2 = insereCarrinho(clien, pessoa, it);
-        if(verif2 == 0)
-        {
-            printf("PRODUTO RESERVADO\n");
-            qnt++;
-        }
-        else if(verif2 == 1) printf("CLIENTE NAO ENCONTRADO\n");
-        else printf("LISTA NAO ENCONTRADA\n");
+        verif2 = inserecarrinho(clien, pessoa, &insere);
+        if(verif2 == 0) printf("Produto inserido\n");
+        if(verif2 == 1) printf("Produto nao encontrado\n");
+        if(verif2 == 2) printf("Lista inexistente\n");
     }
 }
 
-void Retira_carro(Lista_c *clien, Lista_p *prod, Cliente *pessoa)
+void Retirar(Lista_c *clien, Lista_p *prod, Cliente *pessoa)
 {
-    Produto it;
-    int verif, verif2, qnt = 0;
-    printf("Insira o codigo do alimento a ser retirado: ");
+    int tam_s, verif, verif2;
+    Produto insere;
+
+    printf("*****RETIRAR DO CARRINHO*****\n");
+
     setbuf(stdin, NULL);
-    fgets(it.codigo, 10, stdin);
-    it.codigo[strlen(it.codigo) - 1] = it.codigo[strlen(it.codigo)];
+    printf("Insira o codigo do produto: ");
+    fgets(insere.codigo, 10, stdin);
+    tam_s = strlen(insere.codigo);
+    insere.codigo[tam_s - 1] = '\0';
 
-    printf("Insira quantas unidades desse alimento voce deseja retirar: ");
-    scanf("%i", &it.quantidade);
+    printf("Insira quantas quantidades unidades voce deseja retirar: ");
+    scanf("%i", &insere.quantidade);
 
-    verif = removeCarrinho(clien, pessoa, &it);
-    if(verif == 1) printf("Produto nao encontrado\n");
-    else if(verif == 2) printf("Lista(s) nao alocada(s)\n");
-    else if(verif == 3) printf("Quantidade Invalida\n");
-    else if(verif == 4) printf("Cliente nao encontrado\n");
+    verif = removecarrinho(clien, pessoa, &insere);
+    if(verif == 4) printf("Nao existe carrinho\n");
+    else if(verif == 3) printf("Retirou uma quantidade excessiva\n");
+    else if(verif == 2) printf("Nao existe lista de clientes\n");
+    else if(verif == 1) printf("Produto nao encontrado\n");
     else
     {
-        verif2 = AumentaX(prod, it);
-        if(verif2 == 0)
-        {
-            printf("Produto retornado ao estoque: ");
-            qnt--;
-        }
-        else printf("Lista nao alocada\n");
+        Aumenta_X(prod, &insere);
     }
 }
 

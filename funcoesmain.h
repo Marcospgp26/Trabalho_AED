@@ -22,9 +22,9 @@ void AcessaGastos(int tipo, Lista_c *clien, Lista_p *prod, Lista_f *func, Client
 
 //RESERVA DE ALIMENTOS
 void Menu_Reserva(Lista_c *clien, Lista_p *prod, Cliente *pessoa);
-void Reservar_Alimentos(Lista_c *clien, Lista_p *prod, Cliente *pessoa);
-void Insere_carro(Lista_c *clien, Lista_p *prod, Cliente *pessoa);
-void Retira_carro(Lista_c *clien, Lista_p *prod, Cliente *pessoa);
+void Reserva_Menu(Lista_c *clien, Lista_p *prod, Cliente *pessoa);
+void Reservar(Lista_c *clien, Lista_p *prod, Cliente *pessoa);
+void Retirar(Lista_c *clien, Lista_p *prod, Cliente *pessoa);
 
 
 //INSERCAO
