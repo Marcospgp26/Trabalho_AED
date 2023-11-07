@@ -300,6 +300,8 @@
             InsereFuncionario(l, &it);
         }
 
+        fclose(pf);
+
         return 0;
     }
 

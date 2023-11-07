@@ -427,6 +427,8 @@ int FLc_carregar(Lista_c *l, FILE *pc){
         Inserir_fim_c(l, itc);     
     }
     //inserção dos dados do arquivo para a memória do programa
+
+    fclose(pc);
     
     return 0;
 }
