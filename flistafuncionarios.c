@@ -14,6 +14,8 @@
         No_f *inicio;
     }Lista_f;
 
+
+//FUNCOES BASICAS
     Lista_f* Criar_f()
     {
         Lista_f *l = (Lista_f*) malloc(sizeof(Lista_f));
@@ -71,8 +73,9 @@
         return 1;
     }
 
-    //===================================================================================================================================================
-    void MostrarDadosPagamento(Lista_f *l)
+
+//FUNCOES AUXILIARES
+    void MostrarDadosPagamento(Lista_f *l) //Essa funcao foi somente usada para debug
     {
         if(l != NULL)
         {
@@ -90,7 +93,7 @@
         }
     }
 
-    int MostraOcorrencia_f(Lista_f *l, Funcionario *it)
+    int MostraOcorrencia_f(Lista_f *l, Funcionario *it) //Encontra um funcionario, mostrando se ele existe ou nao
     {
         if(l == NULL) return 2;
         if(ListaVazia_f(l) == 0) return 1;
@@ -108,7 +111,9 @@
         return 3;
     }
 
-    int InsereFuncionario(Lista_f *l, Funcionario *it)
+
+//PARTE DE INSERCAO
+    int InsereFuncionario(Lista_f *l, Funcionario *it) //Insere um funcionario em ordem alfabetica
     {
         if(l == NULL) return 2;
         if(MostraOcorrencia_f(l, it) == 0) return 1;
@@ -140,7 +145,7 @@
         return 0;
     }
 
-    int MudaSalarioFuncionario(Lista_f *l, Funcionario *it)
+    int MudaSalarioFuncionario(Lista_f *l, Funcionario *it) //Muda o salario de um funcionario
     {
         if(l == NULL) return 2;
         if(ListaVazia_f(l) == 0) return 1;
@@ -148,12 +153,12 @@
         No_f* n = l->inicio;
         int a;
 
-        while(n != NULL)
+        while(n != NULL) //percorre ate o fim da lista
         {
-            a = strcmp((n->valor.CPF), it->CPF);
+            a = strcmp((n->valor.CPF), it->CPF); //encontra o funcionario desejado
             if(a == 0)
             {
-                n->valor.pagamento = it->pagamento;
+                n->valor.pagamento = it->pagamento; //muda o salario
                 return 0;
             }
             n = n->prox;
@@ -161,7 +166,7 @@
         return 1;
     }
 
-    int MudaSalarioCargo(Lista_f *l, Funcionario *it)
+    int MudaSalarioCargo(Lista_f *l, Funcionario *it) //Muda salario de todos os funcionarios com um cargo
     {
         if(l == NULL) return 2;
         if(ListaVazia_f(l) == 0) return 1;
@@ -169,22 +174,22 @@
         No_f* n = l->inicio;
         int a, verif = 0;
 
-        while(n != NULL)
+        while(n != NULL) //percorre até o fim da lista
         {
-            a = strcmp((n->valor.funcao), it->funcao);
+            a = strcmp((n->valor.funcao), it->funcao); //encontra um funcionario
             if(a == 0)
             {
-                n->valor.pagamento = it->pagamento;
+                n->valor.pagamento = it->pagamento; //muda o pagamento do funcionario
                 verif = 1;
             }
-            n = n->prox;
+            n = n->prox; //continua buscando os outros funcionarios
         }
         if(verif) return 0;
 
         return 1;
     }
 
-    int MudaCargoFuncionario(Lista_f *l, Funcionario *it)
+    int MudaCargoFuncionario(Lista_f *l, Funcionario *it)//Muda o cargo de somente um funcionario
     {
         if(l == NULL) return 2;
         if(ListaVazia_f(l) == 0) return 1;
@@ -206,7 +211,7 @@
         return 1;
     }
 
-    int RemoveFuncionario(Lista_f *l, Funcionario *it)
+    int RemoveFuncionario(Lista_f *l, Funcionario *it) //Remove um funcionario
     {
         if(l == NULL) return 2;
         if(ListaVazia_f(l) == 0) return 1;
@@ -238,22 +243,29 @@
 
     }
 
-    float GastoTotalFuncionarios(Lista_f *l){
+
+//PARTE DE ECONOMIA
+    float GastoTotalFuncionarios(Lista_f *l) //Contabiliza quanto que é gasto com salario de funcionario
+    {
         if(l == NULL) return -2;
         if(ListaVazia_f(l) == 0) return 0;
 
         No_f *no = l->inicio;
         float SalarioTot = 0;
 
-        while(no != NULL){
-            SalarioTot += no->valor.pagamento;
+        while(no != NULL) //percorre até o fim
+        { 
+            SalarioTot += no->valor.pagamento; //soma os salarios dos funcionarios
             no = no->prox;
         }
 
         return SalarioTot;
     }
 
-    FILE *FLf_criar(){
+
+//PARTE DE FILE
+    FILE *FLf_criar() //cria um file
+    {
         FILE *p;
 
         printf("Registro de funcionarios nao foi criado!\nCriando novo arquivo...\n");
@@ -264,7 +276,8 @@
         return p;
     }
 
-    int FLf_carregar(Lista_f *l, FILE *pf){
+    int FLf_carregar(Lista_f *l, FILE *pf) //passa as informacoes de um file para a lista
+    {
         
         pf = fopen("funcionarios.txt", "r");
         if(pf == NULL){
@@ -275,12 +288,14 @@
         No_f *noLista = l->inicio;
         Funcionario it;
 
+        //essa funcao verifica se ha algfum funcionario no carquivo
         if((fscanf(pf, "%i,%[^,],%[^,],%[^,],%f\n", &it.senha, it.CPF, it.nome, it.funcao, &it.pagamento)) != 5) {
             printf("Nao foi detectado nenhum campo no arquivo (funcionarios), ou houve erro na hora da leitura, para carregar informacoes, primeiro salve alguma coisa no arquivo!\n");
             return 1;
         }
         InsereFuncionario(l, &it);
 
+        //insere todos os funcionarios em uma lista
         while((fscanf(pf, "%i,%[^,],%[^,],%[^,],%f\n", &it.senha, it.CPF, it.nome, it.funcao, &it.pagamento)) == 5) {
             InsereFuncionario(l, &it);
         }
@@ -288,7 +303,8 @@
         return 0;
     }
 
-    int FLf_salvar(Lista_f *l, FILE *pf){
+    int FLf_salvar(Lista_f *l, FILE *pf) //salva as informacoes da lista
+    {
         
         if(l == NULL) return 1;
 
@@ -296,6 +312,7 @@
 
         No_f *noLista = l->inicio;
 
+        //Insere todos os funcionarios da lista no arquivo
         while(noLista != NULL) {
             fprintf(pf, "%i,%s,%s,%s,%f\n", noLista->valor.senha, noLista->valor.CPF, noLista->valor.nome, noLista->valor.funcao, noLista->valor.pagamento);
             noLista = noLista->prox;

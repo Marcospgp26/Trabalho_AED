@@ -14,6 +14,7 @@ typedef struct lista_p
     No_p *inicio;
 }Lista_p;
 
+//funcoes basicas
 Lista_p* Criar_p()
 {
     Lista_p *l = (Lista_p*) malloc(sizeof(Lista_p));
@@ -66,7 +67,7 @@ int Remover_inicio_p(Lista_p *l)
     return 0;
 }
 
-//===================================================================================================================================================
+//Funcao auxiliar
 
 int MostraOcorrencia_p(Lista_p *l, Produto it)
 {
@@ -89,6 +90,7 @@ int MostraOcorrencia_p(Lista_p *l, Produto it)
     return 3;
 }
 
+//Parte de estoque
 int InsereProduto(Lista_p *l, Produto it)
 {
     if(l == NULL) return 2;
@@ -197,6 +199,7 @@ int ModificarPreco(Lista_p *l, Produto it)
     return 3;
 }
 
+//Parte de reseva
 int ReduzX(Lista_p *l, Produto *it)
 {
     if(l == NULL) return 2;
@@ -249,6 +252,7 @@ int AumentaX(Lista_p *l, Produto it)
 
 }
 
+//Parte de Economia
 float GastoTotalProdutos(Lista_p *l){
     if(l == NULL) return -2;
     if(ListaVazia_p(l) == 0) return 0;
@@ -264,6 +268,7 @@ float GastoTotalProdutos(Lista_p *l){
     return CustoTot;
 }
 
+//Parte de FILE
 FILE *FLp_criar(){
     FILE *p; 
 
@@ -276,7 +281,6 @@ FILE *FLp_criar(){
 
     return p;
 }
-
 int FLp_carregar(Lista_p *l, FILE *pp){
         
         pp = fopen("produtos.txt", "r");

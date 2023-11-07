@@ -12,7 +12,7 @@
 #define BKSP 8
 #define SPACE 32    //codigos ASCII que serao uteis ao decorrer do código
 
-int menu_entrada(Lista_f **func, Lista_c **clien, int *tipo,  Cliente *pessoa)
+int menu_entrada(Lista_f **func, Lista_c **clien, int *tipo,  Cliente *pessoa) //Consiste na parte em que se escolhe o tipo de entrada
 {
     int esc_t;
     int saida_completa = 0, saida_menu= 0;
@@ -46,7 +46,7 @@ int menu_entrada(Lista_f **func, Lista_c **clien, int *tipo,  Cliente *pessoa)
     return saida_completa;
 }
 
-int entrada_funcionario(Lista_f **func)
+int entrada_funcionario(Lista_f **func) //A parte de entrada de funcionario
 {
 
     printf("*****ENTRAR COMO FUNCIONARIO*****\n\n");
@@ -126,7 +126,7 @@ int entrada_funcionario(Lista_f **func)
 
         entrada->senha = atoi(senhaaux);  //essa função converte uma string em número inteiro, pois no código a senha é interpretada como int
         entrada->CPF[11] = '\0';
-        int saida = Buscar_Item_Chave_f(*func,*entrada);
+        int saida = Buscar_Item_Chave_f(*func,*entrada); //procura o funcionario na lista de funcionarios
 
         if(saida == 0) return 1;
 
@@ -137,7 +137,7 @@ int entrada_funcionario(Lista_f **func)
     }    
 }
 
-int entrada_cliente(Lista_c **clien, Cliente *pessoa)
+int entrada_cliente(Lista_c **clien, Cliente *pessoa)  //A opcao de escolhas de entrada para clientes
 {
     int esc, verif, saida, ext = 0;
     do
@@ -168,7 +168,7 @@ int entrada_cliente(Lista_c **clien, Cliente *pessoa)
     return verif;
 }
 
-int logar_cliente(Lista_c **clien, Cliente *pessoa)
+int logar_cliente(Lista_c **clien, Cliente *pessoa) //Acredita que o cliente ja exista, por isso loga com o cliente
 {
     printf("*****LOGAR COMO CLIENTE*****\n\n");
 
@@ -258,7 +258,7 @@ int logar_cliente(Lista_c **clien, Cliente *pessoa)
     }
 }
 
-int cadastrar_cliente(Lista_c **clien, Cliente *pessoa)
+int cadastrar_cliente(Lista_c **clien, Cliente *pessoa) //Cadastro de novos clientes
 {
     Cliente *it = (Cliente *) malloc(sizeof(Cliente));
     int tam_s, aprova, i =0;
@@ -376,7 +376,7 @@ int cadastrar_cliente(Lista_c **clien, Cliente *pessoa)
     }
 }
 
-void menu_escolhas(int tipo, int *retorno)
+void menu_escolhas(int tipo, int *retorno) //Menu principal do programa
 {
     // imprime as informações iniciais
     printf("*****MENU DO MERCADO BIG BOM*****\n\n");
