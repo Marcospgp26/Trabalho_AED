@@ -210,8 +210,8 @@ int Buscar_Posicao_c(Lista_c *l, int pos, Cliente *it){
     it->senha = noLista->valor.senha;
     it->gasto = noLista->valor.gasto;
     strcpy(it->nome,noLista->valor.nome);
-    it->historico = noLista->historico;
-    it->CPF = noLista->CPF; //retorna o elemento com todas as informações
+    it->historico = noLista->valor.historico; 
+    //retorna o elemento com todas as informações
 
     return 0;
 }
@@ -323,12 +323,12 @@ int removeCarrinho(Lista_c *l, Cliente *pessoa, Produto *it){
 int aumentaGastos(Lista_c *l, Cliente *pessoa, Produto it)
 {
     if(l == NULL) return 2;
-    if(ListaVazia(l) == 0) return 1;
+    if(ListaVazia_c(l) == 0) return 1;
 
     No_c *n = l->inicio;
     while(n != NULL)
     {
-        if(strcmp(n->valor.CPF, it.CPF)) //acha a pessoa
+        if(strcmp(n->valor.CPF, pessoa->CPF)) //acha a pessoa
         {
             n->valor.gasto =+ (it.quantidade * it.preco); //aumenta o gasto
             return 0;
